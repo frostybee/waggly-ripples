@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FriskyMouse.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,26 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormLayered.LayeredForm;
 
 namespace WinFormLayered
 {
     public partial class RippleTester : Form
     {
-        LayeredFrom layered;
+        RipplesController ripplesController;
         public RippleTester()
         {
             InitializeComponent();
-            layered = new LayeredFrom();
+            //layered = new LayeredFrom();
+            ripplesController = new RipplesController();
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {         
-            layered.ShowForm();                        
+        {
+            ripplesController.ShowRipplesAt();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            layered.Hide();
+            //layered.Hide();
 
         }
     }

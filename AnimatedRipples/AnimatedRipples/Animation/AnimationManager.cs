@@ -28,7 +28,7 @@ namespace MaterialWinforms.Animations
         private const double MIN_VALUE = 0.00;
         private const double MAX_VALUE = 1.00;
         // TODO: Change the duration of the animation here. 
-        private readonly Timer animationTimer = new Timer { Interval = 5, Enabled = false };
+        private readonly Timer animationTimer = new Timer { Interval = 10, Enabled = false };
 
         /// <summary>
         /// Constructor

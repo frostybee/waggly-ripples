@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0B7F705C-D086-4D9A-A847-0E99D4374F46}</ProjectGuid>
+    <ProjectGuid>{707CCEEC-7854-446C-A7FF-91B1A0DE67BF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WinFormLayered</RootNamespace>
-    <AssemblyName>WinFormLayered</AssemblyName>
+    <RootNamespace>MetroAnimation</RootNamespace>
+    <AssemblyName>MetroAnimation</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,47 +51,18 @@
   <ItemGroup>
     <Compile Include="Animate\Animate.cs" />
     <Compile Include="Animate\EasingType.cs" />
-    <Compile Include="Animate\IntAnimate.cs" />
     <Compile Include="Animate\Interpolation.cs" />
-    <Compile Include="Animation\AnimationDirection.cs" />
-    <Compile Include="Animation\AnimationManager.cs" />
-    <Compile Include="Animation\Animations.cs" />
-    <Compile Include="ExtendedWinStyles.cs" />
-    <Compile Include="LayeredForm\LayeredWindow.cs" />
-    <Compile Include="LayeredForm\RipplesController.cs" />
-    <Compile Include="Native\HookHelper.cs" />
-    <Compile Include="Native\NativeConstants.cs" />
-    <Compile Include="Native\NativeEnums.cs" />
-    <Compile Include="Native\NativeMethods.cs" />
-    <Compile Include="Native\NativeStructs.cs" />
-    <Compile Include="RippleTester.cs">
+    <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RippleTester.Designer.cs">
-      <DependentUpon>RippleTester.cs</DependentUpon>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="LayeredFrom.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LayeredFrom.Designer.cs">
-      <DependentUpon>LayeredFrom.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Animate\IntAnimate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopMostFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TopMostFrm.Designer.cs">
-      <DependentUpon>TopMostFrm.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="LayeredForm\LayeredWindow.resx">
-      <DependentUpon>LayeredWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RippleTester.resx">
-      <DependentUpon>RippleTester.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LayeredFrom.resx">
-      <DependentUpon>LayeredFrom.cs</DependentUpon>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -112,6 +86,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

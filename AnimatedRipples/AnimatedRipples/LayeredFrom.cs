@@ -1,5 +1,7 @@
 ﻿using Bee.GlobalHooks.NativeApi;
 using MaterialWinforms.Animations;
+using ReaLTaiizor.Animate.Metro;
+using ReaLTaiizor.Enum.Metro;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -51,19 +53,21 @@ namespace WinFormLayered
         public const int LWA_COLORKEY = 0x1;
         public LayeredFrom()
         {
+            SuspendLayout();
             MakeFormLayered();
-            InitializeComponent();
+            ResumeLayout(false);
+            //InitializeComponent();
             //BackColor = Color.;
             _BaseForm = this;
-
+            
             objAnimationManager = new AnimationManager()
             {
-                Increment = 0.012,
+                Increment = 0.010,
                 //Increment = 0.010,
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.SpringInteropolator
-                AnimationType = AnimationType.Linear
+                AnimationType = AnimationType.EaseOut
 
             };
             objAnimationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -84,7 +88,10 @@ namespace WinFormLayered
         {
             //IMPORTANT: @SEE: https://learn.microsoft.com/en-us/archive/msdn-magazine/2006/march/practical-tips-for-boosting-the-performance-of-windows-forms-apps
             // Making the form run faster. 
-
+            AutoScaleDimensions = new SizeF(6F, 13F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(200, 200);
+            FormBorderStyle = FormBorderStyle.None;
             FormBorderStyle = FormBorderStyle.None;
             ShowInTaskbar = false;
             SetWindowLong(this.Handle, GWL_EXSTYLE, (IntPtr)(GetWindowLong(this.Handle, GWL_EXSTYLE) | WS_EX_LAYERED | WS_EX_TRANSPARENT));
@@ -111,8 +118,9 @@ namespace WinFormLayered
                 //Final = CreateImage();
                 //FillBrush = new TextureBrush(Final);
             }
-            //DrawManyRipples(e.Graphics);
-            DrawExpandingCircle(e.Graphics);
+            // NOTE: This should be moved to SetBitmap. 
+            DrawManyRipples(e.Graphics);
+            //DrawExpandingCircle(e.Graphics);
         }
 
         private void DrawExpandingCircle(Graphics graphics)
@@ -145,6 +153,7 @@ namespace WinFormLayered
             //e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;            
             //e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
 
+
             graphics.SmoothingMode = SmoothingMode.AntiAlias;
             graphics.CompositingQuality = CompositingQuality.HighQuality;
             graphics.Clear(Color.Tan);
@@ -169,7 +178,8 @@ namespace WinFormLayered
             // TODO: reduce the opacity of the ripple's color. 
             // T            
             //Color rippleColor = Color.FromArgb(((byte) 100 - (byte)(objAnimationManager.GetProgress() * 0.4)), Color.Red);
-            Color rippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 270)), Color.Red);
+            //Color rippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 20)), Color.Red);
+            Color rippleColor = Color.Red;
             graphics.FillEllipse(new SolidBrush(rippleColor), outer);
             //graphics.DrawEllipse(new Pen(Color.Blue,4), thirdCircle);
             graphics.DrawEllipse(new Pen(rippleColor, 4), outer);
@@ -177,12 +187,13 @@ namespace WinFormLayered
             graphics.FillEllipse(new SolidBrush(Color.Blue), inner);
 
             int radius = 30;
-            Color internalRippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 250)), Color.SteelBlue);
+            //Color internalRippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 50)), Color.SteelBlue);
+            Color internalRippleColor = Color.SteelBlue;
             for (int i = 0; i < 2; i++)
             {
                 rippleSize = (int)(animationValue * radius * 1);
                 Rectangle rect = new Rectangle(100 - rippleSize / 2, 100 - rippleSize / 2, rippleSize, rippleSize);
-                Pen bluePen = new Pen(internalRippleColor, 5);
+                Pen bluePen = new Pen(internalRippleColor, 3);
                 bluePen.DashStyle = DashStyle.DashDot;
                 graphics.DrawEllipse(bluePen, rect);
                 radius += 30;
@@ -252,6 +263,16 @@ namespace WinFormLayered
 
         internal void StartAnimation()
         {
+            Debug.WriteLine("Updating....");
+
+
+            /*
+             IntAnimate animate = new IntAnimate();//animate.Start(int duration, T initial, T end, EasingType easing = EasingType.Linear)
+              animate.Start(1000, 1, 30, EasingType.Linear);
+              animate.Complete = OnAnimationCompleted;
+              animate.Update += OnAnimationUpdated;
+              animate.Start(1000);*/
+
             if (!objAnimationManager.IsAnimating())
             {
                 objAnimationManager.SetProgress(0);
@@ -260,7 +281,19 @@ namespace WinFormLayered
                 objAnimationManager.StartNewAnimation(AnimationDirection.In);
             }
         }
+        int _radius = 0;
+        private void OnAnimationUpdated(int value)
+        {
+            Debug.WriteLine("Updated value: " + value);
+            _radius = value;
+            Invalidate();
+        }
 
+        private void OnAnimationCompleted()
+        {
+            Debug.WriteLine("Animation Completed");
+            Hide();
+        }
         internal void ShowForm()
         {
             Show();
