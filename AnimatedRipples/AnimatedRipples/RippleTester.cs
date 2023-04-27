@@ -14,12 +14,12 @@ namespace WinFormLayered
 {
     public partial class RippleTester : Form
     {
-        RipplesController ripplesController;
+        DrawingManager ripplesController;
         public RippleTester()
         {
             InitializeComponent();
             //layered = new LayeredFrom();
-            ripplesController = new RipplesController();
+            ripplesController = new DrawingManager();
         }
 
         private void button1_Click(object sender, EventArgs e)

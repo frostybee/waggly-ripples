@@ -138,9 +138,9 @@ namespace WinFormLayered
             Rectangle outer = new Rectangle(100 - rippleRadius / 2, 100 - rippleRadius / 2, rippleRadius, rippleRadius);
             // Adjust the ripple's color based on the current progress of the running animation. 
             // NOTE: the value of the opacity needs to be validated < 255
-            //Color rippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 120 )), Color.Red);
+            //Color rippleColor = Color.FromArgb(((byte)250 - (byte)(_animationManager.GetProgress() * 120 )), Color.Red);
             Color rippleColor = Color.Red;
-            //graphics.FillEllipse(new SolidBrush(rippleColor), outer);
+            //_graphics.FillEllipse(new SolidBrush(rippleColor), outer);
             graphics.DrawEllipse(new Pen(Color.Blue, 2), outer);
             // TODO: Draw a circle outline à la Google Maps ripple
             // - Also, draw circle in the middle after the inner one. 
@@ -162,11 +162,11 @@ namespace WinFormLayered
             // TODO: have a look at ShareX project and see how the created the layered window. 
 
             //Rectangle CurrentRect = CalculateCurrentRect();
-            //graphics.FillEllipse(FillBrush, CurrentRect);         
+            //_graphics.FillEllipse(FillBrush, CurrentRect);         
 
-            //graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
+            //_graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
             var animationValue = objAnimationManager.GetProgress();
-            //graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
+            //_graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
             //var rippleRadius = (int)(animationValue * 40 * 2);
             var rippleSize = (int)(animationValue * 30 * 2);
             Debug.WriteLine(animationValue);
@@ -174,20 +174,20 @@ namespace WinFormLayered
             Rectangle outer = new Rectangle(100 - rippleSize / 2, 100 - rippleSize / 2, rippleSize, rippleSize);
             var thirdRipple = (int)(animationValue * 10 * 2);
             Rectangle thirdCircle = new Rectangle(100 - thirdRipple / 2, 100 - thirdRipple / 2, thirdRipple, thirdRipple);
-            //graphics.DrawEllipse(_ColorSchemePen, outer);
+            //_graphics.DrawEllipse(_ColorSchemePen, outer);
             // TODO: reduce the opacity of the ripple's color. 
             // T            
-            //Color rippleColor = Color.FromArgb(((byte) 100 - (byte)(objAnimationManager.GetProgress() * 0.4)), Color.Red);
-            //Color rippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 20)), Color.Red);
+            //Color rippleColor = Color.FromArgb(((byte) 100 - (byte)(_animationManager.GetProgress() * 0.4)), Color.Red);
+            //Color rippleColor = Color.FromArgb(((byte)250 - (byte)(_animationManager.GetProgress() * 20)), Color.Red);
             Color rippleColor = Color.Red;
             graphics.FillEllipse(new SolidBrush(rippleColor), outer);
-            //graphics.DrawEllipse(new Pen(Color.Blue,4), thirdCircle);
+            //_graphics.DrawEllipse(new Pen(Color.Blue,4), thirdCircle);
             graphics.DrawEllipse(new Pen(rippleColor, 4), outer);
             Rectangle inner = new Rectangle(100 - 10 / 2, 100 - 10 / 2, 10, 10);
             graphics.FillEllipse(new SolidBrush(Color.Blue), inner);
 
             int radius = 30;
-            //Color internalRippleColor = Color.FromArgb(((byte)250 - (byte)(objAnimationManager.GetProgress() * 50)), Color.SteelBlue);
+            //Color internalRippleColor = Color.FromArgb(((byte)250 - (byte)(_animationManager.GetProgress() * 50)), Color.SteelBlue);
             Color internalRippleColor = Color.SteelBlue;
             for (int i = 0; i < 2; i++)
             {
@@ -202,7 +202,7 @@ namespace WinFormLayered
             //g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleRadius / 2, animationSource.Y - rippleRadius / 2, rippleRadius, rippleRadius));
 
             //CurrentRect.Height -=5; CurrentRect.Width -= 5;
-            //graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
+            //_graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
         }
 
         private void GenerateOriginalBitmap()
@@ -234,9 +234,9 @@ namespace WinFormLayered
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            /*objAnimationManager.SetProgress(0);
+            /*_animationManager.SetProgress(0);
             _Origin = PointToClient(_Origin); ;
-            objAnimationManager.StartNewAnimation(AnimationDirection.In);*/
+            _animationManager.StartNewAnimation(AnimationDirection.In);*/
         }
 
         // DISABLED: since I have two or more ripples. 
@@ -277,7 +277,7 @@ namespace WinFormLayered
             {
                 objAnimationManager.SetProgress(0);
                 _Origin = new Point(Width / 2, Height / 2);
-                //objAnimationManager.StartNewAnimation(AnimationDirection.InOutIn);
+                //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
                 objAnimationManager.StartNewAnimation(AnimationDirection.In);
             }
         }

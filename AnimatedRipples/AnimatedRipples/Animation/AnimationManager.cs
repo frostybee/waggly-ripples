@@ -253,7 +253,7 @@ namespace MaterialWinforms.Animations
             if (!(index < GetAnimationCount()))
                 throw new IndexOutOfRangeException("Invalid animation index");
 
-            Debug.WriteLine("Animation progress: " + animationProgresses[index]);            
+            //Debug.WriteLine("Animation progress: " + animationProgresses[index]);            
             switch (AnimationType)
             {
                 case AnimationType.Linear:

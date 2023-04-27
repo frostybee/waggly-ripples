@@ -117,8 +117,8 @@ namespace FriskyMouse.UI
         /// <param name="newBitmap"></param>
         /// <param name="opacity">
         /// Specifies an alpha transparency value to be used on the entire source 
-        /// bitmap. The SourceConstantAlpha value is combined with any per-pixel 
-        /// alpha values in the source bitmap. The value ranges from 0 to 255. If 
+        /// _surface. The SourceConstantAlpha value is combined with any per-pixel 
+        /// alpha values in the source _surface. The value ranges from 0 to 255. If 
         /// you set SourceConstantAlpha to 0, it is assumed that your image is 
         /// transparent. When you only want to use per-pixel alpha values, set 
         /// the SourceConstantAlpha value to 255 (opaque).
@@ -126,10 +126,10 @@ namespace FriskyMouse.UI
         /// <exception cref="ApplicationException"></exception>
         public void SetBitmap(Bitmap newBitmap, byte opacity)
         {
-            // Does this bitmap contain an alpha channel?
+            // Does this _surface contain an alpha channel?
             if (newBitmap.PixelFormat != PixelFormat.Format32bppArgb)
             {
-                throw new ApplicationException("The bitmap must be 32ppp with alpha-channel.");
+                throw new ApplicationException("The _surface must be 32ppp with alpha-channel.");
             }
             // Get device contexts
             IntPtr screenDc = NativeMethods.GetDC(IntPtr.Zero);
@@ -138,7 +138,7 @@ namespace FriskyMouse.UI
             IntPtr hOldBitmap = IntPtr.Zero;
             try
             {
-                // Get handle to the new bitmap and select it into the current 
+                // Get handle to the new _surface and select it into the current 
                 // device context.
                 hBitmap = newBitmap.GetHbitmap(Color.FromArgb(0));
                 hOldBitmap = NativeMethods.SelectObject(memoryDc, hBitmap);
@@ -158,7 +158,7 @@ namespace FriskyMouse.UI
                     screenDc,            // Handle to the screen DC
                     ref newLocation,     // New screen position of the layered window
                     ref newSize,         // New size of the layered window
-                    memoryDc,            // Handle to the layered window surface DC
+                    memoryDc,            // Handle to the layered window _surface DC
                     ref sourceLocation,  // Location of the layer in the DC
                     0,                   // Color key of the layered window
                     ref pBlend,          // Transparency of the layered window
