@@ -30,11 +30,12 @@ namespace WinFormLayered.LayeredForm
         /// </summary>
         Graphics _graphics;
         private AnimationManager _animationManager;
-        private BaseRipple _currentProfile;
+        private BaseRipple _currentProfile;        
+        public RippleType RippleType { get; set; }
         public DrawingManager()
         {
             this.layered = new LayeredWindow();
-
+            RippleType = RippleType.Circle;
             _animationManager = new AnimationManager()
             {
                 Increment = 0.020,
@@ -42,12 +43,39 @@ namespace WinFormLayered.LayeredForm
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.SpringInteropolator
-                AnimationType = AnimationType.SpringInteropolator
+                AnimationType = AnimationType.EaseOut
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += ObjAnimationManager_OnAnimationProgress;
             _animationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
+            MakeDrawingProfile();
+        }
+
+        private void MakeDrawingProfile()
+        {
+            switch (RippleType)
+            {
+                case RippleType.Multiple:
+                    break;
+                case RippleType.Single:
+                    _currentProfile = new SingleRipple();
+                    break;                
+                case RippleType.Square:
+                    _currentProfile = new SquareRipple();
+                    break;
+                case RippleType.Star:
+                    _currentProfile = new StarRipple();
+                    break;
+                case RippleType.Concentric:
+                    _currentProfile = new ConcentricRipple();
+                    break;
+                case RippleType.Circle:
+                    _currentProfile = new CircleRipple();
+                    break;                    
+                default:
+                    break;
+            }            
         }
 
         private void ObjAnimationManager_OnAnimationProgress(object sender)
@@ -81,10 +109,7 @@ namespace WinFormLayered.LayeredForm
                 _surface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _blankSurface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _graphics = Graphics.FromImage(_surface);
-                DrawingHelper.SetAntiAliasing(_graphics);
-                // TODO: Implement a profile switch.
-                //_currentProfile = new SingleRipple(
-                _currentProfile = new ConcentricRipple();
+                DrawingHelper.SetAntiAliasing(_graphics);                
             }
             // Clear the _surface that was previously drawn onto the layered window.
             layered.SetBitmap(_blankSurface, 1);

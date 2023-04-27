@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace WinFormLayered.Drawing
 {
- public enum RippleTypes: int
+ public enum RippleType: int
     {
         Single,
-        Multiple,
+        Multiple,        
+        Star,
+        Circle,
+        Square,
         Concentric // Core circle in the middle.          
     }
 }

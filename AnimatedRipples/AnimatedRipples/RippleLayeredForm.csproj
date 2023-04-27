@@ -54,10 +54,13 @@
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Animations.cs" />
     <Compile Include="Drawing\BaseRipple.cs" />
+    <Compile Include="Drawing\CircleRipple.cs" />
     <Compile Include="Drawing\ConcentricRipple.cs" />
     <Compile Include="Drawing\DrawingEnums.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />
     <Compile Include="Drawing\SingleRipple.cs" />
+    <Compile Include="Drawing\SquareRipple.cs" />
+    <Compile Include="Drawing\StarRipple.cs" />
     <Compile Include="ExtendedWinStyles.cs" />
     <Compile Include="LayeredForm\LayeredWindow.cs" />
     <Compile Include="Drawing\RipplesManager.cs" />

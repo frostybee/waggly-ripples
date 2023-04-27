@@ -36,7 +36,7 @@ namespace WinFormLayered.Drawing
             int innerRadius = 5;
             // Expand the size of the radius.
             var rippleRadius = (int)(animationValue * baseRadius * 2);
-            //Rectangle innerRect = new Rectangle(width / 2 -30, width / 2 -30, 30, 30);
+            //Square innerRect = new Square(width / 2 -30, width / 2 -30, 30, 30);
             Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, innerRadius);
             // FIXME: the color opacity needs to be validated: it's crashing when a spring interpolation is applied.
             // Color of the large ripple
@@ -47,7 +47,7 @@ namespace WinFormLayered.Drawing
             using (SolidBrush outerBursh = new SolidBrush(rippleColor))
             using (Pen outlinePen = new Pen(Color.Crimson, 3)) // Pen of the outline
             {
-                //Rectangle outerRect = new Rectangle(width - rippleRadius / 2, width - rippleRadius / 2, rippleRadius, rippleRadius);                
+                //Square outerRect = new Square(width - rippleRadius / 2, width - rippleRadius / 2, rippleRadius, rippleRadius);                
                 Rectangle outerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, rippleRadius);
                 // Adjust the ripple's color based on the current progress of the running animation. 
                 // NOTE: the value of the opacity needs to be validated < 255                

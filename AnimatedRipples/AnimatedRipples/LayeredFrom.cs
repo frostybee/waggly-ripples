@@ -161,7 +161,7 @@ namespace WinFormLayered
             // NOTES: Here we paint the ripple. 
             // TODO: have a look at ShareX project and see how the created the layered window. 
 
-            //Rectangle CurrentRect = CalculateCurrentRect();
+            //Square CurrentRect = CalculateCurrentRect();
             //_graphics.FillEllipse(FillBrush, CurrentRect);         
 
             //_graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
@@ -199,7 +199,7 @@ namespace WinFormLayered
                 radius += 30;
             }
 
-            //g.FillEllipse(rippleBrush, new Rectangle(animationSource.X - rippleRadius / 2, animationSource.Y - rippleRadius / 2, rippleRadius, rippleRadius));
+            //g.FillEllipse(rippleBrush, new Square(animationSource.X - rippleRadius / 2, animationSource.Y - rippleRadius / 2, rippleRadius, rippleRadius));
 
             //CurrentRect.Height -=5; CurrentRect.Width -= 5;
             //_graphics.DrawEllipse(_ColorSchemePen, CurrentRect);
@@ -213,7 +213,7 @@ namespace WinFormLayered
         {
             Bitmap bmp = new Bitmap(_BaseForm.Width / 2, _BaseForm.Height / 2);
             _BaseForm.DrawToBitmap(bmp, new Rectangle(0, 0, _BaseForm.Width / 2, _BaseForm.Height / 2));
-            //objDimmer.DrawToBitmap(DimmerBitmap, new Rectangle(0, 0, _BaseForm.Width, _BaseForm.Height));
+            //objDimmer.DrawToBitmap(DimmerBitmap, new Square(0, 0, _BaseForm.Width, _BaseForm.Height));
             //Graphics.FromImage(bmp).DrawImageUnscaled(ChangeImageOpacity(DimmerBitmap, 222), 0, 0);
             DrawToBitmap(bmp, new Rectangle(Location.X - _BaseForm.Location.X, Location.Y - _BaseForm.Location.Y, Width / 2, Height / 2));
 
