@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormLayered.Drawing;
+using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.LayeredForm
 {
@@ -35,7 +36,7 @@ namespace WinFormLayered.LayeredForm
         public DrawingManager()
         {
             this.layered = new LayeredWindow();
-            RippleType = RippleType.Circle;
+            RippleType = RippleType.Square;
             _animationManager = new AnimationManager()
             {
                 Increment = 0.020,
@@ -43,39 +44,47 @@ namespace WinFormLayered.LayeredForm
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.SpringInteropolator
-                AnimationType = AnimationType.EaseOut
+                AnimationType = AnimationType.Linear
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += ObjAnimationManager_OnAnimationProgress;
             _animationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
-            MakeDrawingProfile();
+            _currentProfile =  MakeDrawingProfile(RippleType);
         }
 
-        private void MakeDrawingProfile()
+        private BaseRipple MakeDrawingProfile(RippleType inRippleType)
         {
-            switch (RippleType)
+            BaseRipple rippleProfile = null;
+            // TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
+            // at runtime. 
+            switch (inRippleType)
             {
+                case RippleType.Crosshair:
+                    rippleProfile = new CrosshairRipple();
+                    break;
                 case RippleType.Multiple:
                     break;
                 case RippleType.Single:
-                    _currentProfile = new SingleRipple();
+                    rippleProfile = new SingleRipple();
                     break;                
                 case RippleType.Square:
-                    _currentProfile = new SquareRipple();
+                    rippleProfile = new SquareRipple();
                     break;
                 case RippleType.Star:
-                    _currentProfile = new StarRipple();
+                    rippleProfile = new StarRipple();
                     break;
                 case RippleType.Concentric:
-                    _currentProfile = new ConcentricRipple();
+                    rippleProfile = new ConcentricRipple();
                     break;
                 case RippleType.Circle:
-                    _currentProfile = new CircleRipple();
+                    rippleProfile = new CircleRipple();
                     break;                    
                 default:
+                    rippleProfile = new CircleRipple();
                     break;
-            }            
+            }  
+            return rippleProfile;
         }
 
         private void ObjAnimationManager_OnAnimationProgress(object sender)
