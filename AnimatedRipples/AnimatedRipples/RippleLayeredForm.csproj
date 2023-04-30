@@ -53,8 +53,11 @@
     <Compile Include="Animation\AnimationDirection.cs" />
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Animations.cs" />
+    <Compile Include="Drawing\Helpers\RandomFast.cs" />
     <Compile Include="Drawing\Shapes\BaseRipple.cs" />
+    <Compile Include="Drawing\Shapes\HexagonRipple.cs" />
     <Compile Include="Drawing\Shapes\CircleRipple.cs" />
+    <Compile Include="Drawing\Shapes\ColorExtensions.cs" />
     <Compile Include="Drawing\Shapes\ConcentricRipple.cs" />
     <Compile Include="Drawing\DrawingEnums.cs" />
     <Compile Include="Drawing\DrawingHelper.cs" />

@@ -11,6 +11,7 @@ namespace WinFormLayered.Drawing
 {
     internal class ConcentricRipple : BaseRipple
     {
+        //TODO: change the name to Lollipop
         // Tools required to draw the ripples.
         SolidBrush brushInnerRipple;
         Pen penOutline;
@@ -29,7 +30,7 @@ namespace WinFormLayered.Drawing
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {
             graphics.Clear(Color.Transparent);
-            int baseRadius = 20; // Needs to be parametrized.
+            int baseRadius = 10; // Needs to be parametrized.
             // TODO: add shadow around the ripples. Figure out how. 
             // NOTES: Here we paint the ripple. 
             // TODO: have a look at ShareX project and see how the created the layered window. 
@@ -42,25 +43,25 @@ namespace WinFormLayered.Drawing
             //_graphics.FillEllipse(new SolidBrush(rippleColor), outerRect);
             //_graphics.DrawEllipse(new Pen(rippleColor, 4), outerRect);
             int radius = 10;
-            //Color internalRippleColor = Color.FromArgb(255 - (byte)progress * 255, Color.SteelBlue);
-            Color internalRippleColor = Color.FromArgb(1, Color.SteelBlue);
+            //Color internalRippleColor = Color.FromArgb(255 - (byte)progress * 255, Color.SteelBlue);            
             //Color internalRippleColor = Color.SteelBlue;
 
             for (int i = 0; i < 3; i++)
             {
                 rippleSize = (int)(progress * radius * 1);
                 Rectangle rect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, rippleSize);
-                Pen bluePen = new Pen(internalRippleColor, 3);
-                bluePen.DashStyle = DashStyle.DashDot;
+                Color internalRippleColor = Color.FromArgb(230, DrawingHelper.RandomColor());                
+                Pen bluePen = new Pen(internalRippleColor, 5);
+                bluePen.DashStyle = DashStyle.Solid;
                 graphics.DrawEllipse(bluePen, rect);
-                radius += 10;
+                radius += 5;
             }
             var thirdRipple = (int)(progress * baseRadius * 2);
             Rectangle thirdRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, thirdRipple);
             //penOutline.Color = Color.FromArgb(thirdRipple, penOutline.Color);
             graphics.DrawEllipse(penOutline, thirdRect);
             // Draw the inner ripple (aka the core).
-            Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 7);
+            Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 5);
             graphics.FillEllipse(brushInnerRipple, innerRect);
         }
     }

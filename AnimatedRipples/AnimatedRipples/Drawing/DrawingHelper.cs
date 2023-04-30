@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormLayered.Drawing.Helpers;
 
 namespace WinFormLayered.Drawing
 {
@@ -12,7 +13,7 @@ namespace WinFormLayered.Drawing
     {
 
         /// <summary>
-        /// Creates a bounding rectangle that bounds a ripple drawing.
+        /// Creates a bounding rectangle for a ripple drawing.
         /// </summary>
         /// <param name="rippleRadius"></param>
         /// <returns></returns>
@@ -26,23 +27,39 @@ namespace WinFormLayered.Drawing
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
             graphics.CompositingQuality = CompositingQuality.HighQuality;
         }
-        public static Color EvaluateTransitionColor(float fraction, int startValue, int endValue)
+
+        public static void drawShadow(Graphics G, GraphicsPath GP, int d, Color pBackColor)
         {
-            int startA = (startValue >> 24) & 0xff;
-            int startR = (startValue >> 16) & 0xff;
-            int startG = (startValue >> 8) & 0xff;
-            int startB = startValue & 0xff;
+            Color[] colors = getColorVector(Color.Black, pBackColor, d).ToArray();
+            for (int i = 0; i < d; i++)
+            {
+                G.TranslateTransform(1f, 0.75f);                // <== shadow vector!
+                using (Pen pen = new Pen(colors[i], 1.75f))  // <== pen width (*)
+                    G.DrawPath(pen, GP);
+            }
+            G.ResetTransform();
+        }        
+        public static GraphicsPath CreateCircle(float x, float y, float radius)
+        {
+            GraphicsPath gp = new GraphicsPath();
+            gp.AddEllipse(x, y, radius * 2, radius * 2);
+            return gp;
+        }
 
-            int endA = (endValue >> 24) & 0xff;
-            int endR = (endValue >> 16) & 0xff;
-            int endG = (endValue >> 8) & 0xff;
-            int endB = endValue & 0xff;
-
-            return Color.FromArgb(((startA + (int)(fraction * (endA - startA))) << 24),
-                        ((startR + (int)(fraction * (endR - startR))) << 16),
-                        ((startG + (int)(fraction * (endG - startG))) << 8),
-                    ((startB + (int)(fraction * (endB - startB))))
-                    );
+        private static List<Color> getColorVector(Color fc, Color bc, int depth)
+        {
+            List<Color> cv = new List<Color>();
+            float dRed = 1f * (bc.R - fc.R) / depth;
+            float dGreen = 1f * (bc.G - fc.G) / depth;
+            float dBlue = 1f * (bc.B - fc.B) / depth;
+            for (int d = 1; d <= depth; d++)
+                cv.Add(Color.FromArgb(60, (int)(fc.R + dRed * d),
+                  (int)(fc.G + dGreen * d), (int)(fc.B + dBlue * d)));
+            return cv;
+        }
+        public static Color RandomColor()
+        {
+            return Color.FromArgb(RandomFast.Next(255), RandomFast.Next(255), RandomFast.Next(255));
         }
     }
 }

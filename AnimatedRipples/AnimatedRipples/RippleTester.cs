@@ -32,5 +32,11 @@ namespace WinFormLayered
             //layered.Hide();
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // Test a shadow around a circle.
+
+        }
     }
 }

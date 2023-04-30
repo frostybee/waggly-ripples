@@ -12,7 +12,9 @@ namespace WinFormLayered.Drawing
         Multiple,        
         Star,
         Circle,
+        Spotlight,
         Square,
+        Hexagon,
         Crosshair,
         Concentric // Core circle in the middle.          
     }

@@ -19,6 +19,8 @@ namespace WinFormLayered.LayeredForm
 {
     /// <summary>
     /// Responsible for creating and animating ripple profiles.
+    /// It maintains ripple instances corresponding to what the user has selected/enabled.
+    /// The profiles maintained are left click, right click, and double click ripple profiles. 
     /// </summary>
     internal class DrawingManager
     {
@@ -26,31 +28,31 @@ namespace WinFormLayered.LayeredForm
         // NOTE: move those to the BaseRipple.
         Bitmap _surface = null;
         Bitmap _blankSurface = null;
-        /// <summary>
+        /// <summary>        
         /// The drawing canvas on which the mouse click ripples will be repeatedly drawn.
         /// </summary>
         Graphics _graphics;
         private AnimationManager _animationManager;
-        private BaseRipple _currentProfile;        
+        private BaseRipple _currentProfile;
         public RippleType RippleType { get; set; }
         public DrawingManager()
         {
             this.layered = new LayeredWindow();
-            RippleType = RippleType.Square;
+            RippleType = RippleType.Hexagon;
             _animationManager = new AnimationManager()
             {
-                Increment = 0.020,
+                Increment = 0.025,
                 //Increment = 0.010,
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.SpringInteropolator
-                AnimationType = AnimationType.Linear
+                AnimationType = AnimationType.CustomQuadratic
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += ObjAnimationManager_OnAnimationProgress;
             _animationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
-            _currentProfile =  MakeDrawingProfile(RippleType);
+            _currentProfile = MakeDrawingProfile(RippleType);
         }
 
         private BaseRipple MakeDrawingProfile(RippleType inRippleType)
@@ -67,7 +69,10 @@ namespace WinFormLayered.LayeredForm
                     break;
                 case RippleType.Single:
                     rippleProfile = new SingleRipple();
-                    break;                
+                    break;
+                case RippleType.Hexagon:
+                    rippleProfile = new HexagonRipple();
+                    break;
                 case RippleType.Square:
                     rippleProfile = new SquareRipple();
                     break;
@@ -77,13 +82,13 @@ namespace WinFormLayered.LayeredForm
                 case RippleType.Concentric:
                     rippleProfile = new ConcentricRipple();
                     break;
-                case RippleType.Circle:
-                    rippleProfile = new CircleRipple();
-                    break;                    
-                default:
-                    rippleProfile = new CircleRipple();
+                case RippleType.Spotlight:
+                    rippleProfile = new SpotlightRipple();
                     break;
-            }  
+                default:
+                    rippleProfile = new SpotlightRipple();
+                    break;
+            }
             return rippleProfile;
         }
 
@@ -118,7 +123,7 @@ namespace WinFormLayered.LayeredForm
                 _surface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _blankSurface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _graphics = Graphics.FromImage(_surface);
-                DrawingHelper.SetAntiAliasing(_graphics);                
+                DrawingHelper.SetAntiAliasing(_graphics);
             }
             // Clear the _surface that was previously drawn onto the layered window.
             layered.SetBitmap(_blankSurface, 1);
