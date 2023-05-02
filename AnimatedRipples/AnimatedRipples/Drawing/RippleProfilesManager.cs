@@ -18,14 +18,16 @@ using WinFormLayered.Drawing.Shapes;
 namespace WinFormLayered.LayeredForm
 {
     /// <summary>
-    /// Responsible for creating and animating ripple profiles.
+    /// Responsible for creating and animating ripple profiles. 
+    /// 
+    /// A ripple profile consists of a drawing that is either to be drawn or animated. 
     /// It maintains ripple instances corresponding to what the user has selected/enabled.
     /// The profiles maintained are left click, right click, and double click ripple profiles. 
     /// </summary>
-    internal class DrawingManager
+    internal class RippleProfilesManager
     {
         LayeredWindow layered;
-        // NOTE: move those to the BaseRipple.
+        // NOTE: move those to the BaseProfile.
         Bitmap _surface = null;
         Bitmap _blankSurface = null;
         /// <summary>        
@@ -33,15 +35,15 @@ namespace WinFormLayered.LayeredForm
         /// </summary>
         Graphics _graphics;
         private AnimationManager _animationManager;
-        private BaseRipple _currentProfile;
-        public RippleType RippleType { get; set; }
-        public DrawingManager()
+        private BaseProfile _currentProfile;
+        public RippleProfileType RippleType { get; set; }
+        public RippleProfilesManager()
         {
             this.layered = new LayeredWindow();
-            RippleType = RippleType.Hexagon;
+            RippleType = RippleProfileType.Circle;
             _animationManager = new AnimationManager()
             {
-                Increment = 0.025,
+                Increment = 0.020,
                 //Increment = 0.010,
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
@@ -50,39 +52,46 @@ namespace WinFormLayered.LayeredForm
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
-            _animationManager.OnAnimationProgress += ObjAnimationManager_OnAnimationProgress;
-            _animationManager.OnAnimationFinished += objAnimationManager_OnAnimationFinished;
+            _animationManager.OnAnimationProgress += OnProcessAnimationProgress;
+            _animationManager.OnAnimationFinished += OnAnimationFinished;
             _currentProfile = MakeDrawingProfile(RippleType);
         }
 
-        private BaseRipple MakeDrawingProfile(RippleType inRippleType)
+        private BaseProfile MakeDrawingProfile(RippleProfileType inRippleType)
         {
-            BaseRipple rippleProfile = null;
+            BaseProfile rippleProfile = null;
             // TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
             // at runtime. 
             switch (inRippleType)
             {
-                case RippleType.Crosshair:
-                    rippleProfile = new CrosshairRipple();
+                case RippleProfileType.Crosshair:
+                    Type t = typeof(CrosshairRipple);
+                    rippleProfile = (BaseProfile)Activator.CreateInstance(t);
                     break;
-                case RippleType.Multiple:
+                case RippleProfileType.Multiple:
                     break;
-                case RippleType.Single:
+                case RippleProfileType.SonarPulse:
+                    rippleProfile = new SonarPulseRipple();
+                    break;
+                case RippleProfileType.Circle:
+                    rippleProfile = new CircleProfile();
+                    break;
+                case RippleProfileType.Single:
                     rippleProfile = new SingleRipple();
                     break;
-                case RippleType.Hexagon:
+                case RippleProfileType.Hexagon:
                     rippleProfile = new HexagonRipple();
                     break;
-                case RippleType.Square:
+                case RippleProfileType.Square:
                     rippleProfile = new SquareRipple();
                     break;
-                case RippleType.Star:
+                case RippleProfileType.Star:
                     rippleProfile = new StarRipple();
                     break;
-                case RippleType.Concentric:
+                case RippleProfileType.Concentric:
                     rippleProfile = new ConcentricRipple();
                     break;
-                case RippleType.Spotlight:
+                case RippleProfileType.Spotlight:
                     rippleProfile = new SpotlightRipple();
                     break;
                 default:
@@ -92,13 +101,41 @@ namespace WinFormLayered.LayeredForm
             return rippleProfile;
         }
 
-        private void ObjAnimationManager_OnAnimationProgress(object sender)
+        private void OnProcessAnimationProgress(object sender)
         {
+            // We process the animation frames here. 
             // We perform the drawing here.                        
             // TODO: put this in a helper method.                        
-            Debug.WriteLine(_animationManager.GetProgress());
-            _currentProfile.Draw(_graphics, _surface, _animationManager.GetProgress());
+            Debug.WriteLine(_animationManager.GetProgress());            
+            var progress = _animationManager.GetProgress();
+            RenderRippleProfile(_currentProfile, progress);            
             layered.SetBitmap(_surface, 255);
+        }
+
+        private void RenderRippleProfile(BaseProfile currentProfile, double progress)
+        {
+            _graphics.Clear(Color.Transparent);
+            var opacity = (int)(progress * 35 * 5);
+            // We adjust the ripple properties every animation frame. 
+            _currentProfile.RippleEntries.ForEach(ripple =>
+            {
+                // Render the ripple --> inputs: graphics, progress, surface size.
+                int rippleSize = (ripple.IsFixed) ? ripple.BaseRadius : (int)(progress * ripple.GetExpandedRadius());
+                ripple.Bounds = (ripple.IsFixed) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);
+                ripple.Opacity = opacity;
+                ripple.Draw(_graphics);
+            });
+        }
+
+        private void OnAnimationFinished(object sender)
+        {
+            //-- Long lasting ripple: show it and hide on finish. 
+            Debug.WriteLine("Finished....");
+            //layered.SetBitmap(new Bitmap(200, 200), 1);
+            // Clear the _surface that was previously drawn onto the layered window.
+            //layered.SetBitmap(_blankSurface, 1);
+            _graphics.Clear(Color.Transparent);
+            layered.Hide();
         }
 
         internal void ShowRipplesAt()
@@ -132,7 +169,7 @@ namespace WinFormLayered.LayeredForm
 
 
             /*animate.Start(1000, 1, 250, EasingType.SineIn);
-            animate.Complete = objAnimationManager_OnAnimationFinished;
+            animate.Complete = OnAnimationFinished;
             animate.Update = OnAnimationUpdated;*/
             //animate.Start(1000);
             if (!_animationManager.IsAnimating())
@@ -163,15 +200,5 @@ namespace WinFormLayered.LayeredForm
             layered.Hide();
         }
         int _radius = 0;
-        private void objAnimationManager_OnAnimationFinished(object sender)
-        {
-            //-- Long lasting ripple: show it and hide on finish. 
-            Debug.WriteLine("Finished....");
-            //layered.SetBitmap(new Bitmap(200, 200), 1);
-            // Clear the _surface that was previously drawn onto the layered window.
-            //layered.SetBitmap(_blankSurface, 1);
-            _graphics.Clear(Color.Transparent);
-            layered.Hide();
-        }
     }
 }

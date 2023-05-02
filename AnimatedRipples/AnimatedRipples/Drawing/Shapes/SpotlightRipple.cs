@@ -9,7 +9,7 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class SpotlightRipple : BaseRipple
+    internal class SpotlightRipple : BaseProfile
     {
         //TODO: need to pass an instance of RippleInfo (aka settings).
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
@@ -18,7 +18,7 @@ namespace WinFormLayered.Drawing
             int baseRadius = 15;
             // Expand the size of the radius.            
             // TODO: ensure that the radius is <= maxRadius.
-            //var radius = (int)(animationValue * baseRadius * 2);
+            //var radius = (int)(animationValue * _baseRadius * 2);
             int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
             var opacity = (int)(progress * 45 * 5);            
             Color rippleColor = Color.Crimson.WithOpacity(opacity);
@@ -29,7 +29,7 @@ namespace WinFormLayered.Drawing
                 graphics.FillEllipse(brush, rect);
                 //graphics.DrawEllipse(outlinePen, rect);                        
                 //-- Draw drop shadow around the ripple.
-                GraphicsPath path = DrawingHelper.CreateCircle(surface.Width / 2f - radius - 2, surface.Height / 2f - radius, radius);
+                //GraphicsPath path = DrawingHelper.CreateCircle(surface.Width / 2f - radius - 2, surface.Height / 2f - radius, radius);
                 //DrawingHelper.drawShadow(graphics, path, 2, Color.DarkRed);
                 //graphics.DrawPath(outlinePen, path);
             }

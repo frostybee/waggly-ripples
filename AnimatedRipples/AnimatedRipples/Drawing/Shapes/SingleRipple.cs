@@ -11,7 +11,7 @@ namespace WinFormLayered.Drawing
     /// <summary>
     /// Represents a single expanding ripple.
     /// </summary>
-    internal class SingleRipple : BaseRipple
+    internal class SingleRipple : BaseProfile
     {
         // TODO: add IsFilled. Color Transition: enabled/disabled.
         // Add random color?

@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 
 namespace WinFormLayered.Drawing
 {
- public enum RippleType: int
+    public enum RippleProfileType : uint
     {
         Single,
-        Multiple,        
+        Multiple,
         Star,
         Circle,
         Spotlight,
+        SonarPulse,
         Square,
         Hexagon,
         Crosshair,
         Concentric // Core circle in the middle.          
+    }
+
+    public enum ShapeType : uint
+    {
+        Circle,        
+        Rectangle,
+        Polygon,
     }
 }

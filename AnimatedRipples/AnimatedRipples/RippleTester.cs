@@ -8,18 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormLayered.Drawing;
 using WinFormLayered.LayeredForm;
 
 namespace WinFormLayered
 {
     public partial class RippleTester : Form
     {
-        DrawingManager ripplesController;
+        RippleProfilesManager ripplesController;
+        List<RippleProfileType> rippleTypes;
         public RippleTester()
         {
             InitializeComponent();
             //layered = new LayeredFrom();
-            ripplesController = new DrawingManager();
+            ripplesController = new RippleProfilesManager();
+            rippleTypes = Enum.GetValues(typeof(RippleProfileType)).Cast<RippleProfileType>().ToList();
+            this.Load += RippleTester_Load;
+        }
+
+        private void RippleTester_Load(object sender, EventArgs e)
+        {
+            this.rippleTypes.ForEach((d) =>  cboxRipplesList.Items.Add(d.ToString()));            
         }
 
         private void button1_Click(object sender, EventArgs e)

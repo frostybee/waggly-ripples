@@ -8,7 +8,7 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class SquareRipple : BaseRipple
+    internal class SquareRipple : BaseProfile
     {
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {

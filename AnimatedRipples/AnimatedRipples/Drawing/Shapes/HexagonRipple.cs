@@ -9,7 +9,7 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class HexagonRipple : BaseRipple
+    internal class HexagonRipple : BaseProfile
     {
         //TODO: need to pass an instance of RippleInfo (aka settings).
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
@@ -22,7 +22,7 @@ namespace WinFormLayered.Drawing
             var y = surface.Height / 2;            
             var shapes = new PointF[6];            
             int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
-            // TODO: implement GetCurrentRaius(); in the BaseRipple
+            // TODO: implement GetCurrentRaius(); in the BaseProfile
             //Create 6 points
             for (int line = 0; line < shapes.Length; line++)
             {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WinFormLayered.Drawing
 {
-    internal class StarRipple : BaseRipple
+    internal class StarRipple : BaseProfile
     {
         public StarRipple()
         {

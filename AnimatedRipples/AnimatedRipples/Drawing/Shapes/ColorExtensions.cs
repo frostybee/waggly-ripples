@@ -10,9 +10,9 @@ namespace WinFormLayered.Drawing.Shapes
 {
     internal static class ColorExtensions
     {
-        public static Color WithOpacity(this Color colorm, int opacity)
+        public static Color WithOpacity(this Color inColor, int opacity)
         {
-            return Color.FromArgb(255 - Math.Min(Math.Max(0,opacity), 255), colorm);
+            return Color.FromArgb(255 - Math.Min(Math.Max(0,opacity), 255), inColor);
         }
 
     }

@@ -11,7 +11,7 @@ using System.Xml.Linq;
 
 namespace WinFormLayered.Drawing.Shapes
 {
-    internal class CrosshairRipple : BaseRipple
+    internal class CrosshairRipple : BaseProfile
     {
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {
