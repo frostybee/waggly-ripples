@@ -28,7 +28,7 @@ namespace WinFormLayered.Drawing
                 Rectangle rect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);
                 graphics.FillEllipse(brush, rect);
                 //graphics.DrawEllipse(outlinePen, rect);                        
-                //-- Draw drop shadow around the ripple.
+                //-- Render drop shadow around the ripple.
                 //GraphicsPath path = DrawingHelper.CreateCircle(surface.Width / 2f - radius - 2, surface.Height / 2f - radius, radius);
                 //DrawingHelper.drawShadow(graphics, path, 2, Color.DarkRed);
                 //graphics.DrawPath(outlinePen, path);

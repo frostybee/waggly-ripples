@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -11,26 +12,50 @@ namespace WinFormLayered.Drawing
 {
     internal class HexagonRipple : BaseProfile
     {
+        Pen _outlinePen;
+        int _baseRadius = 10; // Needs to be parametrized.
+        
+        public HexagonRipple()
+        {
+            InitDrawingProfile();
+        }
+
+        private void InitDrawingProfile()
+        {
+            int opacity = 10;
+            int strokeWidth = 4;
+            var x = 200 / 2;
+            var y = 200 / 2;
+
+            _outlinePen = new Pen(Color.Crimson.WithOpacity(opacity), 4);
+            // 1) Make the outer most ripple.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = true,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
+                    ShapeType = ShapeType.Polygon,
+                    BaseRadius = _baseRadius,
+                    RadiusMultiplier = 2,
+                    OutlinePen = _outlinePen,
+                    IsFilled = false,
+                    PolyPoints =  DrawingHelper.GetHexagonPoints(x, y, _baseRadius)
+                });
+            
+            
+            //int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
+            // TODO: implement GetCurrentRaius(); in the BaseProfile
+            
+            //graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
+        }
+        
+
         //TODO: need to pass an instance of RippleInfo (aka settings).
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {
             graphics.Clear(Color.Transparent);
             int baseRadius = 15;
-            int strokeWidth = 4;
-            //Get the middle of the panel
-            var x = surface.Width / 2;
-            var y = surface.Height / 2;            
-            var shapes = new PointF[6];            
-            int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
-            // TODO: implement GetCurrentRaius(); in the BaseProfile
-            //Create 6 points
-            for (int line = 0; line < shapes.Length; line++)
-            {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              
-                shapes[line] = new PointF(
-                    x + radius * (float)Math.Cos(line * 60 * Math.PI / 180f),
-                    y + radius * (float)Math.Sin(line * 60 * Math.PI / 180f));
-            }
-            graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
+            //graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
 
         }
     }

@@ -21,7 +21,7 @@ namespace WinFormLayered.Drawing
 
         /* Inputs: canvas, radius, color, animation progress: multiplier. 
             Note:
-                - on animation progress -> profile.Draw(); on the canvas.
+                - on animation progress -> profile.Render(); on the canvas.
                 Extract them from the current drawing methods. 
                 Need the canvas and the _surface. 
             TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
@@ -53,10 +53,10 @@ namespace WinFormLayered.Drawing
                 // NOTE: the value of the opacity needs to be validated < 255                
                 graphics.FillEllipse(outerBursh, outerRect);
                 graphics.DrawEllipse(outlinePen, outerRect);
-                // Draw the inner ripple. It must drawn last.
+                // Render the inner ripple. It must drawn last.
                 graphics.FillEllipse(innerBrush, innerRect);
 
-                // TODO: Draw a circle outline à la Google Maps ripple
+                // TODO: Render a circle outline à la Google Maps ripple
                 // - Also, draw circle in the middle after the innerRect one. 
                 // TODO: Look for drawing helpers in ShareX and other libraries.                 
             }

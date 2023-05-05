@@ -22,7 +22,7 @@ namespace WinFormLayered.Drawing
 
         /* Inputs: canvas, radius, color, animation progress: multiplier. 
             Note:
-                - on animation progress -> profile.Draw(); on the canvas.
+                - on animation progress -> profile.Render(); on the canvas.
                 Extract them from the current drawing methods. 
                 Need the canvas and the _surface. 
             TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
@@ -43,7 +43,7 @@ namespace WinFormLayered.Drawing
             {             
                 Rectangle outerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);                                
                 graphics.FillEllipse(outerBursh, outerRect);
-                // Draw the inner ripple. It must drawn last.
+                // Render the inner ripple. It must drawn last.
                 Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, innerRadius);
                 graphics.FillEllipse(innerBrush, innerRect);
             }

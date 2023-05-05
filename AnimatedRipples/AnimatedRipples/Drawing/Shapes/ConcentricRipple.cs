@@ -20,13 +20,13 @@ namespace WinFormLayered.Drawing
         Pen _innerPen;
         //Bitmap surface;
 
-        int _baseRadius = 10; // Needs to be parametrized.
+        int _baseRadius = 40; // Needs to be parametrized.
         public ConcentricRipple()
         {
-            initDrawingProfile();
+            InitDrawingProfile();
         }
 
-        private void initDrawingProfile()
+        private void InitDrawingProfile()
         {
             _brushInnerRipple = new SolidBrush(Color.Yellow);
             _penOutline = new Pen(Color.Crimson, 4);
@@ -44,7 +44,7 @@ namespace WinFormLayered.Drawing
             _ripples.Add(
                 new RippleEntry()
                 {
-                    IsFixed = false,
+                    IsExpandable = true,
                     Bounds = DrawingHelper.CreateRectangle(width, height, _baseRadius * 2),
                     FillBrush = _brushInnerRipple,
                     ShapeType = ShapeType.Circle,
@@ -63,7 +63,7 @@ namespace WinFormLayered.Drawing
                 _ripples.Add(
                     new RippleEntry()
                     {
-                        IsFixed = false,                        
+                        IsExpandable = true,                        
                         Bounds = DrawingHelper.CreateRectangle(width, height, radius),
                         FillBrush = _brushInnerRipple,
                         ShapeType = ShapeType.Circle,
@@ -86,7 +86,7 @@ namespace WinFormLayered.Drawing
             _ripples.Add(
                 new RippleEntry()
                 {
-                    IsFixed = true,
+                    IsExpandable = false,
                     //Bounds = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 5)
                     Bounds = DrawingHelper.CreateRectangle(width, height, 7),
                     FillBrush = _brushInnerRipple,
@@ -111,8 +111,9 @@ namespace WinFormLayered.Drawing
             _ripples.ForEach(ripple =>
             {
                 // Render the ripple --> inputs: graphics, progress, surface size.
-                int rippleSize = (ripple.IsFixed) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
-                ripple.Bounds = (ripple.IsFixed) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);
+                /*int rippleSize = (ripple.IsExpandable) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
+                ripple.Bounds = (ripple.IsExpandable) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);*/
+
                 //RenderRipple();
                 // Need to copy it locally.
                 //RectangleF bounds = ripple.Bounds;
@@ -125,7 +126,7 @@ namespace WinFormLayered.Drawing
                 ripple.Bounds = bounds;*/
                 //_brushInnerRipple.Color = DrawingHelper.RandomColor();
                 //ripple.FillColor = DrawingHelper.RandomColor();
-                ripple.Draw(graphics);
+                ripple.Render(graphics, progress);
             });
 
 
@@ -155,7 +156,7 @@ namespace WinFormLayered.Drawing
             Rectangle thirdRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, thirdRipple);
             //_penOutline.Color = Color.FromArgb(thirdRipple, _penOutline.Color);
             graphics.DrawEllipse(_penOutline, thirdRect);
-            // Draw the inner ripple (aka the core).
+            // Render the inner ripple (aka the core).
             Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 5);
             graphics.FillEllipse(_brushInnerRipple, innerRect);*/
         }

@@ -45,7 +45,7 @@ namespace WinFormLayered.Drawing
             Color starColor = Color.FromArgb(255 - Math.Min(opacity, 255), Color.Crimson);
             //Color starColor = Color.FromArgb(230, Color.Crimson);
             //Color starColor = Color.FromArgb(255 - Math.Min((int)progress * 100*20, 200), Color.Crimson);
-            // Draw the path to the screen.
+            // Render the path to the screen.
             Pen myPen = new Pen(starColor, 5);
             graphics.DrawPath(myPen, myPath);
         }

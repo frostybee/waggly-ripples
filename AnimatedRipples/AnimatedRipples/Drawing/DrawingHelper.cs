@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,21 @@ namespace WinFormLayered.Drawing
 {
     internal class DrawingHelper
     {
+
+        public static Bitmap CreateBitmap(int width, int height, Color inColor)
+        {
+            if (width > 0 && height > 0)
+            {
+                Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                using (Graphics graphics = Graphics.FromImage(bmp))
+                {
+                    graphics.Clear(inColor);
+                }
+                return bmp;
+            }
+            return null;
+        }
 
         /// <summary>
         /// Creates a bounding rectangle for a ripple drawing.
@@ -28,9 +44,23 @@ namespace WinFormLayered.Drawing
             graphics.CompositingQuality = CompositingQuality.HighQuality;
         }
 
-        public static void drawShadow(Graphics G, GraphicsPath GP, int d, Color pBackColor)
+        internal static List<PointF> GetHexagonPoints(int x, int y, int radius)
         {
-            Color[] colors = getColorVector(Color.Black, pBackColor, d).ToArray();
+            //Get the middle of the panel            
+            List<PointF> shapes = new List<PointF>(6);
+            //Create 6 points
+            for (int line = 0; line < shapes.Count; line++)
+            {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              
+                shapes[line] = new PointF(
+                    x + radius * (float)Math.Cos(line * 60 * Math.PI / 180f),
+                    y + radius * (float)Math.Sin(line * 60 * Math.PI / 180f));
+            }
+            return shapes;
+        }
+
+        public static void DrawShadow(Graphics G, GraphicsPath GP, int d, Color pBackColor)
+        {
+            Color[] colors = GetColorVector(Color.Black, pBackColor, d).ToArray();
             for (int i = 0; i < d; i++)
             {
                 G.TranslateTransform(1f, 0.75f);                // <== shadow vector!
@@ -38,7 +68,7 @@ namespace WinFormLayered.Drawing
                     G.DrawPath(pen, GP);
             }
             G.ResetTransform();
-        }        
+        }
         public static GraphicsPath CreateCircle(float x, float y, float radius)
         {
             GraphicsPath gp = new GraphicsPath();
@@ -46,7 +76,7 @@ namespace WinFormLayered.Drawing
             return gp;
         }
 
-        private static List<Color> getColorVector(Color fc, Color bc, int depth)
+        private static List<Color> GetColorVector(Color fc, Color bc, int depth)
         {
             List<Color> cv = new List<Color>();
             float dRed = 1f * (bc.R - fc.R) / depth;

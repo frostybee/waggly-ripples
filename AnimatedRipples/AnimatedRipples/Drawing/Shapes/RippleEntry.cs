@@ -14,7 +14,7 @@ namespace WinFormLayered.Drawing.Shapes
     {
         public bool IsFilled { get; set; }
         [DefaultValue(false)]
-        public bool IsFixed { get; set; }
+        public bool IsExpandable { get; set; }
         [DefaultValue(1)]
         public int RadiusMultiplier { get; set; }
         public Color FillColor { get; set; }
@@ -26,13 +26,19 @@ namespace WinFormLayered.Drawing.Shapes
         public Size Dimension { get; set; }
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
+        public List<PointF> PolyPoints { get; set; }
+        
 
         public ShapeType ShapeType { get; set; }
         public double ExpandedRadius { get { return BaseRadius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
-        internal void Draw(Graphics graphics)
+        // Move this to profileRendered or Helper class.
+        internal void Render(Graphics graphics, double progress)
         {
+            // Expand the radius of the current ripple to be rendered. 
+            //FIXME: ripple.ExpandRadius(progress);
+            ExpandRadius(progress);
             //-- Render this ripple entry.
             switch (ShapeType)
             {
@@ -51,11 +57,25 @@ namespace WinFormLayered.Drawing.Shapes
                 case ShapeType.Rectangle:
                     break;
                 case ShapeType.Polygon:
+                    //PolyPoints = DrawingHelper.GetHexagonPoints(200, 200, E);
                     break;
             }
         }
 
-        internal double GetExpandedRadius()
+        internal void ExpandRadius(double progress)
+        {
+            
+            if (IsExpandable)
+            {
+                int newRadius = Math.Min(Math.Max(1,(int)(progress * CalculateNewRadius())), 200 / 2);
+                //int newRadius = Math.Min(Math.Max(1,(int)(progress * 50)), 200 / 2-5);
+                //int newRadius = (int)();
+                // Create a new bounding rectangle based on the newly expanded radius. 
+                Bounds = DrawingHelper.CreateRectangle(200, 200, newRadius);
+            }           
+        }
+
+        internal double CalculateNewRadius()
         {
             return BaseRadius * RadiusMultiplier;
         }

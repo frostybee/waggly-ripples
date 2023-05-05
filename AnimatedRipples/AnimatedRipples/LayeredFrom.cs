@@ -142,7 +142,7 @@ namespace WinFormLayered
             Color rippleColor = Color.Red;
             //_graphics.FillEllipse(new SolidBrush(rippleColor), outer);
             graphics.DrawEllipse(new Pen(Color.Blue, 2), outer);
-            // TODO: Draw a circle outline à la Google Maps ripple
+            // TODO: Render a circle outline à la Google Maps ripple
             // - Also, draw circle in the middle after the inner one. 
             // TODO: Look for drawing helpers in ShareX and other libraries. 
         }

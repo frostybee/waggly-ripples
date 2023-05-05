@@ -27,14 +27,14 @@ namespace WinFormLayered.Drawing
             _ripples.Add(
                 new RippleEntry()
                 {
-                    IsFixed = false,
+                    IsExpandable = true,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),                     
                     ShapeType = ShapeType.Circle,
                     BaseRadius = 10,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
-                });
+                });;
 
         }
 
@@ -47,8 +47,8 @@ namespace WinFormLayered.Drawing
             _ripples.ForEach(ripple =>
             {
                 // Render the ripple --> inputs: graphics, progress, surface size.
-                int rippleSize = (ripple.IsFixed) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
-                ripple.Bounds = (ripple.IsFixed) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);
+                int rippleSize = (ripple.IsExpandable) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
+                ripple.Bounds = (ripple.IsExpandable) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);
                 ripple.Opacity = opacity;
                 //RenderRipple();
                 // Need to copy it locally.
@@ -62,7 +62,7 @@ namespace WinFormLayered.Drawing
                 ripple.Bounds = bounds;*/
                 //_brushInnerRipple.Color = DrawingHelper.RandomColor();
                 //ripple.FillColor = DrawingHelper.RandomColor();
-                ripple.Draw(graphics);
+                ripple.Render(graphics, progress);
             });
             // Expand the size of the radius.            
             // TODO: ensure that the radius is <= maxRadius.
@@ -73,7 +73,7 @@ namespace WinFormLayered.Drawing
             {
                 Rectangle rect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);
                 graphics.DrawEllipse(outlinePen, rect);                               
-                //-- Draw drop shadow around the ripple.
+                //-- Render drop shadow around the ripple.
                 //GraphicsPath path = DrawingHelper.CreateCircle(surface.Width / 2f - radius - 2, surface.Height / 2f - radius, radius);
                 //DrawingHelper.drawShadow(graphics, path, 4, Color.Yellow);
                 //graphics.DrawPath(outlinePen, path);
