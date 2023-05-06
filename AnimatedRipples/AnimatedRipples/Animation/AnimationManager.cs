@@ -264,8 +264,12 @@ namespace MaterialWinforms.Animations
                     return AnimationEaseOut.CalculateProgress(animationProgresses[index]);
                 case AnimationType.CustomQuadratic:
                     return AnimationCustomQuadratic.CalculateProgress(animationProgresses[index]);
-                case AnimationType.SpringInteropolator:
-                    return AnimationElasticBounce.CalculateProgress(animationProgresses[index]);    
+                case AnimationType.EaseInElastic:
+                    return AnimationEaseInElastic.CalculateProgress(animationProgresses[index]);
+                case AnimationType.EaseInOutBounce:
+                    return AnimationEaseInOutBounce.CalculateProgress(animationProgresses[index]);
+                case AnimationType.EaseOutBounce:
+                    return EaseOutBounceInterpolator.CalculateProgress(animationProgresses[index]);
                 default:
                     throw new NotImplementedException("The given AnimationType is not implemented");
             }

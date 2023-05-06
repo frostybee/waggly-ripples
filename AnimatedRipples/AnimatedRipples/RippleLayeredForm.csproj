@@ -54,9 +54,10 @@
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Animations.cs" />
     <Compile Include="Drawing\Helpers\RandomFast.cs" />
-    <Compile Include="Drawing\Shapes\BaseRipple.cs" />
+    <Compile Include="Drawing\Profiles\BaseProfile.cs" />
     <Compile Include="Drawing\Profiles\HexagonRipple.cs" />
     <Compile Include="Drawing\Profiles\CircleProfile.cs" />
+    <Compile Include="Drawing\Profiles\SquaredRipple.cs" />
     <Compile Include="Drawing\Shapes\RippleEntry.cs" />
     <Compile Include="Drawing\Profiles\SpotlightRipple.cs" />
     <Compile Include="Drawing\Extensions\ColorExtensions.cs" />

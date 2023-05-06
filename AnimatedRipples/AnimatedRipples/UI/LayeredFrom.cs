@@ -66,7 +66,7 @@ namespace WinFormLayered
                 //Increment = 0.010,
                 //Increment = 0.070,
                 //AnimationType = AnimationType.EaseOut,                
-                //AnimationType = AnimationType.SpringInteropolator
+                //AnimationType = AnimationType.EaseInElastic
                 AnimationType = AnimationType.EaseOut
 
             };

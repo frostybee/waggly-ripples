@@ -43,21 +43,21 @@ namespace WinFormLayered.LayeredForm
             _layered = new LayeredWindow();
             RippleType = RippleProfileType.Hexagon;
             RippleType = RippleProfileType.Concentric;
-            RippleType = RippleProfileType.Star;
+            RippleType = RippleProfileType.SonarPulse;
             
             _animationManager = new AnimationManager()
             {
                 Increment = 0.020,
-                //Increment = 0.010,
-                //Increment = 0.070,
+                //Increment = 0.010,                
                 //AnimationType = AnimationType.EaseOut,                
-                //AnimationType = AnimationType.SpringInteropolator
-                AnimationType = AnimationType.EaseOut
+                //AnimationType = AnimationType.EaseInElastic
+                AnimationType = AnimationType.EaseInOutBounce
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += OnProcessAnimationProgress;
             _animationManager.OnAnimationFinished += OnAnimationFinished;
+            // Make default profile.
             _currentProfile = MakeDrawingProfile(RippleType);
         }
         private void OnProcessAnimationProgress(object sender)
@@ -78,15 +78,18 @@ namespace WinFormLayered.LayeredForm
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         private void RenderRipplesProfile(BaseProfile inRippleProfile, double progress)
         {
-            inRippleProfile.Draw(_graphics, _surface, progress);
-            return;
+            if (inRippleProfile.RippleEntries.Count == 0)
+            {
+                //inRippleProfile.Draw(_graphics, _surface, progress);
+             //   return;
+            }
+            
             _graphics.Clear(Color.Transparent);
             //TODO: move this to the ripple class. Needs to be computed there.
             var opacity = (int)(progress * 20 * 5);
             // We adjust the ripple properties every animation frame. 
             inRippleProfile.RippleEntries.ForEach(ripple =>
-            {
-                
+            {                
                 // Render the ripple --> inputs: graphics, progress, surface size.                
                 ripple.Opacity = opacity;
                 //-- Might need to adjust the profile internal ripple definitions before rendering.

@@ -11,6 +11,31 @@ namespace WinFormLayered.Drawing
 {
     internal class SpotlightRipple : BaseProfile
     {
+        SolidBrush _innerBrush;
+        public SpotlightRipple()
+        {
+            InitDrawingProfile();
+        }
+        private void InitDrawingProfile()
+        {
+            int opacity = 10;
+            Color rippleColor = Color.Crimson.WithOpacity(45);
+            _innerBrush = new SolidBrush(rippleColor);
+            //-- 1) Make the outer ripple.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = true,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
+                    ShapeType = ShapeType.Ellipse,
+                    Radius = BaseRadius,
+                    RadiusMultiplier = 3,
+                    FillBrush = _innerBrush,                    
+                    IsFilled = true,
+                });
+        }
+
+
         //TODO: need to pass an instance of RippleInfo (aka settings).
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {
@@ -20,7 +45,7 @@ namespace WinFormLayered.Drawing
             // TODO: ensure that the radius is <= maxRadius.
             //var radius = (int)(animationValue * _baseRadius * 2);
             int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
-            var opacity = (int)(progress * 45 * 5);            
+            var opacity = (int)(progress * 45 * 5);
             Color rippleColor = Color.Crimson.WithOpacity(opacity);
             using (SolidBrush brush = new SolidBrush(rippleColor))
             using (Pen outlinePen = new Pen(Color.Red.WithOpacity(150), 4)) // Pen of the outline

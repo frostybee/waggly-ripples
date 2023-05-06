@@ -13,6 +13,7 @@ namespace WinFormLayered.Drawing
         protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
+        public int BaseRadius { get; set; } = 10;
         protected BaseProfile()
         {
         }

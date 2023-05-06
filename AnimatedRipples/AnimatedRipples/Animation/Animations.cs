@@ -9,7 +9,9 @@ namespace MaterialWinforms.Animations
         EaseInOut,
         EaseOut,
         CustomQuadratic,
-        SpringInteropolator
+        EaseInElastic,
+        EaseInOutBounce,
+        EaseOutBounce,
     }
 
     static class AnimationLinear
@@ -53,7 +55,7 @@ namespace MaterialWinforms.Animations
             return 1 - Math.Cos((Math.Max(progress, kickoff) - kickoff) * Math.PI / (2 - (2 * kickoff)));
         }
     }
-    public static class AnimationElasticBounce
+    public static class AnimationEaseInElastic
     {
         /// <summary>
         /// Implements a spring-like interpolation function.
@@ -67,7 +69,52 @@ namespace MaterialWinforms.Animations
             return time == 0
             ? 0
             : time == 1
-            ? 1 : - Math.Pow(2, 10 * time - 10) * Math.Sin((time * 10 - 10.75) * c4);
+            ? 1 : -Math.Pow(2, 10 * time - 10) * Math.Sin((time * 10 - 10.75) * c4);
+        }
+    }
+
+    public static class AnimationEaseInOutBounce
+    {
+        /// <summary>
+        /// Implements a spring-like interpolation function.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public static double CalculateProgress(double t)
+        {
+            return t < 0.5
+                 ? (1 - EaseOutBounceInterpolator.CalculateProgress(1 - 2 * t)) / 2
+                 : (1 + EaseOutBounceInterpolator.CalculateProgress(2 * t - 1)) / 2;
+        }
+    }
+    public static class EaseOutBounceInterpolator
+    {
+        /// <summary>
+        /// Implements a spring-like interpolation function.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public static double CalculateProgress(double time)
+        {
+            double n1 = 7.5625;
+            double d1 = 2.75;
+
+            if (time < 1 / d1)
+            {
+                return n1 * time * time;
+            }
+            else if (time < 2 / d1)
+            {
+                return n1 * (time -= 1.5 / d1) * time + 0.75;
+            }
+            else if (time < 2.5 / d1)
+            {
+                return n1 * (time -= 2.25 / d1) * time + 0.9375;
+            }
+            else
+            {
+                return n1 * (time -= 2.625 / d1) * time + 0.984375;
+            }
         }
     }
 }

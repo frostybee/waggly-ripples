@@ -10,7 +10,31 @@ namespace WinFormLayered.Drawing
 {
     internal class SquareRipple : BaseProfile
     {
+        SolidBrush brush;
+        Pen _outlinePen;
+        int _baseRadius = 10; // Needs to be parametrized.
+        public SquareRipple()
+        {
+            InitDrawingProfile();
+        }
+        private void InitDrawingProfile()
+        {
+            brush = new SolidBrush(Color.DarkBlue.WithOpacity(_baseRadius * 10));
+            _outlinePen = new Pen(Color.DarkBlue.WithOpacity(_baseRadius * 10), 4);
 
+            // 1) Make the outer most ripple.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = true,
+                    ShapeType = ShapeType.Rectangle,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
+                    Radius = 10,
+                    RadiusMultiplier = 2,
+                    OutlinePen = _outlinePen,
+                    IsFilled = false,
+                });
+        }
         public override void Draw(Graphics graphics, Bitmap surface, double progress)
         {
             graphics.Clear(Color.Transparent);            
