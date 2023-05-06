@@ -26,7 +26,7 @@ namespace WinFormLayered.LayeredForm
     /// </summary>
     internal class RippleProfilesManager
     {
-        LayeredWindow layered;
+        readonly LayeredWindow _layered;
         // NOTE: move those to the BaseProfile.
         Bitmap _surface = null;
         Bitmap _blankSurface = null;
@@ -40,9 +40,10 @@ namespace WinFormLayered.LayeredForm
         public RippleProfileType RippleType { get; set; }
         public RippleProfilesManager()
         {
-            this.layered = new LayeredWindow();
+            _layered = new LayeredWindow();
             RippleType = RippleProfileType.Hexagon;
-            RippleType = RippleProfileType.Circle;
+            RippleType = RippleProfileType.Concentric;
+            RippleType = RippleProfileType.Star;
             
             _animationManager = new AnimationManager()
             {
@@ -67,7 +68,7 @@ namespace WinFormLayered.LayeredForm
             Debug.WriteLine(_animationManager.GetProgress());
             var progress = _animationManager.GetProgress();
             RenderRipplesProfile(_currentProfile, progress);
-            layered.SetBitmap(_surface, 255);
+            _layered.SetBitmap(_surface, 255);
         }
 
         /// <summary>
@@ -77,6 +78,8 @@ namespace WinFormLayered.LayeredForm
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         private void RenderRipplesProfile(BaseProfile inRippleProfile, double progress)
         {
+            inRippleProfile.Draw(_graphics, _surface, progress);
+            return;
             _graphics.Clear(Color.Transparent);
             //TODO: move this to the ripple class. Needs to be computed there.
             var opacity = (int)(progress * 20 * 5);
@@ -140,21 +143,21 @@ namespace WinFormLayered.LayeredForm
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            //layered.SetBitmap(new Bitmap(200, 200), 1);
-            // Clear the _surface that was previously drawn onto the layered window.
-            //layered.SetBitmap(_blankSurface, 1);
+            //_layered.SetBitmap(new Bitmap(200, 200), 1);
+            // Clear the _surface that was previously drawn onto the _layered window.
+            //_layered.SetBitmap(_blankSurface, 1);
             _graphics.Clear(Color.Transparent);
-            layered.Hide();
+            _layered.Hide();
         }
 
         internal void ShowRipplesAt()
         {
             POINT p = new POINT();
             NativeMethods.GetCursorPos(out p);
-            layered.PositionX = p.X;
-            layered.PositionY = p.Y;
-            layered.Move();
-            layered.Show();
+            _layered.PositionX = p.X;
+            _layered.PositionY = p.Y;
+            _layered.Move();
+            _layered.Show();
             StartAnimation();            
         }
         IntAnimate animate = new IntAnimate();//animate.Start(int duration, T initial, T end, EasingType easing = EasingType.Linear)    
@@ -172,14 +175,14 @@ namespace WinFormLayered.LayeredForm
                 _graphics = Graphics.FromImage(_surface);
                 DrawingHelper.SetAntiAliasing(_graphics);
             }
-            // Clear the _surface that was previously drawn onto the layered window.
-            layered.SetBitmap(_blankSurface, 1);
+            // Clear the _surface that was previously drawn onto the _layered window.
+            _layered.SetBitmap(_blankSurface, 1);
             Debug.WriteLine("Updating....");
             // We perform the drawing here.            
 
 
-            /*animate.Start(1000, 1, 250, EasingType.SineIn);
-            animate.Complete = OnAnimationFinished;
+            /*animate.Start(1000, 1, 100, EasingType.QuintInOut);
+            animate.Complete = objAnimationManager_OnAnimationFinished;
             animate.Update = OnAnimationUpdated;*/
             //animate.Start(1000);
             if (!_animationManager.IsAnimating())
@@ -197,17 +200,19 @@ namespace WinFormLayered.LayeredForm
             Debug.WriteLine("Updated Alpha: " + animate.Alpha);
             // We perform the drawing here.                        
             // TODO: put this in a helper method.                        
-            _currentProfile.Draw(_graphics, _surface, animate.Alpha);
-            layered.SetBitmap(_surface, 255);
+            //_currentProfile.Draw(_graphics, _surface, animate.Alpha);
+            RenderRipplesProfile(_currentProfile, animate.Alpha);
+            _layered.SetBitmap(_surface, 255);
         }
         // Metro animation
         private void objAnimationManager_OnAnimationFinished()
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            //layered.SetBitmap(new Bitmap(200, 200), 1);
+            //_layered.SetBitmap(new Bitmap(200, 200), 1);
             _graphics.Clear(Color.Transparent);
-            layered.Hide();
+            _layered.SetBitmap(_blankSurface, 1);
+            _layered.Hide();
         }
         int _radius = 0;
     }

@@ -55,20 +55,20 @@
     <Compile Include="Animation\Animations.cs" />
     <Compile Include="Drawing\Helpers\RandomFast.cs" />
     <Compile Include="Drawing\Shapes\BaseRipple.cs" />
-    <Compile Include="Drawing\Shapes\HexagonRipple.cs" />
-    <Compile Include="Drawing\Shapes\CircleProfile.cs" />
+    <Compile Include="Drawing\Profiles\HexagonRipple.cs" />
+    <Compile Include="Drawing\Profiles\CircleProfile.cs" />
     <Compile Include="Drawing\Shapes\RippleEntry.cs" />
-    <Compile Include="Drawing\Shapes\SpotlightRipple.cs" />
-    <Compile Include="Drawing\Shapes\ColorExtensions.cs" />
-    <Compile Include="Drawing\Shapes\ConcentricRipple.cs" />
+    <Compile Include="Drawing\Profiles\SpotlightRipple.cs" />
+    <Compile Include="Drawing\Extensions\ColorExtensions.cs" />
+    <Compile Include="Drawing\Profiles\ConcentricRipple.cs" />
     <Compile Include="Drawing\DrawingEnums.cs" />
-    <Compile Include="Drawing\DrawingHelper.cs" />
-    <Compile Include="Drawing\Shapes\CrosshairRipple.cs" />
-    <Compile Include="Drawing\Shapes\SonarPulseRipple.cs" />
-    <Compile Include="Drawing\Shapes\SingleRipple.cs" />
-    <Compile Include="Drawing\Shapes\SquareRipple.cs" />
-    <Compile Include="Drawing\Shapes\StarRipple.cs" />
-    <Compile Include="ExtendedWinStyles.cs" />
+    <Compile Include="Drawing\Helpers\DrawingHelper.cs" />
+    <Compile Include="Drawing\Profiles\CrosshairRipple.cs" />
+    <Compile Include="Drawing\Profiles\SonarPulseRipple.cs" />
+    <Compile Include="Drawing\Profiles\SingleRipple.cs" />
+    <Compile Include="Drawing\Profiles\SquareRipple.cs" />
+    <Compile Include="Drawing\Profiles\StarRipple.cs" />
+    <Compile Include="Native\ExtendedWinStyles.cs" />
     <Compile Include="LayeredForm\LayeredWindow.cs" />
     <Compile Include="Drawing\RippleProfilesManager.cs" />
     <Compile Include="Native\HookHelper.cs" />
@@ -76,33 +76,33 @@
     <Compile Include="Native\NativeEnums.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\NativeStructs.cs" />
-    <Compile Include="RippleTester.cs">
+    <Compile Include="UI\RippleTester.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RippleTester.Designer.cs">
+    <Compile Include="UI\RippleTester.Designer.cs">
       <DependentUpon>RippleTester.cs</DependentUpon>
     </Compile>
-    <Compile Include="LayeredFrom.cs">
+    <Compile Include="UI\LayeredFrom.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LayeredFrom.Designer.cs">
+    <Compile Include="UI\LayeredFrom.Designer.cs">
       <DependentUpon>LayeredFrom.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TopMostFrm.cs">
+    <Compile Include="UI\TopMostFrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TopMostFrm.Designer.cs">
+    <Compile Include="UI\TopMostFrm.Designer.cs">
       <DependentUpon>TopMostFrm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="LayeredForm\LayeredWindow.resx">
       <DependentUpon>LayeredWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RippleTester.resx">
+    <EmbeddedResource Include="UI\RippleTester.resx">
       <DependentUpon>RippleTester.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LayeredFrom.resx">
+    <EmbeddedResource Include="UI\LayeredFrom.resx">
       <DependentUpon>LayeredFrom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

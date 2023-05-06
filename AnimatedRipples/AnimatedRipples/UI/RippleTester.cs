@@ -20,7 +20,7 @@ namespace WinFormLayered
         public RippleTester()
         {
             InitializeComponent();
-            //layered = new LayeredFrom();
+            //_layered = new LayeredFrom();
             ripplesController = new RippleProfilesManager();
             rippleTypes = Enum.GetValues(typeof(RippleProfileType)).Cast<RippleProfileType>().ToList();
             this.Load += RippleTester_Load;
@@ -38,7 +38,7 @@ namespace WinFormLayered
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //layered.Hide();
+            //_layered.Hide();
 
         }
 

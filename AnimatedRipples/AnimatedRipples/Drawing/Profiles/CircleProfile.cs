@@ -30,11 +30,11 @@ namespace WinFormLayered.Drawing
                     IsExpandable = true,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),                     
                     ShapeType = ShapeType.Circle,
-                    BaseRadius = 10,
+                    Radius = 10,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
-                });;
+                });
 
         }
 
@@ -47,13 +47,13 @@ namespace WinFormLayered.Drawing
             _ripples.ForEach(ripple =>
             {
                 // Render the ripple --> inputs: graphics, progress, surface size.
-                int rippleSize = (ripple.IsExpandable) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
+                int rippleSize = (ripple.IsExpandable) ? ripple.Radius : (int)(progress * ripple.ExpandedRadius);
                 ripple.Bounds = (ripple.IsExpandable) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);
                 ripple.Opacity = opacity;
                 //RenderRipple();
                 // Need to copy it locally.
                 //RectangleF bounds = ripple.Bounds;
-                //ripple.BaseRadius = rippleSize;
+                //ripple.Radius = rippleSize;
                 /* TODO: Solution ---> I can regenerate the rectangle in the property.
                  * bounds.Width = rippleSize;
                 bounds.Height = rippleSize;

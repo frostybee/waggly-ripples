@@ -159,7 +159,7 @@ namespace WinFormLayered
             graphics.Clear(Color.Tan);
 
             // NOTES: Here we paint the ripple. 
-            // TODO: have a look at ShareX project and see how the created the layered window. 
+            // TODO: have a look at ShareX project and see how the created the _layered window. 
 
             //Square CurrentRect = CalculateCurrentRect();
             //_graphics.FillEllipse(FillBrush, CurrentRect);         
@@ -316,7 +316,7 @@ namespace WinFormLayered
                   return cp;
               }
           }*/
-        // Make layered.
+        // Make _layered.
         /*protected override CreateParams CreateParams
         {
             get

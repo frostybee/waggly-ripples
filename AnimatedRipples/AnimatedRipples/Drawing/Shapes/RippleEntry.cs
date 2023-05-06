@@ -19,7 +19,7 @@ namespace WinFormLayered.Drawing.Shapes
         public int RadiusMultiplier { get; set; }
         public Color FillColor { get; set; }
         public Color StrokeColor { get; set; }
-        public int BaseRadius { get; set; }
+        public int Radius { get; set; }
         public int Opacity { get; set; }
         public BorderStyle BorderStyle { get; set; }
         public RectangleF Bounds { get; set; }
@@ -30,7 +30,7 @@ namespace WinFormLayered.Drawing.Shapes
         
 
         public ShapeType ShapeType { get; set; }
-        public double ExpandedRadius { get { return BaseRadius * RadiusMultiplier; } }
+        public double ExpandedRadius { get { return Radius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
         // Move this to profileRendered or Helper class.
@@ -77,7 +77,7 @@ namespace WinFormLayered.Drawing.Shapes
 
         internal double CalculateNewRadius()
         {
-            return BaseRadius * RadiusMultiplier;
+            return Radius * RadiusMultiplier;
         }
     }
 }

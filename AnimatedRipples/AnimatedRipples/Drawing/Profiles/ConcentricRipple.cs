@@ -48,7 +48,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(width, height, _baseRadius * 2),
                     FillBrush = _brushInnerRipple,
                     ShapeType = ShapeType.Circle,
-                    BaseRadius = 10,
+                    Radius = 10,
                     RadiusMultiplier = 2,
                     OutlinePen = _penOutline,
                     IsFilled = false,
@@ -69,7 +69,7 @@ namespace WinFormLayered.Drawing
                         ShapeType = ShapeType.Circle,
                         OutlinePen = _innerPen,
                         RadiusMultiplier = 2,
-                        BaseRadius = radius,
+                        Radius = radius,
                         IsFilled = false,
                     });
                 radius += 2;
@@ -91,7 +91,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(width, height, 7),
                     FillBrush = _brushInnerRipple,
                     ShapeType = ShapeType.Circle,
-                    BaseRadius = 7,
+                    Radius = 7,
                     IsFilled = true,
                 });
 
@@ -103,7 +103,7 @@ namespace WinFormLayered.Drawing
             graphics.Clear(Color.Transparent);
             // TODO: add shadow around the ripples. Figure out how. 
             // NOTES: Here we paint the ripple. 
-            // TODO: have a look at ShareX project and see how the created the layered window.             
+            // TODO: have a look at ShareX project and see how the created the _layered window.             
 
             // TODO: User a Rendered class that process the _ripples for all profiles.
             //       - Can be put in the base class: render profile.
@@ -111,13 +111,13 @@ namespace WinFormLayered.Drawing
             _ripples.ForEach(ripple =>
             {
                 // Render the ripple --> inputs: graphics, progress, surface size.
-                /*int rippleSize = (ripple.IsExpandable) ? ripple.BaseRadius : (int)(progress * ripple.ExpandedRadius);
+                /*int rippleSize = (ripple.IsExpandable) ? ripple.Radius : (int)(progress * ripple.ExpandedRadius);
                 ripple.Bounds = (ripple.IsExpandable) ? ripple.Bounds : DrawingHelper.CreateRectangle(200, 200, rippleSize);*/
 
                 //RenderRipple();
                 // Need to copy it locally.
                 //RectangleF bounds = ripple.Bounds;
-                //ripple.BaseRadius = rippleSize;
+                //ripple.Radius = rippleSize;
                 /* TODO: Solution ---> I can regenerate the rectangle in the property.
                  * bounds.Width = rippleSize;
                 bounds.Height = rippleSize;

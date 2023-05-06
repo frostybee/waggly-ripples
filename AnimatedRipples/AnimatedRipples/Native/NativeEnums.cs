@@ -298,7 +298,7 @@ namespace FriskyMouse.NativeApi
 
         //#if(_WIN32_WINNT >= 0x0500)
         /// <summary>
-        /// Windows 2000/XP: Creates a layered window. Note that this cannot be used for child windows. Also, this cannot be used if the window has a class style of either <see cref="CS_OWNDC"/> or <see cref="CS_CLASSDC"/>.
+        /// Windows 2000/XP: Creates a _layered window. Note that this cannot be used for child windows. Also, this cannot be used if the window has a class style of either <see cref="CS_OWNDC"/> or <see cref="CS_CLASSDC"/>.
         /// </summary>
         WS_EX_LAYERED = 0x00080000,
         //#endif /* _WIN32_WINNT >= 0x0500 */
