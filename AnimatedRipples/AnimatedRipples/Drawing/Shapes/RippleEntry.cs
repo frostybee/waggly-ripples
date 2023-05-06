@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WinFormLayered.Drawing.Shapes
 {
-    internal class RippleEntry
+    internal abstract class BaseShape
     {
         public bool IsFilled { get; set; }
         [DefaultValue(false)]
@@ -22,7 +22,7 @@ namespace WinFormLayered.Drawing.Shapes
         public int Radius { get; set; }
         public int Opacity { get; set; }
         public BorderStyle BorderStyle { get; set; }
-        public RectangleF Bounds { get; set; }
+        public Rectangle Bounds { get; set; }
         public Size Dimension { get; set; }
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
@@ -42,7 +42,7 @@ namespace WinFormLayered.Drawing.Shapes
             //-- Render this ripple entry.
             switch (ShapeType)
             {
-                case ShapeType.Circle:
+                /*case ShapeType.Circle:
                     // DrawCircle();
                     if (IsFilled)
                     {
@@ -53,7 +53,7 @@ namespace WinFormLayered.Drawing.Shapes
                         OutlinePen.Color = OutlinePen.Color.WithOpacity(Opacity);
                         graphics.DrawEllipse(OutlinePen, Bounds);
                     }
-                    break;
+                    break;*/
                 case ShapeType.Rectangle:
                     break;
                 case ShapeType.Polygon:
@@ -79,5 +79,8 @@ namespace WinFormLayered.Drawing.Shapes
         {
             return Radius * RadiusMultiplier;
         }
+
+        public abstract void Draw(Graphics graphics, double progress);
+
     }
 }

@@ -44,6 +44,7 @@ namespace WinFormLayered.LayeredForm
             RippleType = RippleProfileType.Hexagon;
             RippleType = RippleProfileType.Concentric;
             RippleType = RippleProfileType.Star;
+            RippleType = RippleProfileType.Square;
             
             _animationManager = new AnimationManager()
             {
@@ -78,8 +79,8 @@ namespace WinFormLayered.LayeredForm
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         private void RenderRipplesProfile(BaseProfile inRippleProfile, double progress)
         {
-            inRippleProfile.Draw(_graphics, _surface, progress);
-            return;
+            //inRippleProfile.Draw(_graphics, _surface, progress);
+            //return;
             _graphics.Clear(Color.Transparent);
             //TODO: move this to the ripple class. Needs to be computed there.
             var opacity = (int)(progress * 20 * 5);
@@ -92,7 +93,7 @@ namespace WinFormLayered.LayeredForm
                 //-- Might need to adjust the profile internal ripple definitions before rendering.
                 // For instance, when animating an hexagon.
                 // Render the ripple.
-                ripple.Render(_graphics, progress);
+                ripple.Draw(_graphics, progress);
             });
         }
         private BaseProfile MakeDrawingProfile(RippleProfileType inRippleType)

@@ -42,17 +42,17 @@ namespace WinFormLayered.Drawing
 
             // 1) Make the outer most ripple.
             _ripples.Add(
-                new RippleEntry()
-                {
-                    IsExpandable = true,
-                    Bounds = DrawingHelper.CreateRectangle(width, height, _baseRadius * 2),
-                    FillBrush = _brushInnerRipple,
-                    ShapeType = ShapeType.Circle,
-                    Radius = 10,
-                    RadiusMultiplier = 2,
-                    OutlinePen = _penOutline,
-                    IsFilled = false,
-                });            
+                    new EllipseShape()
+                    {
+                        IsExpandable = true,
+                        Bounds = DrawingHelper.CreateRectangle(width, height, _baseRadius * 2),
+                        FillBrush = _brushInnerRipple,                        
+                        Radius = 10,
+                        RadiusMultiplier = 2,
+                        OutlinePen = _penOutline,
+                        IsFilled = false,
+                    }
+                );
             int radius = 5;
             //Color internalRippleColor = Color.FromArgb(255 - (byte)progress * 255, Color.SteelBlue);            
             //Color internalRippleColor = Color.SteelBlue;
@@ -61,12 +61,11 @@ namespace WinFormLayered.Drawing
             {
                 //-- Make ripples that will be rendered between the inner most and outer ripple.
                 _ripples.Add(
-                    new RippleEntry()
+                    new EllipseShape()
                     {
-                        IsExpandable = true,                        
+                        IsExpandable = true,
                         Bounds = DrawingHelper.CreateRectangle(width, height, radius),
-                        FillBrush = _brushInnerRipple,
-                        ShapeType = ShapeType.Circle,
+                        FillBrush = _brushInnerRipple,                        
                         OutlinePen = _innerPen,
                         RadiusMultiplier = 2,
                         Radius = radius,
@@ -84,13 +83,12 @@ namespace WinFormLayered.Drawing
             // 2) 
             //-- Make the most inner ripple (aka the core).            
             _ripples.Add(
-                new RippleEntry()
+                new EllipseShape()
                 {
                     IsExpandable = false,
                     //Bounds = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 5)
                     Bounds = DrawingHelper.CreateRectangle(width, height, 7),
-                    FillBrush = _brushInnerRipple,
-                    ShapeType = ShapeType.Circle,
+                    FillBrush = _brushInnerRipple,                    
                     Radius = 7,
                     IsFilled = true,
                 });

@@ -21,8 +21,7 @@ namespace WinFormLayered.Drawing
     }
 
     public enum ShapeType : uint
-    {
-        Circle,        
+    {        
         Rectangle,
         Polygon,
     }

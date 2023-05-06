@@ -25,11 +25,10 @@ namespace WinFormLayered.Drawing
             _outlinePen = new Pen(Color.Crimson.WithOpacity(opacity), 4);
             // 1) Make the outer most ripple.
             _ripples.Add(
-                new RippleEntry()
+                new EllipseShape()
                 {
                     IsExpandable = true,
-                    Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),                     
-                    ShapeType = ShapeType.Circle,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),                                         
                     Radius = 10,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,

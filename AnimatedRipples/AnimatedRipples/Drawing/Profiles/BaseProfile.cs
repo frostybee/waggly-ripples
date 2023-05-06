@@ -10,7 +10,7 @@ namespace WinFormLayered.Drawing
 {
     internal abstract class BaseProfile
     {
-        protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
+        protected readonly List<BaseShape> _ripples = new List<BaseShape>();
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
         protected BaseProfile()
@@ -19,6 +19,6 @@ namespace WinFormLayered.Drawing
         // Is it better to use an interface with public properties?
 
         public abstract void Draw(Graphics graphics, Bitmap surface, double progress);
-        public List<RippleEntry> RippleEntries { get => _ripples; }
+        public List<BaseShape> RippleEntries { get => _ripples; }
     }
 }
