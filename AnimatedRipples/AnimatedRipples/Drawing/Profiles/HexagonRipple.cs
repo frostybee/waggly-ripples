@@ -27,7 +27,7 @@ namespace WinFormLayered.Drawing
             var x = 200 / 2;
             var y = 200 / 2;
 
-            _outlinePen = new Pen(Color.Crimson.WithOpacity(opacity), 4);
+            _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
             _ripples.Add(
                 new RippleEntry()
@@ -47,16 +47,7 @@ namespace WinFormLayered.Drawing
             // TODO: implement GetCurrentRaius(); in the BaseProfile
             
             //graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
-        }
-        
-
-        //TODO: need to pass an instance of RippleInfo (aka settings).
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
-        {
-            graphics.Clear(Color.Transparent);
-            int baseRadius = 15;
-            //graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
-
-        }
+        }      
+        //TODO: need to pass an instance of RippleInfo (aka settings).       
     }
 }

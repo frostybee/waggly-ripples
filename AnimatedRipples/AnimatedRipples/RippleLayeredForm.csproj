@@ -53,6 +53,7 @@
     <Compile Include="Animation\AnimationDirection.cs" />
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Animations.cs" />
+    <Compile Include="Drawing\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Drawing\Helpers\RandomFast.cs" />
     <Compile Include="Drawing\Profiles\BaseProfile.cs" />
     <Compile Include="Drawing\Profiles\HexagonRipple.cs" />
@@ -115,6 +116,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

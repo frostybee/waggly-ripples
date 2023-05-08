@@ -13,7 +13,7 @@ namespace WinFormLayered.Drawing.Shapes
 {
     internal class CrosshairRipple : BaseProfile
     {
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
+        public void Draw(Graphics graphics, Bitmap surface, double progress)
         {
             graphics.Clear(Color.Transparent);
             // TODO: Add color transition.
@@ -21,15 +21,19 @@ namespace WinFormLayered.Drawing.Shapes
             int height = Convert.ToInt32(10 * progress);*/
             int width = 40 ;
             int height = 8 ;
-            graphics.FillRectangle(Brushes.CornflowerBlue, new Rectangle((surface.Width / 2) - 4, (surface.Height / 2) - 20, height, width));
-            graphics.FillRectangle(Brushes.Crimson, new Rectangle((surface.Width / 2) - 20, (surface.Height / 2) - 4, width, height));
-/*            var pathX = new GraphicsPath();
+            //width = (int)Math.Min(width, width * progress);
+            //height = (int)Math.Min(height, height * progress);
+            graphics.FillRectangle(Brushes.CornflowerBlue,
+                new Rectangle((surface.Width / 2) - 4, (surface.Height / 2) - 20, height, width));
+            graphics.FillRectangle(Brushes.Crimson,
+                new Rectangle((surface.Width / 2) - 20, (surface.Height / 2) - 4, width, height));
+            /*var pathX = new GraphicsPath();
             var pathY = new GraphicsPath();
             pathX.AddLine(0, surface.Width / 2, surface.Width, surface.Width / 2);
             pathY.AddLine(surface.Width / 2, 0, surface.Width / 2, surface.Width);
             graphics.DrawPath(new Pen(Brushes.Red), pathX);
             graphics.DrawPath(new Pen(Brushes.Red), pathY);*/
-            
+
         }
     }
 }

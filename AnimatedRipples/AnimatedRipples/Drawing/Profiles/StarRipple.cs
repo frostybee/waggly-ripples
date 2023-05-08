@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormLayered.Drawing.Extensions;
 
 namespace WinFormLayered.Drawing
 {
@@ -15,10 +16,10 @@ namespace WinFormLayered.Drawing
         {
         }
 
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
+        public  void Draw(Graphics graphics, Bitmap surface, double progress)
         {
             graphics.Clear(Color.Transparent);
-            DrawingHelper.SetAntiAliasing(graphics);    
+            graphics.SetAntiAliasing();            
             double radiusSize = Convert.ToDouble(40 * progress);
             int opacity = (int)(progress * 100 *2);
             double middleX = surface.Width/2;
@@ -27,7 +28,7 @@ namespace WinFormLayered.Drawing
             double half = radiusSize;
             middleX = middleX - half;
             middleY = middleY - half;
-            
+            //TODO: put this in a helper class. Needs to be adjustable.
             // Create an array of points.
             Point[] myArray =
                      {

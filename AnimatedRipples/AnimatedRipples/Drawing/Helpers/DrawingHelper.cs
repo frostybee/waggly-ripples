@@ -36,24 +36,18 @@ namespace WinFormLayered.Drawing
         internal static Rectangle CreateRectangle(int width, int height, int radius)
         {
             return new Rectangle(width / 2 - radius, height / 2 - radius, radius * 2, radius * 2);
-        }
-        internal static void SetAntiAliasing(System.Drawing.Graphics graphics)
-        {
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            graphics.CompositingQuality = CompositingQuality.HighQuality;
-        }
+        }        
 
         internal static List<PointF> GetHexagonPoints(int x, int y, int radius)
         {
             //Get the middle of the panel            
-            List<PointF> shapes = new List<PointF>(6);
+            List<PointF> shapes = new List<PointF>();
             //Create 6 points
-            for (int line = 0; line < shapes.Count; line++)
+            for (int line = 0; line < 6; line++)
             {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              
-                shapes[line] = new PointF(
+                shapes.Add(new PointF(
                     x + radius * (float)Math.Cos(line * 60 * Math.PI / 180f),
-                    y + radius * (float)Math.Sin(line * 60 * Math.PI / 180f));
+                    y + radius * (float)Math.Sin(line * 60 * Math.PI / 180f)));
             }
             return shapes;
         }

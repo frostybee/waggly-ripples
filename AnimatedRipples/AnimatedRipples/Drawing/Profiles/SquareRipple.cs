@@ -19,8 +19,8 @@ namespace WinFormLayered.Drawing
         }
         private void InitDrawingProfile()
         {
-            brush = new SolidBrush(Color.DarkBlue.WithOpacity(_baseRadius * 10));
-            _outlinePen = new Pen(Color.DarkBlue.WithOpacity(_baseRadius * 10), 4);
+            brush = new SolidBrush(Color.DarkBlue.ReduceOpacity(_baseRadius * 10));
+            _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(_baseRadius * 10), 4);
 
             // 1) Make the outer most ripple.
             _ripples.Add(
@@ -32,23 +32,8 @@ namespace WinFormLayered.Drawing
                     Radius = 10,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
-                    IsFilled = false,
+                    IsFilled = true,
                 });
-        }
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
-        {
-            graphics.Clear(Color.Transparent);            
-            int baseRadius = 15;
-            // Expand the size of the radius.
-            var radius = (int)(progress * baseRadius * 3);
-            Color rippleColor = Color.DarkBlue.WithOpacity(radius * 10);
-            // TODO: create these tools once and dispose them upon switching a profile. 
-            using (SolidBrush brush = new SolidBrush(rippleColor))
-            using (Pen outlinePen = new Pen(rippleColor, 4)) // Pen of the outline
-            {
-                Rectangle rect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);                
-                graphics.DrawRectangle(outlinePen, rect);
-            }         
-        }
+        }         
     }
 }

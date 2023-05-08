@@ -11,6 +11,7 @@ namespace WinFormLayered.Drawing
 {
     internal class SpotlightRipple : BaseProfile
     {
+        // TODO: dispose the drawing tools.
         SolidBrush _innerBrush;
         public SpotlightRipple()
         {
@@ -18,8 +19,7 @@ namespace WinFormLayered.Drawing
         }
         private void InitDrawingProfile()
         {
-            int opacity = 10;
-            Color rippleColor = Color.Crimson.WithOpacity(45);
+            Color rippleColor = Color.Crimson.ReduceOpacity(20);
             _innerBrush = new SolidBrush(rippleColor);
             //-- 1) Make the outer ripple.
             _ripples.Add(
@@ -30,34 +30,9 @@ namespace WinFormLayered.Drawing
                     ShapeType = ShapeType.Ellipse,
                     Radius = BaseRadius,
                     RadiusMultiplier = 3,
-                    FillBrush = _innerBrush,                    
+                    FillBrush = _innerBrush,
                     IsFilled = true,
                 });
-        }
-
-
-        //TODO: need to pass an instance of RippleInfo (aka settings).
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
-        {
-            graphics.Clear(Color.Transparent);
-            int baseRadius = 15;
-            // Expand the size of the radius.            
-            // TODO: ensure that the radius is <= maxRadius.
-            //var radius = (int)(animationValue * _baseRadius * 2);
-            int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
-            var opacity = (int)(progress * 45 * 5);
-            Color rippleColor = Color.Crimson.WithOpacity(opacity);
-            using (SolidBrush brush = new SolidBrush(rippleColor))
-            using (Pen outlinePen = new Pen(Color.Red.WithOpacity(150), 4)) // Pen of the outline
-            {
-                Rectangle rect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);
-                graphics.FillEllipse(brush, rect);
-                //graphics.DrawEllipse(outlinePen, rect);                        
-                //-- Render drop shadow around the ripple.
-                //GraphicsPath path = DrawingHelper.CreateCircle(surface.Width / 2f - radius - 2, surface.Height / 2f - radius, radius);
-                //DrawingHelper.drawShadow(graphics, path, 2, Color.DarkRed);
-                //graphics.DrawPath(outlinePen, path);
-            }
         }
     }
 }

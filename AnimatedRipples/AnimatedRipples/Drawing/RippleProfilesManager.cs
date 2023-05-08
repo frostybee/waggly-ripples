@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormLayered.Drawing;
+using WinFormLayered.Drawing.Extensions;
 using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.LayeredForm
@@ -42,9 +43,16 @@ namespace WinFormLayered.LayeredForm
         {
             _layered = new LayeredWindow();
             RippleType = RippleProfileType.Hexagon;
-            RippleType = RippleProfileType.Concentric;
+            RippleType = RippleProfileType.Concentric;                                 
+            RippleType = RippleProfileType.SquaredPulse;
+            RippleType = RippleProfileType.Hexagon;            
+            RippleType = RippleProfileType.Single;
             RippleType = RippleProfileType.SonarPulse;
-            
+            RippleType = RippleProfileType.Spotlight;
+            RippleType = RippleProfileType.Ripple;
+            RippleType = RippleProfileType.SquaredPulse;
+            RippleType = RippleProfileType.Spotlight;
+
             _animationManager = new AnimationManager()
             {
                 Increment = 0.020,
@@ -67,37 +75,12 @@ namespace WinFormLayered.LayeredForm
             // TODO: put this in a helper method.                        
             Debug.WriteLine(_animationManager.GetProgress());
             var progress = _animationManager.GetProgress();
-            RenderRipplesProfile(_currentProfile, progress);
+            _currentProfile.RenderRipples(_graphics, progress);
+            //RenderRipplesProfile(_currentProfile, progress);
             _layered.SetBitmap(_surface, 255);
         }
 
-        /// <summary>
-        /// Renders the ripples that are defined in a given profile.
-        /// </summary>
-        /// <param name="inRippleProfile">The profile to be rendered.</param>
-        /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
-        private void RenderRipplesProfile(BaseProfile inRippleProfile, double progress)
-        {
-            if (inRippleProfile.RippleEntries.Count == 0)
-            {
-                //inRippleProfile.Draw(_graphics, _surface, progress);
-             //   return;
-            }
-            
-            _graphics.Clear(Color.Transparent);
-            //TODO: move this to the ripple class. Needs to be computed there.
-            var opacity = (int)(progress * 20 * 5);
-            // We adjust the ripple properties every animation frame. 
-            inRippleProfile.RippleEntries.ForEach(ripple =>
-            {                
-                // Render the ripple --> inputs: graphics, progress, surface size.                
-                ripple.Opacity = opacity;
-                //-- Might need to adjust the profile internal ripple definitions before rendering.
-                // For instance, when animating an hexagon.
-                // Render the ripple.
-                ripple.Render(_graphics, progress);
-            });
-        }
+        
         private BaseProfile MakeDrawingProfile(RippleProfileType inRippleType)
         {
             BaseProfile rippleProfile = null;
@@ -114,7 +97,10 @@ namespace WinFormLayered.LayeredForm
                 case RippleProfileType.SonarPulse:
                     rippleProfile = new SonarPulseRipple();
                     break;
-                case RippleProfileType.Circle:
+                case RippleProfileType.SquaredPulse:
+                    rippleProfile = new SquaredRipple();
+                    break;
+                case RippleProfileType.Ripple:
                     rippleProfile = new CircleProfile();
                     break;
                 case RippleProfileType.Single:
@@ -176,15 +162,15 @@ namespace WinFormLayered.LayeredForm
                 _surface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _blankSurface = new Bitmap(200, 200, PixelFormat.Format32bppArgb);
                 _graphics = Graphics.FromImage(_surface);
-                DrawingHelper.SetAntiAliasing(_graphics);
+                _graphics.SetAntiAliasing();                
             }
             // Clear the _surface that was previously drawn onto the _layered window.
             _layered.SetBitmap(_blankSurface, 1);
-            Debug.WriteLine("Updating....");
+            //Debug.WriteLine("Updating....");
             // We perform the drawing here.            
 
 
-            /*animate.Start(1000, 1, 100, EasingType.QuintInOut);
+            /*animate.Start(1000, 1, 1000, EasingType.QuadOut);
             animate.Complete = objAnimationManager_OnAnimationFinished;
             animate.Update = OnAnimationUpdated;*/
             //animate.Start(1000);
@@ -204,7 +190,8 @@ namespace WinFormLayered.LayeredForm
             // We perform the drawing here.                        
             // TODO: put this in a helper method.                        
             //_currentProfile.Draw(_graphics, _surface, animate.Alpha);
-            RenderRipplesProfile(_currentProfile, animate.Alpha);
+            //RenderRipplesProfile(_currentProfile, animate.Alpha);
+            _currentProfile.RenderRipples(_graphics, animate.Alpha);
             _layered.SetBitmap(_surface, 255);
         }
         // Metro animation

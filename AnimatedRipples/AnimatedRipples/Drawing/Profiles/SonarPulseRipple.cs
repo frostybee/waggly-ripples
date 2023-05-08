@@ -28,7 +28,7 @@ namespace WinFormLayered.Drawing
         {
             int opacity = 10;
             _innerBrush = new SolidBrush(Color.DarkTurquoise);
-            _outerBursh = new SolidBrush(Color.DarkRed.WithOpacity(10 * 5));                        
+            _outerBursh = new SolidBrush(Color.DarkRed.ReduceOpacity(10 * 5));                        
             //-- 1) Make the outer ripple.
             _ripples.Add(
                 new RippleEntry()
@@ -64,26 +64,6 @@ namespace WinFormLayered.Drawing
                 Need the canvas and the _surface. 
             TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
                   but I need to test it. 
-        */
-        public override void Draw(Graphics graphics, Bitmap surface, double progress)
-        {
-            graphics.Clear(Color.Transparent);
-            int baseRadius = 15;
-            int innerRadius = 8;
-            int opacityMultiplier = 5;
-            // FIXME: the color opacity needs to be validated: it's crashing when a spring interpolation is applied.
-            // Color of the large ripple
-            var radius = (int)(progress * baseRadius * 7);
-            Color rippleColor = Color.DarkRed.WithOpacity(radius * opacityMultiplier);
-            using (SolidBrush innerBrush = new SolidBrush(Color.DarkTurquoise))
-            using (SolidBrush outerBursh = new SolidBrush(rippleColor))
-            {
-                Rectangle outerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, radius);
-                graphics.FillEllipse(outerBursh, outerRect);
-                // Render the inner ripple. It must drawn last.
-                Rectangle innerRect = DrawingHelper.CreateRectangle(surface.Width, surface.Height, innerRadius);
-                graphics.FillEllipse(innerBrush, innerRect);
-            }
-        }
+        */        
     }
 }

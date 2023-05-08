@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,24 +14,19 @@ namespace WinFormLayered.Drawing.Shapes
 {
     internal class RippleEntry
     {
-        public bool IsFilled { get; set; }
-        [DefaultValue(false)]
-        public bool IsExpandable { get; set; }
-        [DefaultValue(1)]
-        public int RadiusMultiplier { get; set; } = 2;
+        public ShapeType ShapeType { get; set; } = ShapeType.Ellipse;
+        public bool IsFilled { get; set; } = false;
+        public bool IsExpandable { get; set; } = true;        
+        public float RadiusMultiplier { get; set; } = 2.2f;
         public Color FillColor { get; set; }
         public Color StrokeColor { get; set; }
         public int Radius { get; set; }
         public int Opacity { get; set; }
         public BorderStyle BorderStyle { get; set; }
-        public Rectangle Bounds { get; set; }
-        public Size Dimension { get; set; }
+        public Rectangle Bounds { get; set; }        
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
-        public List<PointF> PolyPoints { get; set; }
-
-
-        public ShapeType ShapeType { get; set; }
+        public List<PointF> PolyPoints { get; set; }        
         public double ExpandedRadius { get { return Radius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
@@ -37,8 +34,11 @@ namespace WinFormLayered.Drawing.Shapes
         internal void Render(Graphics graphics, double progress)
         {
             // Expand the radius of the current ripple to be rendered. 
-            //FIXME: ripple.ExpandRadius(progress);
+            //FIXME: ripple.ExpandRadius(animationProgress);
             ExpandRadius(progress);
+            //-- Get the opacity value for animating a fade-like color transition.
+            AdjustColorOpacity(progress);
+            //Debug.WriteLine("Opacity: " + opacity);
             //-- Render this ripple entry.
             switch (ShapeType)
             {
@@ -46,20 +46,45 @@ namespace WinFormLayered.Drawing.Shapes
                     // DrawCircle();
                     if (IsFilled)
                     {
-                        graphics.FillEllipse(FillBrush, Bounds);
+                        graphics.FillEllipse(FillBrush, Bounds);                        
                     }
                     else
                     {
-                        OutlinePen.Color = OutlinePen.Color.WithOpacity(Opacity);
+                        //OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
                         graphics.DrawEllipse(OutlinePen, Bounds);
                     }
                     break;
                 case ShapeType.Rectangle:
+                    //OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
                     graphics.DrawRectangle(OutlinePen, Bounds);
                     break;
                 case ShapeType.Polygon:
-                    //PolyPoints = DrawingHelper.GetHexagonPoints(200, 200, E);
+                    var x = 200 / 2;
+                    var y = 200 / 2;
+                    int newRadius = Math.Min(Math.Max(1, (int)(progress * CalculateNewRadius())), 200 / 2);
+                    PolyPoints = DrawingHelper.GetHexagonPoints(x, y, newRadius);
+                    graphics.DrawPolygon(OutlinePen, PolyPoints.ToArray());
                     break;
+            }
+        }
+
+        private void AdjustColorOpacity(double animationProgress)
+        {
+            //return (255 - Math.Min(Math.Max(0, (int)animationProgress* 150), 255));
+            int opacity = 1;
+            // Opacity percentage: 255 * 75 / 100
+            float percentage = (float)Math.Round(animationProgress * 100 - 10, 2);
+            opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));
+            if (IsExpandable)
+            {
+                if (IsFilled)
+                {
+                    FillBrush.Color = FillBrush.Color.ReduceOpacity(opacity);
+                }
+                else
+                {
+                    OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
+                }
             }
         }
 
@@ -69,7 +94,6 @@ namespace WinFormLayered.Drawing.Shapes
             if (IsExpandable)
             {
                 int newRadius = Math.Min(Math.Max(1, (int)(progress * CalculateNewRadius())), 200 / 2);
-                //int newRadius = Math.Min(Math.Max(1,(int)(progress * 50)), 200 / 2-5);
                 //int newRadius = (int)();
                 // Create a new bounding rectangle based on the newly expanded radius. 
                 Bounds = DrawingHelper.CreateRectangle(200, 200, newRadius);
