@@ -22,6 +22,7 @@ csharp_style_prefer_null_check_over_type_check = true:suggestion
 csharp_prefer_simple_default_expression = true:suggestion
 csharp_space_around_binary_operators = before_and_after
 csharp_indent_braces = true
+csharp_indent_block_contents = false
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

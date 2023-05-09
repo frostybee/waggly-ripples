@@ -25,7 +25,7 @@ namespace WinFormLayered.Drawing
             _ripples.Add(
                 new RippleEntry()
                 {
-                    IsExpandable = true,
+                    IsExpandable = false,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
                     ShapeType = ShapeType.Ellipse,
                     Radius = BaseRadius,

@@ -26,7 +26,7 @@ namespace WinFormLayered.Drawing.Shapes
         public Rectangle Bounds { get; set; }        
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
-        public List<PointF> PolyPoints { get; set; }        
+        public PointF[] PolyPoints { get; set; }        
         public double ExpandedRadius { get { return Radius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
@@ -62,7 +62,8 @@ namespace WinFormLayered.Drawing.Shapes
                     var x = 200 / 2;
                     var y = 200 / 2;
                     int newRadius = Math.Min(Math.Max(1, (int)(progress * CalculateNewRadius())), 200 / 2);
-                    PolyPoints = DrawingHelper.GetHexagonPoints(x, y, newRadius);
+                    //PolyPoints = DrawingHelper.CreateHexagon(x, y, newRadius);
+                    PolyPoints = DrawingHelper.CreateStarShape(200, newRadius);
                     graphics.DrawPolygon(OutlinePen, PolyPoints.ToArray());
                     break;
             }
@@ -73,7 +74,7 @@ namespace WinFormLayered.Drawing.Shapes
             //return (255 - Math.Min(Math.Max(0, (int)animationProgress* 150), 255));
             int opacity = 1;
             // Opacity percentage: 255 * 75 / 100
-            float percentage = (float)Math.Round(animationProgress * 100 - 10, 2);
+            float percentage = (float)Math.Round(animationProgress * 60 , 2);
             opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));
             if (IsExpandable)
             {

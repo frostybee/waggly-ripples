@@ -7,48 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinFormLayered.Drawing.Extensions;
+using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
     internal class StarRipple : BaseProfile
     {
+
+        Pen _outlinePen;
         public StarRipple()
         {
+            InitDrawingProfile();
         }
-
-        public  void Draw(Graphics graphics, Bitmap surface, double progress)
+        private void InitDrawingProfile()
         {
-            graphics.Clear(Color.Transparent);
-            graphics.SetAntiAliasing();            
-            double radiusSize = Convert.ToDouble(40 * progress);
-            int opacity = (int)(progress * 100 *2);
-            double middleX = surface.Width/2;
-            double middleY = surface.Width / 2;
-            double min = 0.05f;
-            double half = radiusSize;
-            middleX = middleX - half;
-            middleY = middleY - half;
-            //TODO: put this in a helper class. Needs to be adjustable.
-            // Create an array of points.
-            Point[] myArray =
-                     {
-                 new Point(Convert.ToInt32(middleX + half * (0.5 + min)), Convert.ToInt32(middleY + half * (0.84 + min))),
-                 new Point(Convert.ToInt32(middleX + half * (1.5f + min)), Convert.ToInt32(middleY + half * (0.84f + min))),
-                 new Point(Convert.ToInt32(middleX + half * (0.68f + min)), Convert.ToInt32(middleY + half * (1.45f + min))),                 
-                 new Point(Convert.ToInt32(middleX + half * (1.0f + min)), Convert.ToInt32(middleY + half * (0.5f + min))),                 
-                 new Point(Convert.ToInt32(middleX + half * (1.32f + min)), Convert.ToInt32(middleY + half * (1.45f + min))),                 
-                 new Point(Convert.ToInt32(middleX + half * (0.5f + min)), Convert.ToInt32(middleY + half * (0.84f + min))),                 
-             };
+            //TODO: store in the settings the stroke width of the pen.
+            // And the style/dashed/dot
+            _outlinePen = new Pen(Color.Crimson, 4);
+            //_outlinePen.DashStyle = DashStyle.Dot;
 
-            // Create a GraphicsPath object and add a polygon.
-            GraphicsPath myPath = new GraphicsPath();
-            myPath.AddPolygon(myArray);            
-            Color starColor = Color.FromArgb(255 - Math.Min(opacity, 255), Color.Crimson);
-            //Color starColor = Color.FromArgb(230, Color.Crimson);
-            //Color starColor = Color.FromArgb(255 - Math.Min((int)progress * 100*20, 200), Color.Crimson);
-            // Render the path to the screen.
-            Pen myPen = new Pen(starColor, 5);
-            graphics.DrawPath(myPen, myPath);
+            // 1) Make the outer most ripple.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = true,
+                    ShapeType = ShapeType.Polygon,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, 20),
+                    Radius = 10,
+                    RadiusMultiplier = 3,
+                    OutlinePen = _outlinePen,
+                    IsFilled = false,
+                });
         }
     }
 }

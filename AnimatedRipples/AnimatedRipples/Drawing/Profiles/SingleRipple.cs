@@ -22,15 +22,15 @@ namespace WinFormLayered.Drawing
 
         public SingleRipple()
         {
-            InitDrawingProfile();
+            MakeSingleProfile();
         }
 
-        private void InitDrawingProfile()
+        private void MakeSingleProfile()
         {
             int opacity = 10;
             _innerBrush = new SolidBrush(Color.Cyan);
             _outerBursh = new SolidBrush(Color.Crimson);
-            _outlinePen = new Pen(Color.YellowGreen.ReduceOpacity(opacity), 4);
+            _outlinePen = new Pen(Color.YellowGreen.ReduceOpacity(opacity), 4);            
             //-- 1) Add the middle ripple.
             _ripples.Add(
                 new RippleEntry()
@@ -69,17 +69,7 @@ namespace WinFormLayered.Drawing
                     OutlinePen = _outlinePen,
                     IsFilled = true,
                 });
-
         }
-
-        /* Inputs: canvas, radius, color, animation progress: multiplier. 
-            Note:
-                - on animation progress -> profile.Render(); on the canvas.
-                Extract them from the current drawing methods. 
-                Need the canvas and the _surface. 
-            TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
-                  but I need to test it. 
-        */
     }
 }
 

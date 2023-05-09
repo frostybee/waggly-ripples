@@ -36,18 +36,39 @@ namespace WinFormLayered.Drawing
         internal static Rectangle CreateRectangle(int width, int height, int radius)
         {
             return new Rectangle(width / 2 - radius, height / 2 - radius, radius * 2, radius * 2);
-        }        
+        }
+        internal static PointF[] CreateStarShape(int width, int radius)
+        {
+            double middleX = width / 2;
+            double middleY = width / 2;
+            double min = 0.05f;
+            double half = radius;
+            middleX = middleX - half;
+            middleY = middleY - half;
+            //TODO: put this in a helper class. Needs to be adjustable.
+            // Create an array of points.
+            PointF[] points =
+                     {
+                 new Point(Convert.ToInt32(middleX + half * (0.5 + min)), Convert.ToInt32(middleY + half * (0.84 + min))),
+                 new Point(Convert.ToInt32(middleX + half * (1.5f + min)), Convert.ToInt32(middleY + half * (0.84f + min))),
+                 new Point(Convert.ToInt32(middleX + half * (0.68f + min)), Convert.ToInt32(middleY + half * (1.45f + min))),
+                 new Point(Convert.ToInt32(middleX + half * (1.0f + min)), Convert.ToInt32(middleY + half * (0.5f + min))),
+                 new Point(Convert.ToInt32(middleX + half * (1.32f + min)), Convert.ToInt32(middleY + half * (1.45f + min))),
+                 new Point(Convert.ToInt32(middleX + half * (0.5f + min)), Convert.ToInt32(middleY + half * (0.84f + min))),
+             };
+            return points;
+        }
 
-        internal static List<PointF> GetHexagonPoints(int x, int y, int radius)
+        internal static PointF[] CreateHexagon(int x, int y, int radius)
         {
             //Get the middle of the panel            
-            List<PointF> shapes = new List<PointF>();
+            PointF[] shapes = new PointF[6];
             //Create 6 points
-            for (int line = 0; line < 6; line++)
+            for (int i = 0; i < 6; i++)
             {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              
-                shapes.Add(new PointF(
-                    x + radius * (float)Math.Cos(line * 60 * Math.PI / 180f),
-                    y + radius * (float)Math.Sin(line * 60 * Math.PI / 180f)));
+                shapes[i] = new PointF(
+                    x + radius * (float)Math.Cos(i * 60 * Math.PI / 180f),
+                    y + radius * (float)Math.Sin(i * 60 * Math.PI / 180f));
             }
             return shapes;
         }

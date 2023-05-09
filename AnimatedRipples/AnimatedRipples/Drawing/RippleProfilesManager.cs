@@ -30,8 +30,7 @@ namespace WinFormLayered.LayeredForm
         readonly LayeredWindow _layered;
         // NOTE: move those to the BaseProfile.
         Bitmap _surface = null;
-        Bitmap _blankSurface = null;
-        
+        Bitmap _blankSurface = null;        
         /// <summary>        
         /// The drawing canvas on which the mouse click ripples will be repeatedly drawn.
         /// </summary>
@@ -41,25 +40,31 @@ namespace WinFormLayered.LayeredForm
         public RippleProfileType RippleType { get; set; }
         public RippleProfilesManager()
         {
-            _layered = new LayeredWindow();
-            RippleType = RippleProfileType.Hexagon;
+            /* 
+             * TODO: Include in the settings: 
+             * - Flag: expandable ripple or not.
+             * - Flag: color transition or not. 
+             * NOTE: I can remove the specialized profiles and put 
+             *      all the ripple instantiation in the BaseProfile class.
+             */
+            _layered = new LayeredWindow();            
             RippleType = RippleProfileType.Concentric;                                 
-            RippleType = RippleProfileType.SquaredPulse;
-            RippleType = RippleProfileType.Hexagon;            
+            RippleType = RippleProfileType.SquaredPulse;            
             RippleType = RippleProfileType.Single;
             RippleType = RippleProfileType.SonarPulse;
             RippleType = RippleProfileType.Spotlight;
             RippleType = RippleProfileType.Ripple;
             RippleType = RippleProfileType.SquaredPulse;
-            RippleType = RippleProfileType.Spotlight;
+            RippleType = RippleProfileType.Hexagon;
+            RippleType = RippleProfileType.Star;
 
             _animationManager = new AnimationManager()
             {
-                Increment = 0.020,
+                Increment = 0.030, // Control the animation duration.
                 //Increment = 0.010,                
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.EaseInElastic
-                AnimationType = AnimationType.EaseInOutBounce
+                AnimationType = AnimationType.EaseOut                
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -178,7 +183,7 @@ namespace WinFormLayered.LayeredForm
             {
                 _animationManager.SetProgress(0);
                 //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
-                _animationManager.StartNewAnimation(AnimationDirection.InOutIn);
+                _animationManager.StartNewAnimation(AnimationDirection.In);
             }
 
         }

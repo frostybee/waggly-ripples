@@ -27,7 +27,7 @@ namespace WinFormLayered.Drawing
             var x = 200 / 2;
             var y = 200 / 2;
 
-            _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
+            _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
             _ripples.Add(
                 new RippleEntry()
@@ -39,7 +39,7 @@ namespace WinFormLayered.Drawing
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
-                    PolyPoints =  DrawingHelper.GetHexagonPoints(x, y, _baseRadius)
+                    //PolyPoints =  DrawingHelper.CreateHexagon(x, y, _baseRadius)
                 });
             
             
