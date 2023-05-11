@@ -15,8 +15,7 @@ namespace WinFormLayered.Drawing
     internal class SonarPulseRipple : BaseProfile
     {
         // TODO: add IsFilled. Color Transition: enabled/disabled.
-        // Add random color?
-        Pen _outlinePen;
+        // Add random color?        
         SolidBrush _innerBrush;
         SolidBrush _outerBursh;
         public SonarPulseRipple()
@@ -27,32 +26,32 @@ namespace WinFormLayered.Drawing
         private void InitDrawingProfile()
         {
             int opacity = 10;
-            _innerBrush = new SolidBrush(Color.DarkTurquoise);
-            _outerBursh = new SolidBrush(Color.DarkRed.ReduceOpacity(10 * 5));                        
-            //-- 1) Make the outer ripple.
+            _innerBrush = new SolidBrush(Color.Yellow);
+            _outerBursh = new SolidBrush(Color.Crimson.WithOpacity(250));           
+            
+            // 1) Make the outer ripple.
             _ripples.Add(
                 new RippleEntry()
                 {
                     IsExpandable = true,
-                    Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, 15),
                     ShapeType = ShapeType.Ellipse,
                     Radius = BaseRadius,
                     RadiusMultiplier = 3,
-                    FillBrush = _outerBursh,
-                    OutlinePen = _outlinePen,
+                    FillBrush = _outerBursh,                    
                     IsFilled = true,
                 });
-            //-- 2) Make the inner ripple that must drawn last.
+            // 2) Make the inner ripple that must drawn last.
             _ripples.Add(
                 new RippleEntry()
                 {
                     IsExpandable = false,
+                    IsFade = false,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, 6),
                     ShapeType = ShapeType.Ellipse,
                     Radius = 6,
                     RadiusMultiplier = 2,
-                    FillBrush = _innerBrush,
-                    OutlinePen = _outlinePen,
+                    FillBrush = _innerBrush,                    
                     IsFilled = true,
                 });
 
@@ -64,6 +63,6 @@ namespace WinFormLayered.Drawing
                 Need the canvas and the _surface. 
             TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
                   but I need to test it. 
-        */        
+        */
     }
 }

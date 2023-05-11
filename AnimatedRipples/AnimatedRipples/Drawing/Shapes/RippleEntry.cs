@@ -16,17 +16,18 @@ namespace WinFormLayered.Drawing.Shapes
     {
         public ShapeType ShapeType { get; set; } = ShapeType.Ellipse;
         public bool IsFilled { get; set; } = false;
-        public bool IsExpandable { get; set; } = true;        
+        public bool IsExpandable { get; set; } = true;
+        public bool IsFade { get; set; } = true;
         public float RadiusMultiplier { get; set; } = 2.2f;
         public Color FillColor { get; set; }
         public Color StrokeColor { get; set; }
         public int Radius { get; set; }
         public int Opacity { get; set; }
         public BorderStyle BorderStyle { get; set; }
-        public Rectangle Bounds { get; set; }        
+        public Rectangle Bounds { get; set; }
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
-        public PointF[] PolyPoints { get; set; }        
+        public PointF[] PolyPoints { get; set; }
         public double ExpandedRadius { get { return Radius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
@@ -46,7 +47,7 @@ namespace WinFormLayered.Drawing.Shapes
                     // DrawCircle();
                     if (IsFilled)
                     {
-                        graphics.FillEllipse(FillBrush, Bounds);                        
+                        graphics.FillEllipse(FillBrush, Bounds);
                     }
                     else
                     {
@@ -55,8 +56,16 @@ namespace WinFormLayered.Drawing.Shapes
                     }
                     break;
                 case ShapeType.Rectangle:
-                    //OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
-                    graphics.DrawRectangle(OutlinePen, Bounds);
+                    //OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);                    
+                    if (IsFilled)
+                    {
+                        graphics.FillRectangle(FillBrush, Bounds);
+                        
+                    }
+                    else
+                    {
+                        graphics.DrawRectangle(OutlinePen, Bounds);
+                    }
                     break;
                 case ShapeType.Polygon:
                     var x = 200 / 2;
@@ -74,13 +83,14 @@ namespace WinFormLayered.Drawing.Shapes
             //return (255 - Math.Min(Math.Max(0, (int)animationProgress* 150), 255));
             int opacity = 1;
             // Opacity percentage: 255 * 75 / 100
-            float percentage = (float)Math.Round(animationProgress * 60 , 2);
+            float percentage = (float)Math.Round(animationProgress * 80, 2);
             opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));
-            if (IsExpandable)
+            if (IsFade)
             {
                 if (IsFilled)
                 {
                     FillBrush.Color = FillBrush.Color.ReduceOpacity(opacity);
+                    //FillBrush.Color = DrawingHelper.RandomColor().ReduceOpacity(opacity);
                 }
                 else
                 {

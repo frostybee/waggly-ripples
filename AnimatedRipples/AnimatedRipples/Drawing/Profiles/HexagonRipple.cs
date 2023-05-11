@@ -40,14 +40,7 @@ namespace WinFormLayered.Drawing
                     OutlinePen = _outlinePen,
                     IsFilled = false,
                     //PolyPoints =  DrawingHelper.CreateHexagon(x, y, _baseRadius)
-                });
-            
-            
-            //int radius = Math.Min((int)(progress * baseRadius * 2), surface.Width / 2);
-            // TODO: implement GetCurrentRaius(); in the BaseProfile
-            
-            //graphics.DrawPolygon(new Pen(Brushes.Red, strokeWidth), shapes);
-        }      
-        //TODO: need to pass an instance of RippleInfo (aka settings).       
+                });                                 
+        }              
     }
 }

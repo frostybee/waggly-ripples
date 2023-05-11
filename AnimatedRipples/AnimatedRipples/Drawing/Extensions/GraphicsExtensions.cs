@@ -12,9 +12,9 @@ namespace WinFormLayered.Drawing.Extensions
     {
         public static void SetAntiAliasing(this Graphics graphics)
         {
-            graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
             graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            graphics.CompositingQuality = CompositingQuality.HighQuality;
+            graphics.CompositingQuality = CompositingQuality.HighQuality;            
         }
     }
 }

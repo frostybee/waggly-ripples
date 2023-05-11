@@ -35,8 +35,6 @@ namespace WinFormLayered.Drawing
                     OutlinePen = _outlinePen,
                     IsFilled = false,
                 });
-
-        }
-        //TODO: need to pass an instance of RippleInfo (aka settings).
+        }        
     }
 }

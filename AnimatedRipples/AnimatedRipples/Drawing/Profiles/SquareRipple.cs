@@ -31,6 +31,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
                     Radius = 10,
                     RadiusMultiplier = 2,
+                    FillBrush = brush,
                     OutlinePen = _outlinePen,
                     IsFilled = true,
                 });

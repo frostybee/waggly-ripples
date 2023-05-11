@@ -19,7 +19,7 @@ using WinFormLayered.Drawing.Shapes;
 namespace WinFormLayered.LayeredForm
 {
     /// <summary>
-    /// Responsible for creating and animating ripple profiles. 
+    /// Responsible for creating, switching and animating ripple profiles. 
     /// 
     /// A ripple profile consists of a drawing that is either to be drawn or animated. 
     /// It maintains ripple instances corresponding to what the user has selected/enabled.
@@ -56,11 +56,12 @@ namespace WinFormLayered.LayeredForm
             RippleType = RippleProfileType.Ripple;
             RippleType = RippleProfileType.SquaredPulse;
             RippleType = RippleProfileType.Hexagon;
-            RippleType = RippleProfileType.Star;
+            RippleType = RippleProfileType.Star;          
+            RippleType = RippleProfileType.SonarPulse;
 
             _animationManager = new AnimationManager()
             {
-                Increment = 0.030, // Control the animation duration.
+                Increment = 0.010, // Control the animation duration.
                 //Increment = 0.010,                
                 //AnimationType = AnimationType.EaseOut,                
                 //AnimationType = AnimationType.EaseInElastic
@@ -68,12 +69,20 @@ namespace WinFormLayered.LayeredForm
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
-            _animationManager.OnAnimationProgress += OnProcessAnimationProgress;
-            _animationManager.OnAnimationFinished += OnAnimationFinished;
+            _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
+            _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;
             // Make default profile.
             _currentProfile = MakeDrawingProfile(RippleType);
+            SwitchProfile(RippleProfileType.Star);
         }
-        private void OnProcessAnimationProgress(object sender)
+
+        public void SwitchProfile(RippleProfileType inSelectedProfile)
+        {
+            _currentProfile?.DisposeDrawingTools();
+            _currentProfile = MakeDrawingProfile(inSelectedProfile);
+        }
+
+        private void OnRipplesAnimationUpdate(object sender)
         {
             // We process the animation frames here. 
             // We perform the drawing here.                        
@@ -96,9 +105,7 @@ namespace WinFormLayered.LayeredForm
                 case RippleProfileType.Crosshair:
                     Type t = typeof(CrosshairRipple);
                     rippleProfile = (BaseProfile)Activator.CreateInstance(t);
-                    break;
-                case RippleProfileType.Multiple:
-                    break;
+                    break;                
                 case RippleProfileType.SonarPulse:
                     rippleProfile = new SonarPulseRipple();
                     break;
@@ -133,7 +140,7 @@ namespace WinFormLayered.LayeredForm
             return rippleProfile;
         }
 
-        private void OnAnimationFinished(object sender)
+        private void OnRipplesAnimationFinished(object sender)
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
@@ -143,7 +150,7 @@ namespace WinFormLayered.LayeredForm
             _graphics.Clear(Color.Transparent);
             _layered.Hide();
         }
-
+     
         internal void ShowRipplesAt()
         {
             POINT p = new POINT();
@@ -209,6 +216,8 @@ namespace WinFormLayered.LayeredForm
             _layered.SetBitmap(_blankSurface, 1);
             _layered.Hide();
         }
+        
+
         int _radius = 0;
     }
 }

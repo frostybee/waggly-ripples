@@ -53,6 +53,7 @@
     <Compile Include="Animation\AnimationDirection.cs" />
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Animations.cs" />
+    <Compile Include="Drawing\Extensions\ControlExtensions.cs" />
     <Compile Include="Drawing\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Drawing\Helpers\RandomFast.cs" />
     <Compile Include="Drawing\Profiles\BaseProfile.cs" />

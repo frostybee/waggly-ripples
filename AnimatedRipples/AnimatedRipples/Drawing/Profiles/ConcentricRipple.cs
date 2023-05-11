@@ -31,11 +31,12 @@ namespace WinFormLayered.Drawing
         private void InitDrawingProfile()
         {
             _brushInnerRipple = new SolidBrush(Color.Yellow);
-            _penOutline = new Pen(Color.Crimson, 7);
+            _penOutline = new Pen(Color.Crimson, 3);
             _innerPen = new Pen(Color.SteelBlue, 3)
             {
                 DashStyle = DashStyle.Dash
             };
+            
             int width = 200;
             int height = 200;
             //-- Make the ripples.
@@ -84,6 +85,7 @@ namespace WinFormLayered.Drawing
                 new RippleEntry()
                 {
                     IsExpandable = false,
+                    IsFade = false,
                     //Bounds = DrawingHelper.CreateRectangle(surface.Width, surface.Height, 5)
                     Bounds = DrawingHelper.CreateRectangle(width, height, 7),
                     FillBrush = _brushInnerRipple,

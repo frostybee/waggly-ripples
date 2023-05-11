@@ -31,6 +31,7 @@ namespace WinFormLayered.Drawing
             _innerBrush = new SolidBrush(Color.Cyan);
             _outerBursh = new SolidBrush(Color.Crimson);
             _outlinePen = new Pen(Color.YellowGreen.ReduceOpacity(opacity), 4);            
+
             //-- 1) Add the middle ripple.
             _ripples.Add(
                 new RippleEntry()
