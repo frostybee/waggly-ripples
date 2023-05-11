@@ -28,6 +28,7 @@ namespace WinFormLayered.Drawing.Shapes
         public SolidBrush FillBrush { get; set; }
         public Pen OutlinePen { get; set; }
         public PointF[] PolyPoints { get; set; }
+        public PolygonType PolygonType { get; set; }
         public double ExpandedRadius { get { return Radius * RadiusMultiplier; } }
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
@@ -57,22 +58,37 @@ namespace WinFormLayered.Drawing.Shapes
                     break;
                 case ShapeType.Rectangle:
                     //OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);                    
-                    if (IsFilled)
+                    /*if (IsFilled)
                     {
                         graphics.FillRectangle(FillBrush, Bounds);
                         
                     }
                     else
-                    {
+                    {*/
                         graphics.DrawRectangle(OutlinePen, Bounds);
-                    }
+                    
                     break;
-                case ShapeType.Polygon:
+                case ShapeType.Polygon:                    
                     var x = 200 / 2;
                     var y = 200 / 2;
                     int newRadius = Math.Min(Math.Max(1, (int)(progress * CalculateNewRadius())), 200 / 2);
+                    switch (PolygonType)
+                    {
+                        case PolygonType.Diamond:
+                            PolyPoints = DrawingHelper.CreateDiamond(x, y, newRadius);
+                            break;
+                        case PolygonType.Hexagon:
+                            PolyPoints = DrawingHelper.CreateHexagon(x, y, newRadius);
+                            break;
+                        case PolygonType.Star:
+                            PolyPoints = DrawingHelper.CreateStarShape(200, newRadius);
+                            break;
+                        default:
+                            break;
+                    }
+                    
                     //PolyPoints = DrawingHelper.CreateHexagon(x, y, newRadius);
-                    PolyPoints = DrawingHelper.CreateStarShape(200, newRadius);
+                    //PolyPoints = DrawingHelper.CreateStarShape(200, newRadius);
                     graphics.DrawPolygon(OutlinePen, PolyPoints.ToArray());
                     break;
             }

@@ -57,6 +57,7 @@
     <Compile Include="Drawing\Extensions\GraphicsExtensions.cs" />
     <Compile Include="Drawing\Helpers\RandomFast.cs" />
     <Compile Include="Drawing\Profiles\BaseProfile.cs" />
+    <Compile Include="Drawing\Profiles\DiamondProfile.cs" />
     <Compile Include="Drawing\Profiles\HexagonRipple.cs" />
     <Compile Include="Drawing\Profiles\CircleProfile.cs" />
     <Compile Include="Drawing\Profiles\SquaredRipple.cs" />
@@ -64,7 +65,7 @@
     <Compile Include="Drawing\Profiles\SpotlightRipple.cs" />
     <Compile Include="Drawing\Extensions\ColorExtensions.cs" />
     <Compile Include="Drawing\Profiles\ConcentricRipple.cs" />
-    <Compile Include="Drawing\DrawingEnums.cs" />
+    <Compile Include="Drawing\Enums\DrawingEnums.cs" />
     <Compile Include="Drawing\Helpers\DrawingHelper.cs" />
     <Compile Include="Drawing\Profiles\CrosshairRipple.cs" />
     <Compile Include="Drawing\Profiles\SonarPulseRipple.cs" />

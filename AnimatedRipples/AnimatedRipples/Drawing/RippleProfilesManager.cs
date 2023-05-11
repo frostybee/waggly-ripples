@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WinFormLayered.Drawing;
 using WinFormLayered.Drawing.Extensions;
+using WinFormLayered.Drawing.Profiles;
 using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.LayeredForm
@@ -50,14 +51,15 @@ namespace WinFormLayered.LayeredForm
             _layered = new LayeredWindow();            
             RippleType = RippleProfileType.Concentric;                                 
             RippleType = RippleProfileType.SquaredPulse;            
-            RippleType = RippleProfileType.Single;
+            RippleType = RippleProfileType.Cherry;
             RippleType = RippleProfileType.SonarPulse;
             RippleType = RippleProfileType.Spotlight;
-            RippleType = RippleProfileType.Ripple;
+            RippleType = RippleProfileType.Single;
             RippleType = RippleProfileType.SquaredPulse;
             RippleType = RippleProfileType.Hexagon;
             RippleType = RippleProfileType.Star;          
             RippleType = RippleProfileType.SonarPulse;
+            RippleType = RippleProfileType.Diamond;
 
             _animationManager = new AnimationManager()
             {
@@ -105,17 +107,20 @@ namespace WinFormLayered.LayeredForm
                 case RippleProfileType.Crosshair:
                     Type t = typeof(CrosshairRipple);
                     rippleProfile = (BaseProfile)Activator.CreateInstance(t);
-                    break;                
+                    break;
+                case RippleProfileType.Diamond:
+                    rippleProfile = new DiamondProfile();
+                    break;
                 case RippleProfileType.SonarPulse:
                     rippleProfile = new SonarPulseRipple();
                     break;
                 case RippleProfileType.SquaredPulse:
                     rippleProfile = new SquaredRipple();
                     break;
-                case RippleProfileType.Ripple:
+                case RippleProfileType.Single:
                     rippleProfile = new CircleProfile();
                     break;
-                case RippleProfileType.Single:
+                case RippleProfileType.Cherry:
                     rippleProfile = new SingleRipple();
                     break;
                 case RippleProfileType.Hexagon:

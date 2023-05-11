@@ -10,11 +10,13 @@ namespace WinFormLayered.Drawing
     public enum RippleProfileType : uint
     {
         [Description("Single")]
-        Single,        
+        Single,
+        [Description("Cherry Blossom")]
+        Cherry,
+        [Description("Diamond")]
+        Diamond,
         [Description("Star ripple")]
-        Star,
-        [Description("Ripple")]
-        Ripple,
+        Star,        
         [Description("Spotlight")]
         Spotlight,
         [Description("Sonar Pulse")]
@@ -36,5 +38,12 @@ namespace WinFormLayered.Drawing
         Ellipse,        
         Rectangle,
         Polygon,
+    }
+
+    public enum PolygonType : uint
+    {
+        Diamond,
+        Hexagon,
+        Star,
     }
 }

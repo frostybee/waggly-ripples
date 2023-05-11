@@ -37,6 +37,7 @@ namespace WinFormLayered.Drawing
                     RadiusMultiplier = 3,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
+                    PolygonType = PolygonType.Star
                 });
         }
     }

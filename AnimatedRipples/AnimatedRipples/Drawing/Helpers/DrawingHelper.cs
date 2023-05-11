@@ -72,6 +72,18 @@ namespace WinFormLayered.Drawing
             }
             return shapes;
         }
+        internal static PointF[] CreateDiamond(int x, int y, int radius)
+        {            
+            var shapes = new PointF[8];                     
+            //Create 6 points
+            for (int angle = 0; angle < 8; angle++)
+            {  //- TODO: put this in a method. We need to create the shapes once and update the radius on animation progress.              
+                shapes[angle] = new PointF(
+                    x + radius * (float)Math.Cos(angle * 60 * Math.PI / 120f),
+                    y + radius * (float)Math.Sin(angle * 60 * Math.PI / 120f));
+            }            
+            return shapes;
+        }
 
         public static void DrawShadow(Graphics G, GraphicsPath GP, int d, Color pBackColor)
         {
