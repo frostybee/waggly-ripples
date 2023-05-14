@@ -1,4 +1,5 @@
 ﻿using FriskyMouse.UI;
+using MaterialWinforms.Animations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,17 +17,17 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace WinFormLayered
 {
-    public partial class RippleTester : Form
+    public partial class RippleViewerForm : Form
     {
         RippleProfilesManager _profilesManager;
-        List<RippleProfileType> rippleTypes;
-        public RippleTester()
+        List<RippleProfileType> _rippleTypes;
+        public RippleViewerForm()
         {
             InitializeComponent();
-            //_layered = new LayeredFrom();
+            //_layeredWindow = new LayeredFrom();
             _profilesManager = new RippleProfilesManager();
-            rippleTypes = Enum.GetValues(typeof(RippleProfileType)).Cast<RippleProfileType>().ToList();
-            this.Load += RippleTester_Load;
+            _rippleTypes = Enum.GetValues(typeof(RippleProfileType)).Cast<RippleProfileType>().ToList();
+            this.Load += RippleViewerForm_Load;
             cboxRipplesList.SelectedIndexChanged += CboxRipplesList_SelectedIndexChanged;
         }
 
@@ -38,21 +39,22 @@ namespace WinFormLayered
             _profilesManager.SwitchProfile(proc);
         }
 
-        private void RippleTester_Load(object sender, EventArgs e)
+        private void RippleViewerForm_Load(object sender, EventArgs e)
         {
-            // Populate the combo box with the ripple profiles descriptions.
-            //this.rippleTypes.ForEach((d) =>  cboxRipplesList.Items.Add(d.ToString()));
+            // Populate the combo box with the ripple profiles descriptions.            
             cboxRipplesList.PopulateFromEnum(typeof(RippleProfileType));
+            cmbAnimDirection.PopulateFromEnum(typeof(AnimationDirection));
+            cmbInterpolationMode.PopulateFromEnum(typeof(InterpolationType));           
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {            
             _profilesManager.ShowRipplesAt();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //_layered.Hide();
+            //_layeredWindow.Hide();
 
         }
 
@@ -60,6 +62,11 @@ namespace WinFormLayered
         {
             // Test a shadow around a circle.
 
+        }
+
+        private void SliderAnimSpeed_Scroll(object sender, EventArgs e)
+        {
+            lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();
         }
     }
 }

@@ -9,7 +9,7 @@ using NativeStructs = FriskyMouse.NativeApi;
 namespace FriskyMouse.UI
 {
     /// <summary>
-    /// Represents a lightweight window used for creating a _layered, transparent window.
+    /// Represents a lightweight window used for creating a _layeredWindow, transparent window.
     /// It helps with drawing the mouse spotlight and other drawings for the sake of mouse behavior decoration such as right/left clicks,etc. 
     /// </summary>
     internal class LayeredWindow : NativeWindow, IDisposable
@@ -42,7 +42,7 @@ namespace FriskyMouse.UI
             Hide();
         }
         /// <summary>
-        /// Moves the _layered window to the specified location.
+        /// Moves the _layeredWindow window to the specified location.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
@@ -54,7 +54,7 @@ namespace FriskyMouse.UI
             //NativeMethods.SetWindowPos(Handle, NativeMethods.HWND_TOPMOST, 0, 0, 0, 0, NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOSIZE);
         }
         /// <summary>
-        /// Hides the current instance of this _layered window. 
+        /// Hides the current instance of this _layeredWindow window. 
         /// It should be called upon finishing decorating mouse clicks.
         /// </summary>
         public void Hide()
@@ -65,7 +65,7 @@ namespace FriskyMouse.UI
             }
         }
         /// <summary>
-        /// Shows the current instance of this _layered window. 
+        /// Shows the current instance of this _layeredWindow window. 
         /// </summary>
         public void Show()
         {
@@ -76,7 +76,7 @@ namespace FriskyMouse.UI
             // Sets the specified window's show state.
             if (Handle != IntPtr.Zero)
             {
-                // TODO: set the initial position of the _layered window.
+                // TODO: set the initial position of the _layeredWindow window.
                 //POINT point = GetCursorPosition();
                 //SetWindowPosition(point.X, point.Y);
                 NativeMethods.ShowWindow(Handle, NativeConstants.SW_SHOWNOACTIVATE);                
@@ -154,14 +154,14 @@ namespace FriskyMouse.UI
                 pBlend.SourceConstantAlpha = opacity;
                 pBlend.AlphaFormat = NativeConstants.AC_SRC_ALPHA;
                 NativeMethods.UpdateLayeredWindow(
-                    this.Handle,         // Handle to the _layered window
+                    this.Handle,         // Handle to the _layeredWindow window
                     screenDc,            // Handle to the screen DC
-                    ref newLocation,     // New screen position of the _layered window
-                    ref newSize,         // New size of the _layered window
-                    memoryDc,            // Handle to the _layered window _surface DC
+                    ref newLocation,     // New screen position of the _layeredWindow window
+                    ref newSize,         // New size of the _layeredWindow window
+                    memoryDc,            // Handle to the _layeredWindow window _surface DC
                     ref sourceLocation,  // Location of the layer in the DC
-                    0,                   // Color key of the _layered window
-                    ref pBlend,          // Transparency of the _layered window
+                    0,                   // Color key of the _layeredWindow window
+                    ref pBlend,          // Transparency of the _layeredWindow window
                     NativeConstants.ULW_ALPHA // Use blend as the blend function
                   );
             }

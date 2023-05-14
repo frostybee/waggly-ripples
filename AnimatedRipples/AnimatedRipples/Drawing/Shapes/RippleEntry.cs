@@ -44,6 +44,9 @@ namespace WinFormLayered.Drawing.Shapes
             //-- Render this ripple entry.
             switch (ShapeType)
             {
+                case ShapeType.Crosshair:
+                    graphics.FillRectangle(FillBrush, Bounds);
+                    break;
                 case ShapeType.Ellipse:
                     // DrawCircle();
                     if (IsFilled)
@@ -120,6 +123,8 @@ namespace WinFormLayered.Drawing.Shapes
 
             if (IsExpandable)
             {
+                // TODO: Take into consideration the MaxRadius.
+                // TODO: Clamp the radius. 
                 int newRadius = Math.Min(Math.Max(1, (int)(progress * CalculateNewRadius())), 200 / 2);
                 //int newRadius = (int)();
                 // Create a new bounding rectangle based on the newly expanded radius. 

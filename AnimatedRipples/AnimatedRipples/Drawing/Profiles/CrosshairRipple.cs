@@ -13,27 +13,45 @@ namespace WinFormLayered.Drawing.Shapes
 {
     internal class CrosshairRipple : BaseProfile
     {
-        public void Draw(Graphics graphics, Bitmap surface, double progress)
+        SolidBrush _verticalBrush;
+        SolidBrush _horizontalBrush;
+        public CrosshairRipple()
         {
-        graphics.Clear(Color.Transparent);
-        // TODO: Add color transition.
-        /*int width = Convert.ToInt32(40 * progress);          
-        int height = Convert.ToInt32(10 * progress);*/
-        int width = 40;
-        int height = 8;
-        //width = (int)Math.Min(width, width * progress);
-        //height = (int)Math.Min(height, height * progress);
-        graphics.FillRectangle(Brushes.CornflowerBlue,
-            new Rectangle((surface.Width / 2) - 4, (surface.Height / 2) - 20, height, width));
-        graphics.FillRectangle(Brushes.Crimson,
-            new Rectangle((surface.Width / 2) - 20, (surface.Height / 2) - 4, width, height));
-        /*var pathX = new GraphicsPath();
-        var pathY = new GraphicsPath();
-        pathX.AddLine(0, surface.Width / 2, surface.Width, surface.Width / 2);
-        pathY.AddLine(surface.Width / 2, 0, surface.Width / 2, surface.Width);
-        graphics.DrawPath(new Pen(Brushes.Red), pathX);
-        graphics.DrawPath(new Pen(Brushes.Red), pathY);*/
-
+            InitDrawingProfile();
         }
+
+        private void InitDrawingProfile()
+        {
+            int opacity = 10;            
+            int width = 40;
+            int height = 8;
+            // TODO: Set the initial opacity here. 
+            //_verticalBrush = new SolidBrush(Color.CornflowerBlue);
+            _verticalBrush = new SolidBrush(Color.DarkBlue);
+            _horizontalBrush = new SolidBrush(Color.Crimson);            
+            // 1) Make the outer most ripple.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = false,
+                    Bounds = new Rectangle((200/ 2) - 4, (200 / 2) - 20, height, width),
+                    ShapeType = ShapeType.Crosshair,
+                    Radius = 10,
+                    RadiusMultiplier = 2,
+                    FillBrush = _verticalBrush,
+                    IsFilled = true,
+                });
+            _ripples.Add(
+             new RippleEntry()
+             {
+                 IsExpandable = false,
+                 Bounds = new Rectangle((200 / 2) - 20, (200 / 2) - 4, width, height),
+                 ShapeType = ShapeType.Crosshair,
+                 Radius = 10,
+                 RadiusMultiplier = 2,
+                 FillBrush = _horizontalBrush,
+                 IsFilled = true,
+             });
+        }       
     }
 }

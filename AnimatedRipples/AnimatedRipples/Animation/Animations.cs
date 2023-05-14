@@ -1,16 +1,24 @@
 ﻿using System;
+using System.ComponentModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace MaterialWinforms.Animations
 {
-    public enum AnimationType
+    public enum InterpolationType
     {
+        [Description("Linear")]
         Linear,
+        [Description("Ease In Out")]
         EaseInOut,
+        [Description("Ease Out")]
         EaseOut,
+        [Description("Custom Quadratic")]
         CustomQuadratic,
+        [Description("Ease In Elastic")]
         EaseInElastic,
+        [Description("Ease In Out Bounce")]
         EaseInOutBounce,
+        [Description("Ease Out Bounce")]
         EaseOutBounce,
     }
 

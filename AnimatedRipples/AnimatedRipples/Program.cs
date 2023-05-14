@@ -16,7 +16,7 @@ namespace WinFormLayered
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RippleTester());
+            Application.Run(new RippleViewerForm());
             //Application.Run(new TopMostFrm());
         }
     }

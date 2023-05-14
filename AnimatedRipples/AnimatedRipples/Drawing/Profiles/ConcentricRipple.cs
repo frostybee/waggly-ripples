@@ -75,6 +75,7 @@ namespace WinFormLayered.Drawing
                         OutlinePen = _innerPen,
                         RadiusMultiplier = 2,
                         Radius = radius,
+                        IsFade = false,
                         IsFilled = false,
                     });
                 radius += 2;

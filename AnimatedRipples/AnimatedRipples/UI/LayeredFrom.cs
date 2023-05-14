@@ -65,9 +65,9 @@ namespace WinFormLayered
                 Increment = 0.010,
                 //Increment = 0.010,
                 //Increment = 0.070,
-                //AnimationType = AnimationType.EaseOut,                
-                //AnimationType = AnimationType.EaseInElastic
-                AnimationType = AnimationType.EaseOut
+                //InterpolationType = InterpolationType.EaseOut,                
+                //InterpolationType = InterpolationType.EaseInElastic
+                AnimationType = InterpolationType.EaseOut
 
             };
             objAnimationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -159,7 +159,7 @@ namespace WinFormLayered
             graphics.Clear(Color.Tan);
 
             // NOTES: Here we paint the ripple. 
-            // TODO: have a look at ShareX project and see how the created the _layered window. 
+            // TODO: have a look at ShareX project and see how the created the _layeredWindow window. 
 
             //Square CurrentRect = CalculateCurrentRect();
             //_graphics.FillEllipse(FillBrush, CurrentRect);         
@@ -316,7 +316,7 @@ namespace WinFormLayered
                   return cp;
               }
           }*/
-        // Make _layered.
+        // Make _layeredWindow.
         /*protected override CreateParams CreateParams
         {
             get

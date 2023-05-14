@@ -11,7 +11,7 @@ namespace MaterialWinforms.Animations
         public bool InterruptAnimation { get; set; }
         public double Increment { get; set; }
         public double SecondaryIncrement { get; set; }
-        public AnimationType AnimationType { get; set; }
+        public InterpolationType AnimationType { get; set; }
         public bool Singular { get; set; }
 
         public delegate void AnimationFinished(object sender);
@@ -43,7 +43,7 @@ namespace MaterialWinforms.Animations
 
             Increment = 0.03;
             SecondaryIncrement = 0.03;
-            AnimationType = AnimationType.Linear;            
+            AnimationType = InterpolationType.Linear;            
             InterruptAnimation = true;
             Singular = singular;
 
@@ -256,22 +256,22 @@ namespace MaterialWinforms.Animations
             //Debug.WriteLine("Animation progress: " + animationProgresses[index]);            
             switch (AnimationType)
             {
-                case AnimationType.Linear:
+                case InterpolationType.Linear:
                     return AnimationLinear.CalculateProgress(animationProgresses[index]);
-                case AnimationType.EaseInOut:
+                case InterpolationType.EaseInOut:
                     return AnimationEaseInOut.CalculateProgress(animationProgresses[index]);
-                case AnimationType.EaseOut:
+                case InterpolationType.EaseOut:
                     return AnimationEaseOut.CalculateProgress(animationProgresses[index]);
-                case AnimationType.CustomQuadratic:
+                case InterpolationType.CustomQuadratic:
                     return AnimationCustomQuadratic.CalculateProgress(animationProgresses[index]);
-                case AnimationType.EaseInElastic:
+                case InterpolationType.EaseInElastic:
                     return AnimationEaseInElastic.CalculateProgress(animationProgresses[index]);
-                case AnimationType.EaseInOutBounce:
+                case InterpolationType.EaseInOutBounce:
                     return AnimationEaseInOutBounce.CalculateProgress(animationProgresses[index]);
-                case AnimationType.EaseOutBounce:
+                case InterpolationType.EaseOutBounce:
                     return EaseOutBounceInterpolator.CalculateProgress(animationProgresses[index]);
                 default:
-                    throw new NotImplementedException("The given AnimationType is not implemented");
+                    throw new NotImplementedException("The given InterpolationType is not implemented");
             }
 
         }

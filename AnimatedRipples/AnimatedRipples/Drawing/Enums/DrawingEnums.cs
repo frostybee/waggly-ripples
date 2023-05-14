@@ -38,6 +38,7 @@ namespace WinFormLayered.Drawing
         Ellipse,        
         Rectangle,
         Polygon,
+        Crosshair
     }
 
     public enum PolygonType : uint

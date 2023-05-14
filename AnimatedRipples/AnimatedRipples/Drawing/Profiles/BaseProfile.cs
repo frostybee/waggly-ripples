@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormLayered.Drawing.Profiles;
 using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
@@ -21,10 +22,11 @@ namespace WinFormLayered.Drawing
         #region Properties
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
-        public int BaseRadius { get; set; } = 10;
+        public int BaseRadius { get; set; } = 10;        
         public List<RippleEntry> RippleEntries { get => _ripples; }
-        #endregion
-                
+        public RippleProfileSettings Options { get; set; }        
+        #endregion               
+
         // Is it better to use an interface with public properties?
 
         /// <summary>

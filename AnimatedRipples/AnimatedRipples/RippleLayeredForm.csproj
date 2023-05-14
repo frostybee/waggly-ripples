@@ -60,6 +60,7 @@
     <Compile Include="Drawing\Profiles\DiamondProfile.cs" />
     <Compile Include="Drawing\Profiles\HexagonRipple.cs" />
     <Compile Include="Drawing\Profiles\CircleProfile.cs" />
+    <Compile Include="Drawing\Settings\ProfileSettings.cs" />
     <Compile Include="Drawing\Profiles\SquaredRipple.cs" />
     <Compile Include="Drawing\Shapes\RippleEntry.cs" />
     <Compile Include="Drawing\Profiles\SpotlightRipple.cs" />
@@ -80,11 +81,11 @@
     <Compile Include="Native\NativeEnums.cs" />
     <Compile Include="Native\NativeMethods.cs" />
     <Compile Include="Native\NativeStructs.cs" />
-    <Compile Include="UI\RippleTester.cs">
+    <Compile Include="UI\RippleViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\RippleTester.Designer.cs">
-      <DependentUpon>RippleTester.cs</DependentUpon>
+    <Compile Include="UI\RippleViewerForm.Designer.cs">
+      <DependentUpon>RippleViewerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\LayeredFrom.cs">
       <SubType>Form</SubType>
@@ -103,8 +104,8 @@
     <EmbeddedResource Include="LayeredForm\LayeredWindow.resx">
       <DependentUpon>LayeredWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\RippleTester.resx">
-      <DependentUpon>RippleTester.cs</DependentUpon>
+    <EmbeddedResource Include="UI\RippleViewerForm.resx">
+      <DependentUpon>RippleViewerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\LayeredFrom.resx">
       <DependentUpon>LayeredFrom.cs</DependentUpon>

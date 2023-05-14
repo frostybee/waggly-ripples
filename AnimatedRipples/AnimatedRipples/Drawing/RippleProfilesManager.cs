@@ -28,7 +28,8 @@ namespace WinFormLayered.LayeredForm
     /// </summary>
     internal class RippleProfilesManager
     {
-        readonly LayeredWindow _layered;
+
+        readonly LayeredWindow _layeredWindow;
         // NOTE: move those to the BaseProfile.
         Bitmap _surface = null;
         Bitmap _blankSurface = null;        
@@ -48,7 +49,7 @@ namespace WinFormLayered.LayeredForm
              * NOTE: I can remove the specialized profiles and put 
              *      all the ripple instantiation in the BaseProfile class.
              */
-            _layered = new LayeredWindow();            
+            _layeredWindow = new LayeredWindow();            
             RippleType = RippleProfileType.Concentric;                                 
             RippleType = RippleProfileType.SquaredPulse;            
             RippleType = RippleProfileType.Cherry;
@@ -63,11 +64,11 @@ namespace WinFormLayered.LayeredForm
 
             _animationManager = new AnimationManager()
             {
-                Increment = 0.010, // Control the animation duration.
+                Increment = 0.020, // Control the animation duration.
                 //Increment = 0.010,                
-                //AnimationType = AnimationType.EaseOut,                
-                //AnimationType = AnimationType.EaseInElastic
-                AnimationType = AnimationType.EaseOut                
+                //InterpolationType = InterpolationType.EaseOut,                
+                //InterpolationType = InterpolationType.EaseInElastic
+                AnimationType = InterpolationType.EaseOut                
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -93,7 +94,7 @@ namespace WinFormLayered.LayeredForm
             var progress = _animationManager.GetProgress();
             _currentProfile.RenderRipples(_graphics, progress);
             //RenderRipplesProfile(_currentProfile, progress);
-            _layered.SetBitmap(_surface, 255);
+            _layeredWindow.SetBitmap(_surface, 255);
         }
 
         
@@ -149,21 +150,21 @@ namespace WinFormLayered.LayeredForm
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            //_layered.SetBitmap(new Bitmap(200, 200), 1);
-            // Clear the _surface that was previously drawn onto the _layered window.
-            //_layered.SetBitmap(_blankSurface, 1);
+            //_layeredWindow.SetBitmap(new Bitmap(200, 200), 1);
+            // Clear the _surface that was previously drawn onto the _layeredWindow window.
+            //_layeredWindow.SetBitmap(_blankSurface, 1);
             _graphics.Clear(Color.Transparent);
-            _layered.Hide();
+            _layeredWindow.Hide();
         }
      
         internal void ShowRipplesAt()
         {
             POINT p = new POINT();
             NativeMethods.GetCursorPos(out p);
-            _layered.PositionX = p.X;
-            _layered.PositionY = p.Y;
-            _layered.Move();
-            _layered.Show();
+            _layeredWindow.PositionX = p.X +1 ;
+            _layeredWindow.PositionY = p.Y +1;
+            _layeredWindow.Move();
+            _layeredWindow.Show();
             StartAnimation();            
         }
         IntAnimate animate = new IntAnimate();//animate.Start(int duration, T initial, T end, EasingType easing = EasingType.Linear)    
@@ -181,8 +182,8 @@ namespace WinFormLayered.LayeredForm
                 _graphics = Graphics.FromImage(_surface);
                 _graphics.SetAntiAliasing();                
             }
-            // Clear the _surface that was previously drawn onto the _layered window.
-            _layered.SetBitmap(_blankSurface, 1);
+            // Clear the _surface that was previously drawn onto the _layeredWindow window.
+            _layeredWindow.SetBitmap(_blankSurface, 1);
             //Debug.WriteLine("Updating....");
             // We perform the drawing here.            
 
@@ -195,7 +196,7 @@ namespace WinFormLayered.LayeredForm
             {
                 _animationManager.SetProgress(0);
                 //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
-                _animationManager.StartNewAnimation(AnimationDirection.In);
+                _animationManager.StartNewAnimation(AnimationDirection.Out);
             }
 
         }
@@ -209,17 +210,17 @@ namespace WinFormLayered.LayeredForm
             //_currentProfile.Draw(_graphics, _surface, animate.Alpha);
             //RenderRipplesProfile(_currentProfile, animate.Alpha);
             _currentProfile.RenderRipples(_graphics, animate.Alpha);
-            _layered.SetBitmap(_surface, 255);
+            _layeredWindow.SetBitmap(_surface, 255);
         }
         // Metro animation
         private void objAnimationManager_OnAnimationFinished()
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            //_layered.SetBitmap(new Bitmap(200, 200), 1);
+            //_layeredWindow.SetBitmap(new Bitmap(200, 200), 1);
             _graphics.Clear(Color.Transparent);
-            _layered.SetBitmap(_blankSurface, 1);
-            _layered.Hide();
+            _layeredWindow.SetBitmap(_blankSurface, 1);
+            _layeredWindow.Hide();
         }
         
 
