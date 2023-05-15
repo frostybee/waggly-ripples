@@ -98,51 +98,51 @@ namespace WinFormLayered.LayeredForm
         }
 
         
-        private BaseProfile MakeDrawingProfile(RippleProfileType inRippleType)
+        private BaseProfile MakeDrawingProfile(RippleProfileType inProfileType)
         {
-            BaseProfile rippleProfile = null;
-            // TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
+            BaseProfile rippleProfile = BaseProfile.MakeProfile(inProfileType);
+            /*// TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
             // at runtime. 
-            switch (inRippleType)
+            switch (inProfileType)
             {
                 case RippleProfileType.Crosshair:
-                    Type t = typeof(CrosshairRipple);
+                    Type t = typeof(CrosshairProfile);
                     rippleProfile = (BaseProfile)Activator.CreateInstance(t);
                     break;
                 case RippleProfileType.Diamond:
                     rippleProfile = new DiamondProfile();
                     break;
                 case RippleProfileType.SonarPulse:
-                    rippleProfile = new SonarPulseRipple();
+                    rippleProfile = new SonarPulseProfile();
                     break;
                 case RippleProfileType.SquaredPulse:
-                    rippleProfile = new SquaredRipple();
+                    rippleProfile = new SquaredPulseProfile();
                     break;
                 case RippleProfileType.Single:
                     rippleProfile = new CircleProfile();
                     break;
                 case RippleProfileType.Cherry:
-                    rippleProfile = new SingleRipple();
+                    rippleProfile = new SingleProfile();
                     break;
                 case RippleProfileType.Hexagon:
-                    rippleProfile = new HexagonRipple();
+                    rippleProfile = new HexagonProfile();
                     break;
                 case RippleProfileType.Square:
-                    rippleProfile = new SquareRipple();
+                    rippleProfile = new SquareProfile();
                     break;
                 case RippleProfileType.Star:
-                    rippleProfile = new StarRipple();
+                    rippleProfile = new StarProfile();
                     break;
                 case RippleProfileType.Concentric:
-                    rippleProfile = new ConcentricRipple();
+                    rippleProfile = new ConcentricProfile();
                     break;
                 case RippleProfileType.Spotlight:
-                    rippleProfile = new SpotlightRipple();
+                    rippleProfile = new SpotlightProfile();
                     break;
                 default:
-                    rippleProfile = new SpotlightRipple();
+                    rippleProfile = new SpotlightProfile();
                     break;
-            }
+            }*/
             return rippleProfile;
         }
 

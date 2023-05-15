@@ -30,7 +30,7 @@ namespace WinFormLayered
             InitializeComponent();
             //_layeredWindow = new LayeredFrom();            
             _profilesManager = new RippleProfilesManager();
-            _currentProfile = new SonarPulseRipple();
+            _currentProfile = new SonarPulseProfile();
             this.Load += RippleViewerForm_Load;
             cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;
             pcbRipplePreview.Paint += PcbRipplePreview_Paint;
@@ -42,9 +42,9 @@ namespace WinFormLayered
                 //InterpolationType = InterpolationType.EaseInElastic
                 InterpolationMode = InterpolationType.EaseOut
             };
-            _animationDirection = AnimationDirection.In;            ;
-            _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
-            _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;
+            _animationDirection = AnimationDirection.In; ;
+            _animationManager.OnAnimationProgress += OnRipplesAnimation_Update;
+            _animationManager.OnAnimationFinished += OnRipplesAnimation_Finished;
             pcbRipplePreview.BackColor = Color.Transparent;
 
             //pcbRipplePreview.BringToFront();
@@ -61,11 +61,13 @@ namespace WinFormLayered
                 // Draw and animate the selected profile. 
                 var progress = _animationManager.GetProgress();
                 _currentProfile.RenderRipples(e.Graphics, progress);
+                //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
+
             }
         }
         private void btnPreview_Click(object sender, EventArgs e)
         {
-            StartAnimation();            
+            StartAnimation();
         }
 
         private void StartAnimation()
@@ -78,7 +80,7 @@ namespace WinFormLayered
             }
         }
 
-        private void OnRipplesAnimationUpdate(object sender)
+        private void OnRipplesAnimation_Update(object sender)
         {
             // We process the animation frames here. 
             // We perform the drawing here.                        
@@ -91,14 +93,6 @@ namespace WinFormLayered
             pcbRipplePreview.Invalidate();
         }
 
-        private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine(cmbProfilesList.SelectedIndex);
-            Enum.TryParse<RippleProfileType>(cmbProfilesList.SelectedValue.ToString(), out RippleProfileType profile);            
-            _profilesManager.SwitchProfile(profile);
-            _currentProfile = MakeDrawingProfile(profile);
-        }
-
         private void RippleViewerForm_Load(object sender, EventArgs e)
         {
             // Populate the combo box with the ripple profiles descriptions.            
@@ -107,7 +101,7 @@ namespace WinFormLayered
             cmbInterpolationMode.PopulateFromEnum(typeof(InterpolationType));
         }
 
-        private void OnRipplesAnimationFinished(object sender)
+        private void OnRipplesAnimation_Finished(object sender)
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
@@ -135,18 +129,34 @@ namespace WinFormLayered
         }
         private void SliderAnimSpeed_Scroll(object sender, EventArgs e)
         {
-            lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();            
+            lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();
             // Increase the speed of the animation.
-            _animationManager.Increment = (double)sliderAnimSpeed.Value/1000;
+            _animationManager.Increment = (double)sliderAnimSpeed.Value / 1000;
         }
-
+        private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
+        { 
+            // A ripple profile has been selected.
+            Debug.WriteLine(cmbProfilesList.SelectedIndex);
+            Enum.TryParse<RippleProfileType>(cmbProfilesList.SelectedValue.ToString(), out RippleProfileType profile);
+            //_profilesManager.SwitchProfile(profile);
+            _currentProfile = BaseProfile.MakeProfile(profile);
+            //BaseProfile rippleProfile = BaseProfile.MakeProfile(inProfileType);
+        }
         private void CmbAnimDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // The direction of the animation has been changed. 
             Debug.WriteLine(cmbProfilesList.SelectedIndex);
+            // TODO: Make an extension method. Retrieve the value
             Enum.TryParse<AnimationDirection>(cmbAnimDirection.SelectedValue.ToString(), out AnimationDirection direction);
             _animationDirection = direction;
         }
-
+        private void CmbInterpolationMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // The animation's interpolation mode has been changed.
+            Debug.WriteLine(cmbInterpolationMode.SelectedIndex);
+            Enum.TryParse<InterpolationType>(cmbInterpolationMode.SelectedValue.ToString(), out InterpolationType interpolation);
+            _animationManager.InterpolationMode = interpolation;
+        }
         private void BtnStopAnimation_Click(object sender, EventArgs e)
         {
             if (_animationManager.IsAnimating())
@@ -154,64 +164,7 @@ namespace WinFormLayered
                 _animationManager.Stop();
                 // Clear the preview.
             }
-        }
-
-        private void CmbInterpolationMode_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine(cmbInterpolationMode.SelectedIndex);
-            Enum.TryParse<InterpolationType>(cmbInterpolationMode.SelectedValue.ToString(), out InterpolationType interpolation);
-            _animationManager.InterpolationMode = interpolation;
-        }
-
-
-        private BaseProfile MakeDrawingProfile(RippleProfileType inRippleType)
-        {
-            // TODO: Make a profile factory.
-            BaseProfile rippleProfile = null;
-            // TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
-            // at runtime. 
-            switch (inRippleType)
-            {
-                case RippleProfileType.Crosshair:
-                    Type t = typeof(CrosshairRipple);
-                    rippleProfile = (BaseProfile)Activator.CreateInstance(t);
-                    break;
-                case RippleProfileType.Diamond:
-                    rippleProfile = new DiamondProfile();
-                    break;
-                case RippleProfileType.SonarPulse:
-                    rippleProfile = new SonarPulseRipple();
-                    break;
-                case RippleProfileType.SquaredPulse:
-                    rippleProfile = new SquaredRipple();
-                    break;
-                case RippleProfileType.Single:
-                    rippleProfile = new CircleProfile();
-                    break;
-                case RippleProfileType.Cherry:
-                    rippleProfile = new SingleRipple();
-                    break;
-                case RippleProfileType.Hexagon:
-                    rippleProfile = new HexagonRipple();
-                    break;
-                case RippleProfileType.Square:
-                    rippleProfile = new SquareRipple();
-                    break;
-                case RippleProfileType.Star:
-                    rippleProfile = new StarRipple();
-                    break;
-                case RippleProfileType.Concentric:
-                    rippleProfile = new ConcentricRipple();
-                    break;
-                case RippleProfileType.Spotlight:
-                    rippleProfile = new SpotlightRipple();
-                    break;
-                default:
-                    rippleProfile = new SpotlightRipple();
-                    break;
-            }
-            return rippleProfile;
-        }
+        }     
 
     }
 }

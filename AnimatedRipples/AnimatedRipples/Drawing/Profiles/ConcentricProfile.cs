@@ -11,7 +11,7 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class ConcentricRipple : BaseProfile
+    internal class ConcentricProfile : BaseProfile
     {
         //TODO: change the name to Lollipop
         // Tools required to draw the ripples.
@@ -23,7 +23,7 @@ namespace WinFormLayered.Drawing
         //Bitmap surface;
 
         int _baseRadius = 40; // Needs to be parametrized.
-        public ConcentricRipple()
+        public ConcentricProfile()
         {
             InitDrawingProfile();
         }

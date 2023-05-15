@@ -9,11 +9,11 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class SpotlightRipple : BaseProfile
+    internal class SpotlightProfile : BaseProfile
     {
         // TODO: dispose the drawing tools.
         SolidBrush _innerBrush;
-        public SpotlightRipple()
+        public SpotlightProfile()
         {
             InitDrawingProfile();
         }

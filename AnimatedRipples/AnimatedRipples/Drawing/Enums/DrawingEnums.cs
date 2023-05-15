@@ -4,32 +4,35 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WinFormLayered.Drawing.Attributes;
+using WinFormLayered.Drawing.Profiles;
+using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
     public enum RippleProfileType : uint
     {
-        [Description("Single")]
+        [Description("Single"), ConstructableEnum(typeof(CircleProfile))]
         Single,
-        [Description("Cherry Blossom")]
+        [Description("Cherry Blossom"), ConstructableEnum(typeof(SingleProfile))]
         Cherry,
-        [Description("Diamond")]
+        [Description("Diamond"), ConstructableEnum(typeof(DiamondProfile))]
         Diamond,
-        [Description("Star ripple")]
+        [Description("Star ripple"), ConstructableEnum(typeof(StarProfile))]
         Star,        
-        [Description("Spotlight")]
+        [Description("Spotlight"), ConstructableEnum(typeof(SpotlightProfile))]
         Spotlight,
-        [Description("Sonar Pulse")]
+        [Description("Sonar Pulse"), ConstructableEnum(typeof(SonarPulseProfile))]
         SonarPulse,
-        [Description("Squared Pulse")]
+        [Description("Squared Pulse"), ConstructableEnum(typeof(SquaredPulseProfile))]
         SquaredPulse,
-        [Description("Square")]
+        [Description("Square"), ConstructableEnum(typeof(SquareProfile))]
         Square,
-        [Description("Hexagon")]
+        [Description("Hexagon"), ConstructableEnum(typeof(HexagonProfile))]
         Hexagon,
-        [Description("Crosshair")]
+        [Description("Crosshair"), ConstructableEnum(typeof(CrosshairProfile))]
         Crosshair,
-        [Description("Concentric Circles")]
+        [Description("Concentric Circles"), ConstructableEnum(typeof(ConcentricProfile))]
         Concentric // Core circle in the middle.          
     }
 

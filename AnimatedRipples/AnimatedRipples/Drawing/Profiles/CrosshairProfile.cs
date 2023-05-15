@@ -11,11 +11,11 @@ using System.Xml.Linq;
 
 namespace WinFormLayered.Drawing.Shapes
 {
-    internal class CrosshairRipple : BaseProfile
+    internal class CrosshairProfile : BaseProfile
     {
         SolidBrush _verticalBrush;
         SolidBrush _horizontalBrush;
-        public CrosshairRipple()
+        public CrosshairProfile()
         {
             InitDrawingProfile();
         }

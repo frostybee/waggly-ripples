@@ -10,12 +10,12 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class HexagonRipple : BaseProfile
+    internal class HexagonProfile : BaseProfile
     {
         Pen _outlinePen;
         int _baseRadius = 10; // Needs to be parametrized.
         
-        public HexagonRipple()
+        public HexagonProfile()
         {
             InitDrawingProfile();
         }

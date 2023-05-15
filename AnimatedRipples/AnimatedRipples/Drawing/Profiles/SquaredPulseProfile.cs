@@ -12,7 +12,7 @@ namespace WinFormLayered.Drawing
     /// <summary>
     /// Represents a single expanding ripple.
     /// </summary>
-    internal class SquaredRipple : BaseProfile
+    internal class SquaredPulseProfile : BaseProfile
     {
         // TODO: add IsFilled. Color Transition: enabled/disabled.
         // Add random color?        
@@ -20,7 +20,7 @@ namespace WinFormLayered.Drawing
         SolidBrush _innerBrush;
         SolidBrush _outerBursh;
 
-        public SquaredRipple()
+        public SquaredPulseProfile()
         {
             InitDrawingProfile();
         }

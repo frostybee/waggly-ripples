@@ -11,11 +11,11 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class StarRipple : BaseProfile
+    internal class StarProfile : BaseProfile
     {
 
         Pen _outlinePen;
-        public StarRipple()
+        public StarProfile()
         {
             InitDrawingProfile();
         }

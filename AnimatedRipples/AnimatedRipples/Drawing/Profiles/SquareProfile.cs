@@ -8,12 +8,12 @@ using WinFormLayered.Drawing.Shapes;
 
 namespace WinFormLayered.Drawing
 {
-    internal class SquareRipple : BaseProfile
+    internal class SquareProfile : BaseProfile
     {
         SolidBrush brush;
         Pen _outlinePen;
         int _baseRadius = 10; // Needs to be parametrized.
-        public SquareRipple()
+        public SquareProfile()
         {
             InitDrawingProfile();
         }

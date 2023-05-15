@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinFormLayered.Drawing.Attributes;
+using WinFormLayered.Drawing.Extensions;
 using WinFormLayered.Drawing.Profiles;
 using WinFormLayered.Drawing.Shapes;
 
@@ -18,14 +20,14 @@ namespace WinFormLayered.Drawing
     {
         private bool disposedValue;
         protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
-        
+
         #region Properties
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
-        public int BaseRadius { get; set; } = 10;        
+        public int BaseRadius { get; set; } = 10;
         public List<RippleEntry> RippleEntries { get => _ripples; }
-        public RippleProfileSettings Options { get; set; }        
-        #endregion               
+        public RippleProfileSettings Options { get; set; }
+        #endregion
 
         // Is it better to use an interface with public properties?
 
@@ -37,7 +39,7 @@ namespace WinFormLayered.Drawing
         public void RenderRipples(Graphics _graphics, double progress)
         {
             Debug.WriteLine("Progress: " + progress);
-            _graphics.Clear(Color.Transparent);
+            //_graphics.Clear(Color.Transparent);
             //TODO: move this to the ripple class. Needs to be computed there.
             var opacity = (int)(progress * 20 * 5);
             // We adjust the ripple properties every animation frame. 
@@ -50,6 +52,14 @@ namespace WinFormLayered.Drawing
                 // Draw the ripple.                
                 ripple.Draw(_graphics, progress);
             });
+        }
+        public static BaseProfile MakeProfile(RippleProfileType profileType)
+        {
+            ConstructableEnumAttribute attribute = profileType.GetEnumAttribute<ConstructableEnumAttribute>();
+            Debug.WriteLine(attribute.Type);
+            BaseProfile profile = (BaseProfile)Activator.CreateInstance(attribute.Type);
+            return profile;
+
         }
         public void DisposeDrawingTools()
         {
@@ -68,7 +78,7 @@ namespace WinFormLayered.Drawing
                 if (disposing)
                 {
                     // Dispose of the drawing tools such as brushes, pens, etc.
-                    DisposeDrawingTools();                   
+                    DisposeDrawingTools();
                 }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override finalizer
