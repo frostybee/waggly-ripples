@@ -1,5 +1,5 @@
 ﻿using Bee.GlobalHooks.NativeApi;
-using MaterialWinforms.Animations;
+using MaterialSkin.Animations;
 using ReaLTaiizor.Animate.Metro;
 using ReaLTaiizor.Enum.Metro;
 using System;
@@ -67,7 +67,7 @@ namespace WinFormLayered
                 //Increment = 0.070,
                 //InterpolationType = InterpolationType.EaseOut,                
                 //InterpolationType = InterpolationType.EaseInElastic
-                AnimationType = InterpolationType.EaseOut
+                InterpolationMode = InterpolationType.EaseOut
 
             };
             objAnimationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -142,7 +142,7 @@ namespace WinFormLayered
             Color rippleColor = Color.Red;
             //_graphics.FillEllipse(new SolidBrush(rippleColor), outer);
             graphics.DrawEllipse(new Pen(Color.Blue, 2), outer);
-            // TODO: Render a circle outline à la Google Maps ripple
+            // TODO: Draw a circle outline à la Google Maps ripple
             // - Also, draw circle in the middle after the inner one. 
             // TODO: Look for drawing helpers in ShareX and other libraries. 
         }

@@ -33,7 +33,7 @@ namespace WinFormLayered.Drawing.Shapes
 
         //-- TODO: can be moved to a BaseShape class: then render() it there.
         // Move this to profileRendered or Helper class.
-        internal void Render(Graphics graphics, double progress)
+        internal void Draw(Graphics graphics, double progress)
         {
             // Expand the radius of the current ripple to be rendered. 
             //FIXME: ripple.ExpandRadius(animationProgress);
@@ -41,7 +41,7 @@ namespace WinFormLayered.Drawing.Shapes
             //-- Get the opacity value for animating a fade-like color transition.
             AdjustColorOpacity(progress);
             //Debug.WriteLine("Opacity: " + opacity);
-            //-- Render this ripple entry.
+            //-- Draw this ripple entry.
             switch (ShapeType)
             {
                 case ShapeType.Crosshair:

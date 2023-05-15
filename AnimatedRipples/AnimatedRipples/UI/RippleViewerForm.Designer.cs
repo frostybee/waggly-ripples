@@ -31,7 +31,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.cboxRipplesList = new System.Windows.Forms.ComboBox();
+            this.cmbProfilesList = new System.Windows.Forms.ComboBox();
             this.pcbRipplePreview = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,6 +45,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cmbAnimDirection = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnPreview = new System.Windows.Forms.Button();
+            this.btnStopAnimation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbRipplePreview)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliderAnimSpeed)).BeginInit();
@@ -81,13 +83,13 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // cboxRipplesList
+            // cmbProfilesList
             // 
-            this.cboxRipplesList.FormattingEnabled = true;
-            this.cboxRipplesList.Location = new System.Drawing.Point(12, 61);
-            this.cboxRipplesList.Name = "cboxRipplesList";
-            this.cboxRipplesList.Size = new System.Drawing.Size(158, 24);
-            this.cboxRipplesList.TabIndex = 3;
+            this.cmbProfilesList.FormattingEnabled = true;
+            this.cmbProfilesList.Location = new System.Drawing.Point(12, 61);
+            this.cmbProfilesList.Name = "cmbProfilesList";
+            this.cmbProfilesList.Size = new System.Drawing.Size(158, 24);
+            this.cmbProfilesList.TabIndex = 3;
             // 
             // pcbRipplePreview
             // 
@@ -153,7 +155,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(50, 98);
+            this.label5.Location = new System.Drawing.Point(12, 93);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 16);
             this.label5.TabIndex = 10;
@@ -180,11 +182,12 @@
             this.cmbInterpolationMode.Name = "cmbInterpolationMode";
             this.cmbInterpolationMode.Size = new System.Drawing.Size(184, 24);
             this.cmbInterpolationMode.TabIndex = 8;
+            this.cmbInterpolationMode.SelectedIndexChanged += new System.EventHandler(this.CmbInterpolationMode_SelectedIndexChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(197, 27);
+            this.label4.Location = new System.Drawing.Point(195, 23);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(121, 16);
             this.label4.TabIndex = 7;
@@ -193,7 +196,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 27);
+            this.label3.Location = new System.Drawing.Point(10, 24);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 16);
             this.label3.TabIndex = 6;
@@ -206,11 +209,12 @@
             this.cmbAnimDirection.Name = "cmbAnimDirection";
             this.cmbAnimDirection.Size = new System.Drawing.Size(158, 24);
             this.cmbAnimDirection.TabIndex = 6;
+            this.cmbAnimDirection.SelectedIndexChanged += new System.EventHandler(this.CmbAnimDirection_SelectedIndexChanged);
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.cboxRipplesList);
+            this.groupBox2.Controls.Add(this.cmbProfilesList);
             this.groupBox2.Location = new System.Drawing.Point(28, 25);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(432, 114);
@@ -218,11 +222,33 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Profile Options";
             // 
+            // btnPreview
+            // 
+            this.btnPreview.Location = new System.Drawing.Point(510, 313);
+            this.btnPreview.Name = "btnPreview";
+            this.btnPreview.Size = new System.Drawing.Size(93, 25);
+            this.btnPreview.TabIndex = 10;
+            this.btnPreview.Text = "Preview";
+            this.btnPreview.UseVisualStyleBackColor = true;
+            this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
+            // 
+            // btnStopAnimation
+            // 
+            this.btnStopAnimation.Location = new System.Drawing.Point(623, 313);
+            this.btnStopAnimation.Name = "btnStopAnimation";
+            this.btnStopAnimation.Size = new System.Drawing.Size(93, 25);
+            this.btnStopAnimation.TabIndex = 11;
+            this.btnStopAnimation.Text = "Stop";
+            this.btnStopAnimation.UseVisualStyleBackColor = true;
+            this.btnStopAnimation.Click += new System.EventHandler(this.BtnStopAnimation_Click);
+            // 
             // RippleViewerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 475);
+            this.Controls.Add(this.btnStopAnimation);
+            this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
@@ -247,7 +273,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ComboBox cboxRipplesList;
+        private System.Windows.Forms.ComboBox cmbProfilesList;
         private System.Windows.Forms.PictureBox pcbRipplePreview;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -261,6 +287,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblAnimSpeed;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button btnPreview;
+        private System.Windows.Forms.Button btnStopAnimation;
     }
 }
 

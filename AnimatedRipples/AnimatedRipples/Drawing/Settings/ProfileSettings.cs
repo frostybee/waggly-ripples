@@ -1,4 +1,4 @@
-﻿using MaterialWinforms.Animations;
+﻿using MaterialSkin.Animations;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Drawing2D;

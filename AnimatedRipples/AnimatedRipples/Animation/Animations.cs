@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-
-namespace MaterialWinforms.Animations
+﻿namespace MaterialSkin.Animations
 {
+    using System;
+    using System.ComponentModel;
+
     public enum InterpolationType
     {
         [Description("Linear")]

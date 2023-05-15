@@ -58,7 +58,7 @@ namespace WinFormLayered.Drawing
         }
         /* Inputs: canvas, radius, color, animation progress: multiplier. 
             Note:
-                - on animation progress -> profile.Render(); on the canvas.
+                - on animation progress -> profile.Draw(); on the canvas.
                 Extract them from the current drawing methods. 
                 Need the canvas and the _surface. 
             TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300

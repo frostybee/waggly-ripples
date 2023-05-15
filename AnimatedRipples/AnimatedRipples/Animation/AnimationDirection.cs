@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace MaterialWinforms.Animations
+namespace MaterialSkin.Animations
 {
+    /// <summary>
+    /// Defines the AnimationDirection
+    /// </summary>
     public enum AnimationDirection
     {
         [Description("In")]

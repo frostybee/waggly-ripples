@@ -1,374 +1,597 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace MaterialWinforms.Animations
+﻿namespace MaterialSkin.Animations
 {
-    public class AnimationManager
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Defines the <see cref="AnimationManager" />
+    /// </summary>
+    internal class AnimationManager
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether InterruptAnimation
+        /// </summary>
         public bool InterruptAnimation { get; set; }
-        public double Increment { get; set; }
-        public double SecondaryIncrement { get; set; }
-        public InterpolationType AnimationType { get; set; }
-        public bool Singular { get; set; }
-
-        public delegate void AnimationFinished(object sender);
-        public event AnimationFinished OnAnimationFinished;
-
-        public delegate void AnimationProgress(object sender);
-        public event AnimationProgress OnAnimationProgress;
-        
-        private readonly List<double> animationProgresses;
-        private readonly List<Point> animationSources;
-        private readonly List<AnimationDirection> animationDirections;
-        private readonly List<object[]> animationDatas;
-
-        private const double MIN_VALUE = 0.00;
-        private const double MAX_VALUE = 1.00;
-        // TODO: Change the duration of the animation here. 
-        private readonly Timer animationTimer = new Timer { Interval = 10, Enabled = false };
 
         /// <summary>
-        /// Constructor
+        /// Gets or sets the Increment
+        /// </summary>
+        public double Increment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the SecondaryIncrement
+        /// </summary>
+        public double SecondaryIncrement { get; set; }
+
+        /// <summary>
+        /// Gets or sets the InterpolationType
+        /// </summary>
+        public InterpolationType InterpolationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Singular
+        /// </summary>
+        public bool Singular { get; set; }
+
+        /// <summary>
+        /// The AnimationFinished
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        public delegate void AnimationFinished(object sender);
+
+        /// <summary>
+        /// Defines the OnAnimationFinished
+        /// </summary>
+        public event AnimationFinished OnAnimationFinished;
+
+        /// <summary>
+        /// The AnimationProgress
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        public delegate void AnimationProgress(object sender);
+
+        /// <summary>
+        /// Defines the OnAnimationProgress
+        /// </summary>
+        public event AnimationProgress OnAnimationProgress;
+
+        /// <summary>
+        /// Defines the _animationProgresses
+        /// </summary>
+        private readonly List<double> _animationProgresses;
+
+        /// <summary>
+        /// Defines the _animationSources
+        /// </summary>
+        private readonly List<Point> _animationSources;
+
+        /// <summary>
+        /// Defines the _animationDirections
+        /// </summary>
+        private readonly List<AnimationDirection> _animationDirections;
+
+        /// <summary>
+        /// Defines the _animationDatas
+        /// </summary>
+        private readonly List<object[]> _animationDatas;
+
+        /// <summary>
+        /// Defines the MIN_VALUE
+        /// </summary>
+        private const double MIN_VALUE = 0.00;
+
+        /// <summary>
+        /// Defines the MAX_VALUE
+        /// </summary>
+        private const double MAX_VALUE = 1.00;
+
+        /// <summary>
+        /// Defines the _animationTimer
+        /// </summary>
+        private readonly Timer _animationTimer = new Timer { Interval = 5, Enabled = false };
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AnimationManager"/> class.
         /// </summary>
         /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new animation is added to the list.</param>
-        public AnimationManager(bool singular = true /* I can add interpolator here: make required. */)
+        public AnimationManager(bool singular = true)
         {
-            animationProgresses = new List<double>();
-            animationSources = new List<Point>();
-            animationDirections = new List<AnimationDirection>();
-            animationDatas = new List<object[]>();
+            _animationProgresses = new List<double>();
+            _animationSources = new List<Point>();
+            _animationDirections = new List<AnimationDirection>();
+            _animationDatas = new List<object[]>();
 
             Increment = 0.03;
             SecondaryIncrement = 0.03;
-            AnimationType = InterpolationType.Linear;            
+            InterpolationMode = InterpolationType.Linear;
             InterruptAnimation = true;
             Singular = singular;
 
             if (Singular)
             {
-                animationProgresses.Add(0);
-                animationSources.Add(new Point(0, 0));
-                animationDirections.Add(AnimationDirection.In);
+                _animationProgresses.Add(0);
+                _animationSources.Add(new Point(0, 0));
+                _animationDirections.Add(AnimationDirection.In);
             }
 
-            animationTimer.Tick += AnimationTimerOnTick;
+            _animationTimer.Tick += AnimationTimerOnTick;
         }
 
+        /// <summary>
+        /// The AnimationTimerOnTick
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="eventArgs">The eventArgs<see cref="EventArgs"/></param>
         private void AnimationTimerOnTick(object sender, EventArgs eventArgs)
         {
-            for (int i = 0; i < animationProgresses.Count; i++)
+            for (var i = 0; i < _animationProgresses.Count; i++)
             {
                 UpdateProgress(i);
 
                 if (!Singular)
                 {
-                    if ((animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] == MAX_VALUE))
+                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutOut;
+                        _animationDirections[i] = AnimationDirection.InOutOut;
                     }
-                    else if ((animationDirections[i] == AnimationDirection.InOutRepeatingIn && animationProgresses[i] == MIN_VALUE))
+                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MIN_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
                     }
-                    else if ((animationDirections[i] == AnimationDirection.InOutRepeatingOut && animationProgresses[i] == MIN_VALUE))
+                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
                     }
                     else if (
-                        (animationDirections[i] == AnimationDirection.In && animationProgresses[i] == MAX_VALUE) ||
-                        (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] == MIN_VALUE) ||
-                        (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] == MIN_VALUE))
+                        (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] == MAX_VALUE) ||
+                        (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] == MIN_VALUE) ||
+                        (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] == MIN_VALUE))
                     {
-                        animationProgresses.RemoveAt(i);
-                        animationSources.RemoveAt(i);
-                        animationDirections.RemoveAt(i);
-                        animationDatas.RemoveAt(i);
+                        _animationProgresses.RemoveAt(i);
+                        _animationSources.RemoveAt(i);
+                        _animationDirections.RemoveAt(i);
+                        _animationDatas.RemoveAt(i);
                     }
                 }
                 else
                 {
-                    if ((animationDirections[i] == AnimationDirection.InOutIn && animationProgresses[i] == MAX_VALUE))
+                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutOut;
+                        _animationDirections[i] = AnimationDirection.InOutOut;
                     }
-                    else if ((animationDirections[i] == AnimationDirection.InOutRepeatingIn && animationProgresses[i] == MAX_VALUE))
+                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MAX_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
                     }
-                    else if ((animationDirections[i] == AnimationDirection.InOutRepeatingOut && animationProgresses[i] == MIN_VALUE))
+                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
                     {
-                        animationDirections[i] = AnimationDirection.InOutRepeatingIn;
+                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
                     }
                 }
             }
 
-            if (OnAnimationProgress != null)
-            {
-                OnAnimationProgress(this);
-            }
+            OnAnimationProgress?.Invoke(this);
         }
 
+        /// <summary>
+        /// The IsAnimating
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public bool IsAnimating()
         {
-            return animationTimer.Enabled;
+            return _animationTimer.Enabled;
         }
 
+        /// <summary>
+        /// The StartNewAnimation
+        /// </summary>
+        /// <param name="animationDirection">The animationDirection<see cref="AnimationDirection"/></param>
+        /// <param name="data">The data<see cref="object[]"/></param>
         public void StartNewAnimation(AnimationDirection animationDirection, object[] data = null)
         {
             StartNewAnimation(animationDirection, new Point(0, 0), data);
         }
 
+        /// <summary>
+        /// The StartNewAnimation
+        /// </summary>
+        /// <param name="animationDirection">The animationDirection<see cref="AnimationDirection"/></param>
+        /// <param name="animationSource">The animationSource<see cref="Point"/></param>
+        /// <param name="data">The data<see cref="object[]"/></param>
         public void StartNewAnimation(AnimationDirection animationDirection, Point animationSource, object[] data = null)
         {
             if (!IsAnimating() || InterruptAnimation)
             {
-                if (Singular && animationDirections.Count > 0)
+                if (Singular && _animationDirections.Count > 0)
                 {
-                    animationDirections[0] = animationDirection;
+                    _animationDirections[0] = animationDirection;
                 }
                 else
                 {
-                    animationDirections.Add(animationDirection);
+                    _animationDirections.Add(animationDirection);
                 }
 
-                if (Singular && animationSources.Count > 0)
+                if (Singular && _animationSources.Count > 0)
                 {
-                    animationSources[0] = animationSource;
+                    _animationSources[0] = animationSource;
                 }
                 else
                 {
-                    animationSources.Add(animationSource);
+                    _animationSources.Add(animationSource);
                 }
 
-                if (!(Singular && animationProgresses.Count > 0))
+                if (!(Singular && _animationProgresses.Count > 0))
                 {
-                    switch (animationDirections[animationDirections.Count - 1])
+                    switch (_animationDirections[_animationDirections.Count - 1])
                     {
                         case AnimationDirection.InOutRepeatingIn:
                         case AnimationDirection.InOutIn:
                         case AnimationDirection.In:
-                            animationProgresses.Add(MIN_VALUE);
+                            _animationProgresses.Add(MIN_VALUE);
                             break;
+
                         case AnimationDirection.InOutRepeatingOut:
                         case AnimationDirection.InOutOut:
                         case AnimationDirection.Out:
-                            animationProgresses.Add(MAX_VALUE);
+                            _animationProgresses.Add(MAX_VALUE);
                             break;
+
                         default:
                             throw new Exception("Invalid AnimationDirection");
                     }
                 }
 
-                if (Singular && animationDatas.Count > 0)
+                if (Singular && _animationDatas.Count > 0)
                 {
-                    animationDatas[0] = data ?? new object[] { };
+                    _animationDatas[0] = data ?? new object[] { };
                 }
                 else
                 {
-                    animationDatas.Add(data ?? new object[] { });
+                    _animationDatas.Add(data ?? new object[] { });
                 }
-
             }
 
-            animationTimer.Start();
+            _animationTimer.Start();
         }
 
+        /// <summary>
+        /// The UpdateProgress
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
         public void UpdateProgress(int index)
         {
-            switch (animationDirections[index])
+            switch (_animationDirections[index])
             {
                 case AnimationDirection.InOutRepeatingIn:
                 case AnimationDirection.InOutIn:
                 case AnimationDirection.In:
                     IncrementProgress(index);
                     break;
+
                 case AnimationDirection.InOutRepeatingOut:
                 case AnimationDirection.InOutOut:
                 case AnimationDirection.Out:
                     DecrementProgress(index);
                     break;
+
                 default:
                     throw new Exception("No AnimationDirection has been set");
             }
         }
 
+        /// <summary>
+        /// The IncrementProgress
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
         private void IncrementProgress(int index)
         {
-            animationProgresses[index] += Increment;
-            if (animationProgresses[index] > MAX_VALUE)
+            _animationProgresses[index] += Increment;
+            if (_animationProgresses[index] > MAX_VALUE)
             {
-                animationProgresses[index] = MAX_VALUE;
+                _animationProgresses[index] = MAX_VALUE;
 
                 for (int i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingOut) return;
-                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MAX_VALUE) return;
-                    if (animationDirections[i] == AnimationDirection.In && animationProgresses[i] != MAX_VALUE) return;
+                    if (_animationDirections[i] == AnimationDirection.InOutIn)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MAX_VALUE)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] != MAX_VALUE)
+                    {
+                        return;
+                    }
                 }
-                
-                animationTimer.Stop();
-                if (OnAnimationFinished != null) OnAnimationFinished(this);
+
+                _animationTimer.Stop();
+                OnAnimationFinished?.Invoke(this);
             }
         }
 
+        /// <summary>
+        /// The DecrementProgress
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
         private void DecrementProgress(int index)
         {
-            animationProgresses[index] -= (animationDirections[index] == AnimationDirection.InOutOut || animationDirections[index] == AnimationDirection.InOutRepeatingOut) ? SecondaryIncrement : Increment;
-            if (animationProgresses[index] < MIN_VALUE)
+            _animationProgresses[index] -= (_animationDirections[index] == AnimationDirection.InOutOut || _animationDirections[index] == AnimationDirection.InOutRepeatingOut) ? SecondaryIncrement : Increment;
+            if (_animationProgresses[index] < MIN_VALUE)
             {
-                animationProgresses[index] = MIN_VALUE;
+                _animationProgresses[index] = MIN_VALUE;
 
-                for (int i = 0; i < GetAnimationCount(); i++)
+                for (var i = 0; i < GetAnimationCount(); i++)
                 {
-                    if (animationDirections[i] == AnimationDirection.InOutIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingIn) return;
-                    if (animationDirections[i] == AnimationDirection.InOutRepeatingOut) return;
-                    if (animationDirections[i] == AnimationDirection.InOutOut && animationProgresses[i] != MIN_VALUE) return;
-                    if (animationDirections[i] == AnimationDirection.Out && animationProgresses[i] != MIN_VALUE) return;
+                    if (_animationDirections[i] == AnimationDirection.InOutIn)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingIn)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutRepeatingOut)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] != MIN_VALUE)
+                    {
+                        return;
+                    }
+
+                    if (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] != MIN_VALUE)
+                    {
+                        return;
+                    }
                 }
 
-                animationTimer.Stop();
-                if (OnAnimationFinished != null) OnAnimationFinished(this);
+                _animationTimer.Stop();
+                OnAnimationFinished?.Invoke(this);
             }
         }
 
+        /// <summary>
+        /// The GetProgress
+        /// </summary>
+        /// <returns>The <see cref="double"/></returns>
         public double GetProgress()
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationProgresses.Count == 0)
+            if (_animationProgresses.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
             return GetProgress(0);
         }
 
+        /// <summary>
+        /// The GetProgress
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
+        /// <returns>The <see cref="double"/></returns>
         public double GetProgress(int index)
         {
             if (!(index < GetAnimationCount()))
+            {
                 throw new IndexOutOfRangeException("Invalid animation index");
+            }
 
-            //Debug.WriteLine("Animation progress: " + animationProgresses[index]);            
-            switch (AnimationType)
+             switch (InterpolationMode)
             {
                 case InterpolationType.Linear:
-                    return AnimationLinear.CalculateProgress(animationProgresses[index]);
+                    return AnimationLinear.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseInOut:
-                    return AnimationEaseInOut.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseOut:
-                    return AnimationEaseOut.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.CustomQuadratic:
-                    return AnimationCustomQuadratic.CalculateProgress(animationProgresses[index]);
+                    return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseInElastic:
-                    return AnimationEaseInElastic.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseInElastic.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseInOutBounce:
-                    return AnimationEaseInOutBounce.CalculateProgress(animationProgresses[index]);
+                    return AnimationEaseInOutBounce.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseOutBounce:
-                    return EaseOutBounceInterpolator.CalculateProgress(animationProgresses[index]);
+                    return EaseOutBounceInterpolator.CalculateProgress(_animationProgresses[index]);
                 default:
                     throw new NotImplementedException("The given InterpolationType is not implemented");
             }
-
         }
 
+        /// <summary>
+        /// The GetSource
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
+        /// <returns>The <see cref="Point"/></returns>
         public Point GetSource(int index)
         {
             if (!(index < GetAnimationCount()))
+            {
                 throw new IndexOutOfRangeException("Invalid animation index");
+            }
 
-            return animationSources[index];
+            return _animationSources[index];
         }
 
+        /// <summary>
+        /// The GetSource
+        /// </summary>
+        /// <returns>The <see cref="Point"/></returns>
         public Point GetSource()
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationSources.Count == 0)
+            if (_animationSources.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            return animationSources[0];
+            return _animationSources[0];
         }
 
+        /// <summary>
+        /// The GetDirection
+        /// </summary>
+        /// <returns>The <see cref="AnimationDirection"/></returns>
         public AnimationDirection GetDirection()
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationDirections.Count == 0)
+            if (_animationDirections.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            return animationDirections[0];
+            return _animationDirections[0];
         }
 
+        /// <summary>
+        /// The GetDirection
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
+        /// <returns>The <see cref="AnimationDirection"/></returns>
         public AnimationDirection GetDirection(int index)
         {
-            if (!(index < animationDirections.Count))
+            if (!(index < _animationDirections.Count))
+            {
                 throw new IndexOutOfRangeException("Invalid animation index");
+            }
 
-            return animationDirections[index];
+            return _animationDirections[index];
         }
 
+        /// <summary>
+        /// The GetData
+        /// </summary>
+        /// <returns>The <see cref="object[]"/></returns>
         public object[] GetData()
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationDatas.Count == 0)
+            if (_animationDatas.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            return animationDatas[0];
+            return _animationDatas[0];
         }
 
+        /// <summary>
+        /// The GetData
+        /// </summary>
+        /// <param name="index">The index<see cref="int"/></param>
+        /// <returns>The <see cref="object[]"/></returns>
         public object[] GetData(int index)
         {
-            if (!(index < animationDatas.Count))
+            if (!(index < _animationDatas.Count))
+            {
                 throw new IndexOutOfRangeException("Invalid animation index");
+            }
 
-            return animationDatas[index];
+            return _animationDatas[index];
         }
 
+        /// <summary>
+        /// The GetAnimationCount
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
         public int GetAnimationCount()
         {
-            return animationProgresses.Count;
+            return _animationProgresses.Count;
         }
 
+        /// <summary>
+        /// The SetProgress
+        /// </summary>
+        /// <param name="progress">The progress<see cref="double"/></param>
         public void SetProgress(double progress)
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationProgresses.Count == 0)
+            if (_animationProgresses.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            animationProgresses[0] = progress;
+            _animationProgresses[0] = progress;
         }
 
+        /// <summary>
+        /// The SetDirection
+        /// </summary>
+        /// <param name="direction">The direction<see cref="AnimationDirection"/></param>
         public void SetDirection(AnimationDirection direction)
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationProgresses.Count == 0)
+            if (_animationProgresses.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            animationDirections[0] = direction;
+            _animationDirections[0] = direction;
         }
 
+        /// <summary>
+        /// The SetData
+        /// </summary>
+        /// <param name="data">The data<see cref="object[]"/></param>
         public void SetData(object[] data)
         {
             if (!Singular)
+            {
                 throw new Exception("Animation is not set to Singular.");
+            }
 
-            if (animationDatas.Count == 0)
+            if (_animationDatas.Count == 0)
+            {
                 throw new Exception("Invalid animation");
+            }
 
-            animationDatas[0] = data;
+            _animationDatas[0] = data;
+        }
+        public void Stop()
+        {
+            _animationTimer.Stop();
+            if (OnAnimationFinished != null) OnAnimationFinished(this);
         }
     }
 }

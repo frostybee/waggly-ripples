@@ -43,12 +43,12 @@ namespace WinFormLayered.Drawing
             // We adjust the ripple properties every animation frame. 
             _ripples.ForEach(ripple =>
             {
-                // Render the ripple --> inputs: graphics, progress, surface size.                
+                // Draw the ripple --> inputs: graphics, progress, surface size.                
                 ripple.Opacity = opacity;
                 //-- Might need to adjust the profile internal ripple definitions before rendering.
                 // For instance, when animating an hexagon.
-                // Render the ripple.                
-                ripple.Render(_graphics, progress);
+                // Draw the ripple.                
+                ripple.Draw(_graphics, progress);
             });
         }
         public void DisposeDrawingTools()

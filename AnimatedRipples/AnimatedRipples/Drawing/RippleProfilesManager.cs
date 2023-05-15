@@ -1,6 +1,6 @@
 ﻿using FriskyMouse.NativeApi;
 using FriskyMouse.UI;
-using MaterialWinforms.Animations;
+using MaterialSkin.Animations;
 using ReaLTaiizor.Animate.Metro;
 using ReaLTaiizor.Enum.Metro;
 using System;
@@ -68,7 +68,7 @@ namespace WinFormLayered.LayeredForm
                 //Increment = 0.010,                
                 //InterpolationType = InterpolationType.EaseOut,                
                 //InterpolationType = InterpolationType.EaseInElastic
-                AnimationType = InterpolationType.EaseOut                
+                InterpolationMode = InterpolationType.EaseOut                
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -196,7 +196,7 @@ namespace WinFormLayered.LayeredForm
             {
                 _animationManager.SetProgress(0);
                 //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
-                _animationManager.StartNewAnimation(AnimationDirection.Out);
+                _animationManager.StartNewAnimation(AnimationDirection.In);
             }
 
         }
