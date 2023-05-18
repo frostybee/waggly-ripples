@@ -39,7 +39,7 @@ namespace WinFormLayered.Drawing.Shapes
             //FIXME: ripple.ExpandRadius(animationProgress);
             ExpandRadius(progress);
             //-- Get the opacity value for animating a fade-like color transition.
-            AdjustColorOpacity(progress);
+            //AdjustColorOpacity(progress);
             //Debug.WriteLine("Opacity: " + opacity);
             //-- Draw this ripple entry.
             switch (ShapeType)

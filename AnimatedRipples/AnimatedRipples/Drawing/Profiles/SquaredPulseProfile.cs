@@ -38,9 +38,9 @@ namespace WinFormLayered.Drawing
                 new RippleEntry()
                 {
                     IsExpandable = true,
-                    Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius+5),
                     ShapeType = ShapeType.Rectangle,
-                    Radius = BaseRadius,
+                    Radius = BaseRadius+5,
                     IsFade = true,
                     RadiusMultiplier = 2,
                     FillBrush = _outerBursh,
@@ -61,16 +61,6 @@ namespace WinFormLayered.Drawing
                     OutlinePen = _outlinePen,
                     IsFilled = true,
                 });
-
-        }
-
-        /* Inputs: canvas, radius, color, animation progress: multiplier. 
-            Note:
-                - on animation progress -> profile.Draw(); on the canvas.
-                Extract them from the current drawing methods. 
-                Need the canvas and the _surface. 
-            TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
-                  but I need to test it. 
-        */
+        }        
     }
 }

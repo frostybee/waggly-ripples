@@ -25,6 +25,9 @@ namespace WinFormLayered
         private AnimationManager _animationManager;
         private BaseProfile _currentProfile;
         private AnimationDirection _animationDirection;
+        private Bitmap _canvas;
+        private Graphics _graphics;
+
         public RippleViewerForm()
         {
             InitializeComponent();            
@@ -47,16 +50,7 @@ namespace WinFormLayered
         }
         private void PcbRipplePreview_Paint(object sender, PaintEventArgs e)
         {
-            if (_animationManager.IsAnimating())
-            {
-                e.Graphics.SetAntiAliasing();
-                e.Graphics.Clear(Color.White);                
-                // Draw and animate the selected profile. 
-                var progress = _animationManager.GetProgress();
-                _currentProfile.RenderRipples(e.Graphics, progress);
-                //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
-
-            }
+            
         }
         private void btnPreview_Click(object sender, EventArgs e)
         {
@@ -77,12 +71,22 @@ namespace WinFormLayered
         {
             // We process the animation frames here. 
             // We perform the drawing here.                        
-            // TODO: put this in a helper method.                        
-            Debug.WriteLine(_animationManager.GetProgress());
-            var progress = _animationManager.GetProgress();
+            // TODO: put this in a helper method.                                  
             //_currentProfile.RenderRipples(_graphics, progress);
             //RenderRipplesProfile(_currentProfile, progress);
             //_layeredWindow.SetBitmap(_surface, 255);
+
+            if (_animationManager.IsAnimating())
+            {
+                Debug.WriteLine(_animationManager.GetProgress());                
+                _graphics.Clear(Color.Transparent);
+                // Draw and animate the selected profile. 
+                var progress = _animationManager.GetProgress();
+                _currentProfile.RenderRipples(_graphics, progress);
+                //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
+
+            }
+
             pcbRipplePreview.Invalidate();
         }
 
@@ -92,6 +96,11 @@ namespace WinFormLayered
             cmbProfilesList.PopulateFromEnum(typeof(RippleProfileType));
             cmbAnimDirection.PopulateFromEnum(typeof(AnimationDirection));
             cmbInterpolationMode.PopulateFromEnum(typeof(InterpolationType));
+            //-- Create the drawing canvas on which the ripples will be drawn.
+            _canvas = DrawingHelper.CreateBitmap(pcbRipplePreview.Width, pcbRipplePreview.Height, Color.White);
+            pcbRipplePreview.Image = _canvas;
+            _graphics = Graphics.FromImage(_canvas);
+            _graphics.SetAntiAliasing(); // Need to set it once.
         }
 
         private void OnRipplesAnimation_Finished(object sender)

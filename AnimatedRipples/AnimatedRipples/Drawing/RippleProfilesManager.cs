@@ -179,9 +179,6 @@ namespace WinFormLayered.LayeredForm
             _graphics.Clear(Color.Transparent);
             _layeredWindow.SetBitmap(_blankSurface, 1);
             _layeredWindow.Hide();
-        }
-        
-
-        int _radius = 0;
+        }        
     }
 }
