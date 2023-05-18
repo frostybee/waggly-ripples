@@ -45,14 +45,17 @@ namespace MaterialSkin.Animations
         InElastic,
         [Description("Out Elastic")]
         OutElastic,
+        [Description("In Out Elastic")]
+        InOutElastic,
         [Description("In Bounce")]
         InBounce,
         [Description("Out Bounce")]
         OutBounce,
         [Description("In Out Bounce")]
         InOutBounce,
+        [Description("In Quint")]
+        InQuint,
         [Description("In Out Quint")]
-        InOutQuint
+        InOutQuint        
     }
-
 }

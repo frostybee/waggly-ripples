@@ -9,22 +9,28 @@
     {
         public static double CalculateProgress(double progress)
         {
-            return progress * progress * progress;
+            return Math.Pow(progress, 3);            
         }
     }
-
+    static class AnimationInQuint
+    {
+        public static double CalculateProgress(double t)
+        {
+            return Math.Pow(t, 5);
+        }
+    }
     static class AnimationInOutQuint
     {
         public static double CalculateProgress(double t)
         {
-            return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 5) / 2;
+            return t < 0.5 ? 16 * Math.Pow(t, 5) : 1 - Math.Pow(-2 * t + 2, 5) / 2;
         }
     }
     static class AnimationEaseInOutCubic
     {
         public static double CalculateProgress(double progress)
         {
-            return progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.Pow(-2 * progress + 2, 3) / 2;
+            return progress < 0.5 ? 4 * Math.Pow(progress, 3) : 1 - Math.Pow(-2 * progress + 2, 3) / 2;
         }
     }
 
@@ -78,33 +84,34 @@
     }
     public static class AnimationEaseInElastic
     {
-        /// <summary>
-        /// Implements a spring-like interpolation function.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
+        private static double c4 = (2 * Math.PI) / 3;
         public static double CalculateProgress(double time)
-        {
-            double c4 = (2 * Math.PI) / 3;
-            //return Math.abs(0.5 - t) * 2;
+        {          
             return time == 0 ? 0 : time == 1 ? 1 : -Math.Pow(2, 10 * time - 10) * Math.Sin((time * 10 - 10.75) * c4);
         }
     }
     public static class AnimationOutElastic
     {
-        /// <summary>
-        /// Implements a spring-like interpolation function.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
+        private static double c4 = (2 * Math.PI) / 3;
         public static double CalculateProgress(double x)
-        {
-            double c4 = (2 * Math.PI) / 3;
-            //return Math.abs(0.5 - t) * 2;
+        {           
             return x == 0 ? 0 : x == 1 ? 1 : Math.Pow(2, -10 * x) * Math.Sin((x * 10 - 0.75) * c4) + 1;
         }
     }
-
+    public static class AnimationInOutElastic
+    {
+        private static double c5 = (2 * Math.PI) / 4.5;
+        public static double CalculateProgress(double x)
+        {
+            return x == 0
+              ? 0
+              : x == 1
+              ? 1
+              : x < 0.5
+              ? -(Math.Pow(2, 20 * x - 10) * Math.Sin((20 * x - 11.125) * c5)) / 2
+              : (Math.Pow(2, -20 * x + 10) * Math.Sin((20 * x - 11.125) * c5)) / 2 + 1;
+        }
+    }
     static class AnimationEaseInBounce
     {
         public static double CalculateProgress(double progress)
@@ -115,12 +122,7 @@
 
 
     public static class AnimationEaseInOutBounce
-    {
-        /// <summary>
-        /// Implements a spring-like interpolation function.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
+    {        
         public static double CalculateProgress(double t)
         {
             return t < 0.5
@@ -129,12 +131,7 @@
         }
     }
     public static class EaseOutBounceInterpolator
-    {
-        /// <summary>
-        /// Implements a spring-like interpolation function.
-        /// </summary>
-        /// <param name="time"></param>
-        /// <returns></returns>
+    {        
         public static double CalculateProgress(double time)
         {
             double n1 = 7.5625;

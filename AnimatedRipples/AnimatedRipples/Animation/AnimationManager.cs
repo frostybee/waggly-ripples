@@ -402,7 +402,9 @@
 
             switch (InterpolationMode)
             {
-
+                // TODO: Make a factory for instantiating interpolators. 
+                case InterpolationType.InQuint:
+                    return AnimationInQuint.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.InOutQuint:
                     return AnimationInOutQuint.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.InCubic:
@@ -423,6 +425,8 @@
                     return AnimationEaseInElastic.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.OutElastic:
                     return AnimationOutElastic.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.InOutElastic:
+                    return AnimationInOutElastic.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.InOutBounce:
                     return AnimationEaseInOutBounce.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.OutBounce:
