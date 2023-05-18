@@ -3,24 +3,38 @@
     using System;
     using System.ComponentModel;
 
-    public enum InterpolationType
+    // TODO: Automate the creation of these interpolators.
+    // Make the instantiation process dynamic.
+    static class AnimationEaseInCubic
     {
-        [Description("Linear")]
-        Linear,
-        [Description("Ease In Out")]
-        EaseInOut,
-        [Description("Ease Out")]
-        EaseOut,
-        [Description("Custom Quadratic")]
-        CustomQuadratic,
-        [Description("Ease In Elastic")]
-        EaseInElastic,
-        [Description("Ease In Out Bounce")]
-        EaseInOutBounce,
-        [Description("Ease Out Bounce")]
-        EaseOutBounce,
+        public static double CalculateProgress(double progress)
+        {
+            return progress * progress * progress;
+        }
     }
 
+    static class AnimationInOutQuint
+    {
+        public static double CalculateProgress(double t)
+        {
+            return t < 0.5 ? 16 * t * t * t * t * t : 1 - Math.Pow(-2 * t + 2, 5) / 2;
+        }
+    }
+    static class AnimationEaseInOutCubic
+    {
+        public static double CalculateProgress(double progress)
+        {
+            return progress < 0.5 ? 4 * progress * progress * progress : 1 - Math.Pow(-2 * progress + 2, 3) / 2;
+        }
+    }
+
+    static class AnimationEaseOutCubic
+    {
+        public static double CalculateProgress(double progress)
+        {
+            return 1 - Math.Pow(1 - progress, 3);
+        }
+    }
     static class AnimationLinear
     {
         public static double CalculateProgress(double progress)
@@ -73,12 +87,32 @@
         {
             double c4 = (2 * Math.PI) / 3;
             //return Math.abs(0.5 - t) * 2;
-            return time == 0
-            ? 0
-            : time == 1
-            ? 1 : -Math.Pow(2, 10 * time - 10) * Math.Sin((time * 10 - 10.75) * c4);
+            return time == 0 ? 0 : time == 1 ? 1 : -Math.Pow(2, 10 * time - 10) * Math.Sin((time * 10 - 10.75) * c4);
         }
     }
+    public static class AnimationOutElastic
+    {
+        /// <summary>
+        /// Implements a spring-like interpolation function.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public static double CalculateProgress(double x)
+        {
+            double c4 = (2 * Math.PI) / 3;
+            //return Math.abs(0.5 - t) * 2;
+            return x == 0 ? 0 : x == 1 ? 1 : Math.Pow(2, -10 * x) * Math.Sin((x * 10 - 0.75) * c4) + 1;
+        }
+    }
+
+    static class AnimationEaseInBounce
+    {
+        public static double CalculateProgress(double progress)
+        {
+            return 1 - EaseOutBounceInterpolator.CalculateProgress(1 - progress);
+        }
+    }
+
 
     public static class AnimationEaseInOutBounce
     {

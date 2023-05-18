@@ -13,11 +13,10 @@ namespace WinFormLayered.Drawing
     /// Represents a single expanding ripple.
     /// </summary>
     internal class SonarPulseProfile : BaseProfile
-    {
-        // TODO: add IsFilled. Color Transition: enabled/disabled.
-        // Add random color?        
+    { 
         SolidBrush _innerBrush;
         SolidBrush _outerBursh;
+        Pen _middlePen;        
         public SonarPulseProfile()
         {
             InitDrawingProfile();
@@ -25,9 +24,9 @@ namespace WinFormLayered.Drawing
 
         private void InitDrawingProfile()
         {
-            int opacity = 10;
-            _innerBrush = new SolidBrush(Color.Yellow);
-            _outerBursh = new SolidBrush(Color.Crimson.WithOpacity(250));           
+            _innerBrush = new SolidBrush(Color.Green);
+            _outerBursh = new SolidBrush(Color.DarkGreen.WithOpacity(250));
+            _middlePen = new Pen(Color.White, 3);
             
             // 1) Make the outer ripple.
             _ripples.Add(
@@ -38,31 +37,35 @@ namespace WinFormLayered.Drawing
                     ShapeType = ShapeType.Ellipse,
                     Radius = BaseRadius,
                     RadiusMultiplier = 3,
-                    FillBrush = _outerBursh,                    
+                    FillBrush = _outerBursh,
                     IsFilled = true,
-                });
-            // 2) Make the inner ripple that must drawn last.
+                });            
+            // 2) Make the most outer ripple. 
             _ripples.Add(
                 new RippleEntry()
                 {
                     IsExpandable = false,
                     IsFade = false,
-                    Bounds = DrawingHelper.CreateRectangle(Width, Height, 6),
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, 9),
                     ShapeType = ShapeType.Ellipse,
-                    Radius = 6,
+                    Radius = 9,
                     RadiusMultiplier = 2,
-                    FillBrush = _innerBrush,                    
+                    OutlinePen = _middlePen,
+                    IsFilled = false,
+                });            
+            // 3) Make the most inner ripple. It must drawn last.
+            _ripples.Add(
+                new RippleEntry()
+                {
+                    IsExpandable = false,
+                    IsFade = false,
+                    Bounds = DrawingHelper.CreateRectangle(Width, Height, 8),
+                    ShapeType = ShapeType.Ellipse,
+                    Radius = 8,
+                    RadiusMultiplier = 2,
+                    FillBrush = _innerBrush,
                     IsFilled = true,
                 });
-
         }
-        /* Inputs: canvas, radius, color, animation progress: multiplier. 
-            Note:
-                - on animation progress -> profile.Draw(); on the canvas.
-                Extract them from the current drawing methods. 
-                Need the canvas and the _surface. 
-            TODO: Inputs/parameters: radius of the ripple, canvas size should be fixed to 300
-                  but I need to test it. 
-        */
     }
 }

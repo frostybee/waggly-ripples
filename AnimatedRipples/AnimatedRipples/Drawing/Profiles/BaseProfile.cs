@@ -38,6 +38,7 @@ namespace WinFormLayered.Drawing
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         public void RenderRipples(Graphics _graphics, double progress)
         {
+            //_graphics.SetAntiAliasing();
             Debug.WriteLine("Progress: " + progress);
             //_graphics.Clear(Color.Transparent);
             //TODO: move this to the ripple class. Needs to be computed there.
@@ -53,7 +54,7 @@ namespace WinFormLayered.Drawing
                 ripple.Draw(_graphics, progress);
             });
         }
-        public static BaseProfile MakeProfile(RippleProfileType profileType)
+        public static BaseProfile CreateProfile(RippleProfileType profileType)
         {
             ConstructableEnumAttribute attribute = profileType.GetEnumAttribute<ConstructableEnumAttribute>();
             Debug.WriteLine(attribute.Type);
@@ -65,6 +66,7 @@ namespace WinFormLayered.Drawing
         {
             _ripples.ForEach(ripple =>
             {
+                // Dispose of the allocated drawing tools.
                 ripple.FillBrush?.Dispose();
                 ripple.OutlinePen?.Dispose();
             });

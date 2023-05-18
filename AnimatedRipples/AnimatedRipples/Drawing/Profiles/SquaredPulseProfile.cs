@@ -28,7 +28,7 @@ namespace WinFormLayered.Drawing
         private void InitDrawingProfile()
         {
             int opacity = 10;
-            _innerBrush = new SolidBrush(Color.LightSalmon);
+            _innerBrush = new SolidBrush(Color.DarkBlue);
             _outerBursh = new SolidBrush(Color.Crimson);
 
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
@@ -41,10 +41,11 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
                     ShapeType = ShapeType.Rectangle,
                     Radius = BaseRadius,
+                    IsFade = true,
                     RadiusMultiplier = 2,
                     FillBrush = _outerBursh,
                     OutlinePen = _outlinePen,
-                    IsFilled = true,
+                    IsFilled = false,
                 });
             //-- 3) Inner ripple that must drawn last.
             _ripples.Add(
@@ -54,6 +55,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, 6),
                     ShapeType = ShapeType.Ellipse,
                     Radius = 5,
+                    IsFade  = false,
                     RadiusMultiplier = 2,
                     FillBrush = _innerBrush,
                     OutlinePen = _outlinePen,

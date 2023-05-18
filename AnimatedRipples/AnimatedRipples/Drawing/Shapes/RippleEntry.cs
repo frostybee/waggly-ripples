@@ -113,6 +113,7 @@ namespace WinFormLayered.Drawing.Shapes
                 }
                 else
                 {
+                    Debug.WriteLine("opacity: "+opacity);
                     OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
                 }
             }

@@ -66,7 +66,7 @@ namespace WinFormLayered
                 //Increment = 0.010,
                 //Increment = 0.070,
                 //InterpolationType = InterpolationType.EaseOut,                
-                //InterpolationType = InterpolationType.EaseInElastic
+                //InterpolationType = InterpolationType.InElastic
                 InterpolationMode = InterpolationType.EaseOut
 
             };

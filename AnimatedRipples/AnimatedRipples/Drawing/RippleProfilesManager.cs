@@ -60,23 +60,23 @@ namespace WinFormLayered.LayeredForm
             RippleType = RippleProfileType.Hexagon;
             RippleType = RippleProfileType.Star;          
             RippleType = RippleProfileType.SonarPulse;
-            RippleType = RippleProfileType.Diamond;
+            RippleType = RippleProfileType.SonarPulse;
 
             _animationManager = new AnimationManager()
             {
                 Increment = 0.020, // Control the animation duration.
                 //Increment = 0.010,                
                 //InterpolationType = InterpolationType.EaseOut,                
-                //InterpolationType = InterpolationType.EaseInElastic
-                InterpolationMode = InterpolationType.EaseOut                
+                //InterpolationType = InterpolationType.InElastic
+                InterpolationMode = InterpolationType.OutBounce
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
             _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;
             // Make default profile.
-            _currentProfile = MakeDrawingProfile(RippleType);
-            SwitchProfile(RippleProfileType.Star);
+            //_currentProfile = MakeDrawingProfile(RippleType);
+            SwitchProfile(RippleProfileType.SonarPulse);
         }
 
         public void SwitchProfile(RippleProfileType inSelectedProfile)
@@ -92,57 +92,15 @@ namespace WinFormLayered.LayeredForm
             // TODO: put this in a helper method.                        
             Debug.WriteLine(_animationManager.GetProgress());
             var progress = _animationManager.GetProgress();
+            _graphics.Clear(Color.Transparent);
             _currentProfile.RenderRipples(_graphics, progress);
             //RenderRipplesProfile(_currentProfile, progress);
             _layeredWindow.SetBitmap(_surface, 255);
         }
-
         
         private BaseProfile MakeDrawingProfile(RippleProfileType inProfileType)
         {
-            BaseProfile rippleProfile = BaseProfile.MakeProfile(inProfileType);
-            /*// TODO: Convert this code to dynamic one. Detect type based on the selected profile and instantiate it 
-            // at runtime. 
-            switch (inProfileType)
-            {
-                case RippleProfileType.Crosshair:
-                    Type t = typeof(CrosshairProfile);
-                    rippleProfile = (BaseProfile)Activator.CreateInstance(t);
-                    break;
-                case RippleProfileType.Diamond:
-                    rippleProfile = new DiamondProfile();
-                    break;
-                case RippleProfileType.SonarPulse:
-                    rippleProfile = new SonarPulseProfile();
-                    break;
-                case RippleProfileType.SquaredPulse:
-                    rippleProfile = new SquaredPulseProfile();
-                    break;
-                case RippleProfileType.Single:
-                    rippleProfile = new CircleProfile();
-                    break;
-                case RippleProfileType.Cherry:
-                    rippleProfile = new SingleProfile();
-                    break;
-                case RippleProfileType.Hexagon:
-                    rippleProfile = new HexagonProfile();
-                    break;
-                case RippleProfileType.Square:
-                    rippleProfile = new SquareProfile();
-                    break;
-                case RippleProfileType.Star:
-                    rippleProfile = new StarProfile();
-                    break;
-                case RippleProfileType.Concentric:
-                    rippleProfile = new ConcentricProfile();
-                    break;
-                case RippleProfileType.Spotlight:
-                    rippleProfile = new SpotlightProfile();
-                    break;
-                default:
-                    rippleProfile = new SpotlightProfile();
-                    break;
-            }*/
+            BaseProfile rippleProfile = BaseProfile.CreateProfile(inProfileType);            
             return rippleProfile;
         }
 

@@ -400,22 +400,36 @@
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
 
-             switch (InterpolationMode)
+            switch (InterpolationMode)
             {
+
+                case InterpolationType.InOutQuint:
+                    return AnimationInOutQuint.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.InCubic:
+                    return AnimationEaseInCubic.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.OutCubic:
+                    return AnimationEaseOutCubic.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.InOutCubic:
+                    return AnimationEaseInOutCubic.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.Linear:
                     return AnimationLinear.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.EaseInOut:
+                case InterpolationType.InOut:
                     return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.EaseOut:
                     return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
                 case InterpolationType.CustomQuadratic:
                     return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.EaseInElastic:
+                case InterpolationType.InElastic:
                     return AnimationEaseInElastic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.EaseInOutBounce:
+                case InterpolationType.OutElastic:
+                    return AnimationOutElastic.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.InOutBounce:
                     return AnimationEaseInOutBounce.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.EaseOutBounce:
+                case InterpolationType.OutBounce:
                     return EaseOutBounceInterpolator.CalculateProgress(_animationProgresses[index]);
+                case InterpolationType.InBounce:
+                    return AnimationEaseInBounce.CalculateProgress(_animationProgresses[index]);
+
                 default:
                     throw new NotImplementedException("The given InterpolationType is not implemented");
             }

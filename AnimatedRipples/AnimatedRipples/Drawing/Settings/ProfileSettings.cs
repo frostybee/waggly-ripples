@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace WinFormLayered.Drawing.Profiles
 {
     internal class RippleProfileSettings
@@ -21,6 +22,5 @@ namespace WinFormLayered.Drawing.Profiles
         public int InitialOpacity { get; set; } = 100;
         public int MaxRadius { get; set; }
         #endregion
-
     }
 }

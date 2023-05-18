@@ -27,37 +27,30 @@ namespace WinFormLayered
         private AnimationDirection _animationDirection;
         public RippleViewerForm()
         {
-            InitializeComponent();
-            //_layeredWindow = new LayeredFrom();            
+            InitializeComponent();            
             _profilesManager = new RippleProfilesManager();
             _currentProfile = new SonarPulseProfile();
-            this.Load += RippleViewerForm_Load;
-            cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;
-            pcbRipplePreview.Paint += PcbRipplePreview_Paint;
+            _animationDirection = AnimationDirection.In;
             _animationManager = new AnimationManager()
             {
-                Increment = 0.020, // Control the animation duration.
-                //Increment = 0.010,                
-                //InterpolationType = InterpolationType.EaseOut,                
-                //InterpolationType = InterpolationType.EaseInElastic
+                Increment = 0.010, // Control the animation duration.                                         
                 InterpolationMode = InterpolationType.EaseOut
             };
-            _animationDirection = AnimationDirection.In; ;
-            _animationManager.OnAnimationProgress += OnRipplesAnimation_Update;
-            _animationManager.OnAnimationFinished += OnRipplesAnimation_Finished;
             pcbRipplePreview.BackColor = Color.Transparent;
-
             //pcbRipplePreview.BringToFront();
             DoubleBuffered = true;
-
-
+            this.Load += RippleViewerForm_Load;
+            cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;
+            pcbRipplePreview.Paint += PcbRipplePreview_Paint;                        
+            _animationManager.OnAnimationProgress += OnRipplesAnimation_Update;
+            _animationManager.OnAnimationFinished += OnRipplesAnimation_Finished;           
         }
         private void PcbRipplePreview_Paint(object sender, PaintEventArgs e)
         {
             if (_animationManager.IsAnimating())
             {
                 e.Graphics.SetAntiAliasing();
-                //e.Graphics.Clear(Color.White);                
+                e.Graphics.Clear(Color.White);                
                 // Draw and animate the selected profile. 
                 var progress = _animationManager.GetProgress();
                 _currentProfile.RenderRipples(e.Graphics, progress);
@@ -134,29 +127,24 @@ namespace WinFormLayered
             _animationManager.Increment = (double)sliderAnimSpeed.Value / 1000;
         }
         private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
-        { 
-            // A ripple profile has been selected.
-            Debug.WriteLine(cmbProfilesList.SelectedIndex);
-            Enum.TryParse<RippleProfileType>(cmbProfilesList.SelectedValue.ToString(), out RippleProfileType profile);
-            //_profilesManager.SwitchProfile(profile);
-            _currentProfile = BaseProfile.MakeProfile(profile);
-            //BaseProfile rippleProfile = BaseProfile.MakeProfile(inProfileType);
+        {
+            // A ripple profile has been selected. Switch to the newly selected profile. 
+            RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();            
+            _currentProfile.Dispose();
+            _currentProfile = BaseProfile.CreateProfile(profile);            
+            StartAnimation();
         }
         private void CmbAnimDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // The direction of the animation has been changed. 
-            Debug.WriteLine(cmbProfilesList.SelectedIndex);
-            // TODO: Make an extension method. Retrieve the value
-            Enum.TryParse<AnimationDirection>(cmbAnimDirection.SelectedValue.ToString(), out AnimationDirection direction);
-            _animationDirection = direction;
+            // The direction of the animation has been changed.                                     
+            _animationDirection = cmbAnimDirection.ParseEnumValue<AnimationDirection>();
         }
         private void CmbInterpolationMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // The animation's interpolation mode has been changed.
-            Debug.WriteLine(cmbInterpolationMode.SelectedIndex);
-            Enum.TryParse<InterpolationType>(cmbInterpolationMode.SelectedValue.ToString(), out InterpolationType interpolation);
-            _animationManager.InterpolationMode = interpolation;
+            // The animation's interpolation mode has been changed.                                    
+            _animationManager.InterpolationMode = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
         }
+        
         private void BtnStopAnimation_Click(object sender, EventArgs e)
         {
             if (_animationManager.IsAnimating())
@@ -164,7 +152,6 @@ namespace WinFormLayered
                 _animationManager.Stop();
                 // Clear the preview.
             }
-        }     
-
+        }    
     }
 }

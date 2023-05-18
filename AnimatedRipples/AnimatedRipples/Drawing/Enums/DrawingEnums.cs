@@ -12,7 +12,7 @@ namespace WinFormLayered.Drawing
 {
     public enum RippleProfileType : uint
     {
-        [Description("Single"), ConstructableEnum(typeof(CircleProfile))]
+        [Description("Expanding Ripple"), ConstructableEnum(typeof(CircleProfile))]
         Single,
         [Description("Cherry Blossom"), ConstructableEnum(typeof(SingleProfile))]
         Cherry,
@@ -20,13 +20,13 @@ namespace WinFormLayered.Drawing
         Diamond,
         [Description("Star ripple"), ConstructableEnum(typeof(StarProfile))]
         Star,        
-        [Description("Spotlight"), ConstructableEnum(typeof(SpotlightProfile))]
+        [Description("Fading Spotlight"), ConstructableEnum(typeof(SpotlightProfile))]
         Spotlight,
         [Description("Sonar Pulse"), ConstructableEnum(typeof(SonarPulseProfile))]
         SonarPulse,
         [Description("Squared Pulse"), ConstructableEnum(typeof(SquaredPulseProfile))]
         SquaredPulse,
-        [Description("Square"), ConstructableEnum(typeof(SquareProfile))]
+        [Description("Expanding Square"), ConstructableEnum(typeof(SquareProfile))]
         Square,
         [Description("Hexagon"), ConstructableEnum(typeof(HexagonProfile))]
         Hexagon,
