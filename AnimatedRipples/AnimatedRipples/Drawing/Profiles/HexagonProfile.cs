@@ -35,7 +35,7 @@ namespace WinFormLayered.Drawing
                     IsExpandable = true,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
                     ShapeType = ShapeType.Polygon,
-                    Radius = _baseRadius,
+                    InitialRadius = _baseRadius,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,

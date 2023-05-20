@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnLayeredFrom = new System.Windows.Forms.Button();
             this.cmbProfilesList = new System.Windows.Forms.ComboBox();
             this.pcbRipplePreview = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,6 +43,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cmbAnimDirection = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkbColorTransition = new System.Windows.Forms.CheckBox();
             this.btnPreview = new System.Windows.Forms.Button();
             this.btnStopAnimation = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbRipplePreview)).BeginInit();
@@ -53,35 +52,15 @@
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // btnLayeredFrom
             // 
-            this.button1.Location = new System.Drawing.Point(540, 410);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(130, 39);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "OpenLayered";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(540, 359);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(119, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Hide Form";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(686, 357);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(93, 25);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Shadow Tester";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnLayeredFrom.Location = new System.Drawing.Point(510, 372);
+            this.btnLayeredFrom.Name = "btnLayeredFrom";
+            this.btnLayeredFrom.Size = new System.Drawing.Size(169, 44);
+            this.btnLayeredFrom.TabIndex = 1;
+            this.btnLayeredFrom.Text = "Show Layered Window";
+            this.btnLayeredFrom.UseVisualStyleBackColor = true;
+            this.btnLayeredFrom.Click += new System.EventHandler(this.BtnLayeredWindow_Click);
             // 
             // cmbProfilesList
             // 
@@ -127,7 +106,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cmbAnimDirection);
-            this.groupBox1.Location = new System.Drawing.Point(28, 209);
+            this.groupBox1.Location = new System.Drawing.Point(28, 177);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(412, 184);
             this.groupBox1.TabIndex = 8;
@@ -163,7 +142,6 @@
             // 
             // sliderAnimSpeed
             // 
-            this.sliderAnimSpeed.AllowDrop = true;
             this.sliderAnimSpeed.Location = new System.Drawing.Point(39, 117);
             this.sliderAnimSpeed.Maximum = 50;
             this.sliderAnimSpeed.Minimum = 10;
@@ -213,6 +191,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkbColorTransition);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.cmbProfilesList);
             this.groupBox2.Location = new System.Drawing.Point(28, 25);
@@ -222,11 +201,24 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Profile Options";
             // 
+            // chkbColorTransition
+            // 
+            this.chkbColorTransition.AutoSize = true;
+            this.chkbColorTransition.Location = new System.Drawing.Point(196, 61);
+            this.chkbColorTransition.Name = "chkbColorTransition";
+            this.chkbColorTransition.Size = new System.Drawing.Size(123, 20);
+            this.chkbColorTransition.TabIndex = 6;
+            this.chkbColorTransition.Text = "Color Transition";
+            this.chkbColorTransition.UseVisualStyleBackColor = true;
+            this.chkbColorTransition.CheckedChanged += new System.EventHandler(this.ChkbColorTransition_CheckedChanged);
+            // 
             // btnPreview
             // 
+            this.btnPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPreview.ForeColor = System.Drawing.Color.Blue;
             this.btnPreview.Location = new System.Drawing.Point(510, 313);
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(93, 25);
+            this.btnPreview.Size = new System.Drawing.Size(93, 35);
             this.btnPreview.TabIndex = 10;
             this.btnPreview.Text = "Preview";
             this.btnPreview.UseVisualStyleBackColor = true;
@@ -234,9 +226,11 @@
             // 
             // btnStopAnimation
             // 
+            this.btnStopAnimation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStopAnimation.ForeColor = System.Drawing.Color.Red;
             this.btnStopAnimation.Location = new System.Drawing.Point(623, 313);
             this.btnStopAnimation.Name = "btnStopAnimation";
-            this.btnStopAnimation.Size = new System.Drawing.Size(93, 25);
+            this.btnStopAnimation.Size = new System.Drawing.Size(93, 35);
             this.btnStopAnimation.TabIndex = 11;
             this.btnStopAnimation.Text = "Stop";
             this.btnStopAnimation.UseVisualStyleBackColor = true;
@@ -253,9 +247,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pcbRipplePreview);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnLayeredFrom);
             this.Name = "RippleViewerForm";
             this.Text = "Animated Ripples Viewer";
             ((System.ComponentModel.ISupportInitialize)(this.pcbRipplePreview)).EndInit();
@@ -270,9 +262,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnLayeredFrom;
         private System.Windows.Forms.ComboBox cmbProfilesList;
         private System.Windows.Forms.PictureBox pcbRipplePreview;
         private System.Windows.Forms.Label label1;
@@ -289,6 +279,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Button btnStopAnimation;
+        private System.Windows.Forms.CheckBox chkbColorTransition;
     }
 }
 

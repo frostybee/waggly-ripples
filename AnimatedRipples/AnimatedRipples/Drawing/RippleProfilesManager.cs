@@ -38,7 +38,7 @@ namespace WinFormLayered.LayeredForm
         /// </summary>
         Graphics _graphics;
         private AnimationManager _animationManager;
-        private BaseProfile _currentProfile;
+        private BaseProfile _currentProfile;        
         public RippleProfileType RippleType { get; set; }
         public RippleProfilesManager()
         {
@@ -49,17 +49,7 @@ namespace WinFormLayered.LayeredForm
              * NOTE: I can remove the specialized profiles and put 
              *      all the ripple instantiation in the BaseProfile class.
              */
-            _layeredWindow = new LayeredWindow();            
-            RippleType = RippleProfileType.Concentric;                                 
-            RippleType = RippleProfileType.SquaredPulse;            
-            RippleType = RippleProfileType.Cherry;
-            RippleType = RippleProfileType.SonarPulse;
-            RippleType = RippleProfileType.Spotlight;
-            RippleType = RippleProfileType.Single;
-            RippleType = RippleProfileType.SquaredPulse;
-            RippleType = RippleProfileType.Hexagon;
-            RippleType = RippleProfileType.Star;          
-            RippleType = RippleProfileType.SonarPulse;
+            _layeredWindow = new LayeredWindow();                        
             RippleType = RippleProfileType.SonarPulse;
 
             _animationManager = new AnimationManager()
@@ -73,16 +63,12 @@ namespace WinFormLayered.LayeredForm
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
             _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
-            _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;
-            // Make default profile.
-            //_currentProfile = MakeDrawingProfile(RippleType);
-            SwitchProfile(RippleProfileType.SonarPulse);
+            _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;            
         }
 
-        public void SwitchProfile(RippleProfileType inSelectedProfile)
-        {
-            _currentProfile?.DisposeDrawingTools();
-            _currentProfile = MakeDrawingProfile(inSelectedProfile);
+        public void SwitchProfile(BaseProfile inProfile)
+        {            
+            _currentProfile = inProfile;
         }
 
         private void OnRipplesAnimationUpdate(object sender)
@@ -154,7 +140,7 @@ namespace WinFormLayered.LayeredForm
             {
                 _animationManager.SetProgress(0);
                 //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
-                _animationManager.StartNewAnimation(AnimationDirection.In);
+                _animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
             }
 
         }
@@ -179,6 +165,12 @@ namespace WinFormLayered.LayeredForm
             _graphics.Clear(Color.Transparent);
             _layeredWindow.SetBitmap(_blankSurface, 1);
             _layeredWindow.Hide();
-        }        
+        }
+
+        internal void ApplySettings(RippleProfileSettings profileSettings)
+        {
+            _animationManager.Increment = profileSettings.AnimationSpeed;
+            _animationManager.InterpolationMode = profileSettings.AnimInteroplation;            
+        }
     }
 }

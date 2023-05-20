@@ -28,7 +28,7 @@ namespace WinFormLayered.Drawing
                     IsExpandable = false,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, BaseRadius),
                     ShapeType = ShapeType.Ellipse,
-                    Radius = BaseRadius,
+                    InitialRadius = BaseRadius,
                     RadiusMultiplier = 3,
                     FillBrush = _innerBrush,
                     IsFilled = true,

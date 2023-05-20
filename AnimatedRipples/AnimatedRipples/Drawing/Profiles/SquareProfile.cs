@@ -29,7 +29,7 @@ namespace WinFormLayered.Drawing
                     IsExpandable = true,
                     ShapeType = ShapeType.Rectangle,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
-                    Radius = 10,
+                    InitialRadius = 10,
                     RadiusMultiplier = 2,
                     FillBrush = brush,
                     OutlinePen = _outlinePen,

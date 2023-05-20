@@ -31,7 +31,7 @@ namespace WinFormLayered.Drawing.Profiles
                     IsExpandable = true,
                     Bounds = DrawingHelper.CreateRectangle(Width, Height, _baseRadius),
                     ShapeType = ShapeType.Polygon,
-                    Radius = _baseRadius,
+                    InitialRadius = _baseRadius,
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,

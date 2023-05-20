@@ -76,7 +76,7 @@
     <Compile Include="Drawing\Profiles\SquareProfile.cs" />
     <Compile Include="Drawing\Profiles\StarProfile.cs" />
     <Compile Include="Native\ExtendedWinStyles.cs" />
-    <Compile Include="LayeredForm\LayeredWindow.cs" />
+    <Compile Include="UI\LayeredWindow.cs" />
     <Compile Include="Drawing\RippleProfilesManager.cs" />
     <Compile Include="Native\HookHelper.cs" />
     <Compile Include="Native\NativeConstants.cs" />
@@ -89,12 +89,6 @@
     <Compile Include="UI\RippleViewerForm.Designer.cs">
       <DependentUpon>RippleViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\LayeredFrom.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\LayeredFrom.Designer.cs">
-      <DependentUpon>LayeredFrom.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\TopMostFrm.cs">
@@ -103,14 +97,11 @@
     <Compile Include="UI\TopMostFrm.Designer.cs">
       <DependentUpon>TopMostFrm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="LayeredForm\LayeredWindow.resx">
+    <EmbeddedResource Include="UI\LayeredWindow.resx">
       <DependentUpon>LayeredWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\RippleViewerForm.resx">
       <DependentUpon>RippleViewerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\LayeredFrom.resx">
-      <DependentUpon>LayeredFrom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -53,7 +53,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(width, height, _baseRadius * 2),
                     FillBrush = _brushInnerRipple,
                     ShapeType = ShapeType.Ellipse,
-                    Radius = 10,
+                    InitialRadius = 10,
                     RadiusMultiplier = 2.5f,
                     OutlinePen = _penOutline,
                     IsFilled = false,
@@ -74,7 +74,7 @@ namespace WinFormLayered.Drawing
                         ShapeType = ShapeType.Ellipse,
                         OutlinePen = _innerPen,
                         RadiusMultiplier = 2,
-                        Radius = radius,
+                        InitialRadius = radius,
                         IsFade = false,
                         IsFilled = false,
                     });
@@ -91,7 +91,7 @@ namespace WinFormLayered.Drawing
                     Bounds = DrawingHelper.CreateRectangle(width, height, 7),
                     FillBrush = _brushInnerRipple,
                     ShapeType = ShapeType.Ellipse,
-                    Radius = 7,
+                    InitialRadius = 7,
                     IsFilled = true,
                 });
         }

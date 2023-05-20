@@ -21,37 +21,37 @@ namespace WinFormLayered
 {
     public partial class RippleViewerForm : Form
     {
-        RippleProfilesManager _profilesManager;
+        private readonly RippleProfilesManager _profilesManager = new RippleProfilesManager();        
         private AnimationManager _animationManager;
-        private BaseProfile _currentProfile;
-        private AnimationDirection _animationDirection;
+        private BaseProfile _currentProfile;        
         private Bitmap _canvas;
         private Graphics _graphics;
 
         public RippleViewerForm()
         {
             InitializeComponent();            
-            _profilesManager = new RippleProfilesManager();
-            _currentProfile = new SonarPulseProfile();
-            _animationDirection = AnimationDirection.In;
+            //            
+            _currentProfile = new SonarPulseProfile();            
             _animationManager = new AnimationManager()
             {
                 Increment = 0.010, // Control the animation duration.                                         
                 InterpolationMode = InterpolationType.EaseOut
-            };
-            pcbRipplePreview.BackColor = Color.Transparent;
-            //pcbRipplePreview.BringToFront();
+            };            
             DoubleBuffered = true;
             this.Load += RippleViewerForm_Load;
-            cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;
-            pcbRipplePreview.Paint += PcbRipplePreview_Paint;                        
+            this.Click += RippleViewerForm_Click;
+            cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;                    
             _animationManager.OnAnimationProgress += OnRipplesAnimation_Update;
             _animationManager.OnAnimationFinished += OnRipplesAnimation_Finished;           
         }
-        private void PcbRipplePreview_Paint(object sender, PaintEventArgs e)
+
+        private void RippleViewerForm_Click(object sender, EventArgs e)
         {
-            
+            // Render the current ripple profile onto the layered window
+            // where the mouse has been clicked on the form.
+            _profilesManager.ShowRipplesAt();
         }
+
         private void btnPreview_Click(object sender, EventArgs e)
         {
             StartAnimation();
@@ -61,32 +61,21 @@ namespace WinFormLayered
         {
             if (!_animationManager.IsAnimating())
             {
-                _animationManager.SetProgress(0);
-                //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
-                _animationManager.StartNewAnimation(_animationDirection);
+                _animationManager.SetProgress(0);                
+                _animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
             }
         }
 
         private void OnRipplesAnimation_Update(object sender)
-        {
-            // We process the animation frames here. 
-            // We perform the drawing here.                        
-            // TODO: put this in a helper method.                                  
-            //_currentProfile.RenderRipples(_graphics, progress);
-            //RenderRipplesProfile(_currentProfile, progress);
-            //_layeredWindow.SetBitmap(_surface, 255);
-
+        {        
             if (_animationManager.IsAnimating())
-            {
-                Debug.WriteLine(_animationManager.GetProgress());                
+            {            
                 _graphics.Clear(Color.Transparent);
                 // Draw and animate the selected profile. 
                 var progress = _animationManager.GetProgress();
                 _currentProfile.RenderRipples(_graphics, progress);
                 //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
-
             }
-
             pcbRipplePreview.Invalidate();
         }
 
@@ -99,6 +88,7 @@ namespace WinFormLayered
             //-- Create the drawing canvas on which the ripples will be drawn.
             _canvas = DrawingHelper.CreateBitmap(pcbRipplePreview.Width, pcbRipplePreview.Height, Color.White);
             pcbRipplePreview.Image = _canvas;
+            pcbRipplePreview.BackColor = Color.White;
             _graphics = Graphics.FromImage(_canvas);
             _graphics.SetAntiAliasing(); // Need to set it once.
         }
@@ -107,51 +97,45 @@ namespace WinFormLayered
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            //_layeredWindow.SetBitmap(new Bitmap(200, 200), 1);
-            // Clear the _surface that was previously drawn onto the _layeredWindow window.
-            //_layeredWindow.SetBitmap(_blankSurface, 1);
-            //_graphics.Clear(Color.Transparent);
-            //_layeredWindow.Hide();
+            // Clear the _surface that was previously drawn onto the _layeredWindow window.                                    
         }
-        private void button1_Click(object sender, EventArgs e)
+        private void BtnLayeredWindow_Click(object sender, EventArgs e)
         {
             _profilesManager.ShowRipplesAt();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            //_layeredWindow.Hide();
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            // Test a shadow around a circle.
-
-        }
+        }       
+                
         private void SliderAnimSpeed_Scroll(object sender, EventArgs e)
         {
             lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();
-            // Increase the speed of the animation.
-            _animationManager.Increment = (double)sliderAnimSpeed.Value / 1000;
+            // Increase the animation speed.
+            double speed = (double)sliderAnimSpeed.Value / 1000;
+            _animationManager.Increment = speed;
+            _currentProfile.Options.AnimationSpeed = speed;
+            _profilesManager.ApplySettings(_currentProfile.Options);
         }
         private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
         {
             // A ripple profile has been selected. Switch to the newly selected profile. 
-            RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();            
-            _currentProfile.Dispose();
-            _currentProfile = BaseProfile.CreateProfile(profile);            
+            RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();                        
+            BaseProfile _newProfile = BaseProfile.CreateProfile(profile);
+            _newProfile.Options = _currentProfile.Options;
+            _profilesManager.SwitchProfile(_newProfile);
+            _currentProfile?.Dispose();
+            _currentProfile = _newProfile;
             StartAnimation();
         }
         private void CmbAnimDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
             // The direction of the animation has been changed.                                     
-            _animationDirection = cmbAnimDirection.ParseEnumValue<AnimationDirection>();
+            _currentProfile.Options.AnimationDirection = cmbAnimDirection.ParseEnumValue<AnimationDirection>();                         
         }
         private void CmbInterpolationMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             // The animation's interpolation mode has been changed.                                    
-            _animationManager.InterpolationMode = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
+            InterpolationType interpolation = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
+            _animationManager.InterpolationMode = interpolation;
+            _currentProfile.Options.AnimInteroplation = interpolation;
+            _profilesManager.ApplySettings(_currentProfile.Options);
         }
         
         private void BtnStopAnimation_Click(object sender, EventArgs e)
@@ -161,6 +145,10 @@ namespace WinFormLayered
                 _animationManager.Stop();
                 // Clear the preview.
             }
-        }    
+        }
+        private void ChkbColorTransition_CheckedChanged(object sender, EventArgs e)
+        {
+            _currentProfile.IsColorTransition = chkbColorTransition.Checked;            
+        }
     }
 }

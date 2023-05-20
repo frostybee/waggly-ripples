@@ -214,11 +214,11 @@ namespace FriskyMouse.UI
 
         #region Properties
         /// <summary>
-        /// The y coordinate
+        /// Gets/Sets the y coordinate of the layered window.
         /// </summary>
         public int PositionY { get; set; }
         /// <summary>
-        /// The x coordinate
+        /// Gets/Sets the x coordinate of the layered window.
         /// </summary>
         public int PositionX { get; set; }
         public int Height { get; set; }

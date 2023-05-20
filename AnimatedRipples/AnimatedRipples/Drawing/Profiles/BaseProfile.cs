@@ -25,35 +25,38 @@ namespace WinFormLayered.Drawing
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
         public int BaseRadius { get; set; } = 10;
-        public List<RippleEntry> RippleEntries { get => _ripples; }
-        public RippleProfileSettings Options { get; set; }
+        public bool IsColorTransition { get; set; } = true;        
+        public RippleProfileSettings Options { get; set; } = new RippleProfileSettings();
         #endregion
 
         // Is it better to use an interface with public properties?
 
         /// <summary>
-        /// Renders the ripples that are defined in a given profile.
+        /// Prepares and renders the ripples that are defined in a given profile.
         /// </summary>
         /// <param name="inRippleProfile">The profile to be rendered.</param>
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         public void RenderRipples(Graphics _graphics, double progress)
-        {
-            //_graphics.SetAntiAliasing();
-            Debug.WriteLine("Progress: " + progress);
-            //_graphics.Clear(Color.Transparent);
-            //TODO: move this to the ripple class. Needs to be computed there.
-            var opacity = (int)(progress * 20 * 5);
+        {                                   
             // We adjust the ripple properties every animation frame. 
             _ripples.ForEach(ripple =>
-            {
-                // Draw the ripple --> inputs: graphics, progress, surface size.                
-                ripple.Opacity = opacity;
-                //-- Might need to adjust the profile internal ripple definitions before rendering.
-                // For instance, when animating an hexagon.
+            {                
+                if (IsColorTransition)
+                {
+                    // We fade the color of the ripple based on the current animation's progress value.
+                    ripple.AdjustColorOpacity(progress);
+                }
+                ripple.ExpandRadius(progress);                
                 // Draw the ripple.                
-                ripple.Draw(_graphics, progress);
+                ripple.Draw(_graphics);
             });
         }
+
+        /// <summary>
+        /// Creates an instance of the supplied ripple profile.
+        /// </summary>
+        /// <param name="profileType">The enum value that represents the profile to be instantiated.</param>
+        /// <returns>An instance of the </returns>
         public static BaseProfile CreateProfile(RippleProfileType profileType)
         {
             ConstructableEnumAttribute attribute = profileType.GetEnumAttribute<ConstructableEnumAttribute>();
