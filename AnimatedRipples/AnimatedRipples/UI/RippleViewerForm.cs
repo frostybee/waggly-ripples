@@ -1,23 +1,14 @@
-﻿using FriskyMouse.UI;
-using MaterialSkin.Animations;
+﻿using FrostyBee.FriskyRipples.Animation;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinFormLayered.Drawing;
-using WinFormLayered.Drawing.Extensions;
-using WinFormLayered.Drawing.Profiles;
-using WinFormLayered.Drawing.Shapes;
-using WinFormLayered.LayeredForm;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using FrostyBee.FriskyRipples.Drawing;
+using FrostyBee.FriskyRipples.Extensions;
+using FrostyBee.FriskyRipples.LayeredForm;
+using FrostyBee.FriskyRipples.Helpers;
 
-namespace WinFormLayered
+namespace FrostyBee.FriskyRipples
 {
     public partial class RippleViewerForm : Form
     {

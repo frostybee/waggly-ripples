@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO.Ports;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using FrostyBee.FriskyRipples.Extensions;
+using FrostyBee.FriskyRipples.Helpers;
 
-namespace WinFormLayered.Drawing.Shapes
+namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class RippleEntry
     {

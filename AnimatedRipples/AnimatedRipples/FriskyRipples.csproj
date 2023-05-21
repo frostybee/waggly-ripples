@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0B7F705C-D086-4D9A-A847-0E99D4374F46}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>WinFormLayered</RootNamespace>
-    <AssemblyName>WinFormLayered</AssemblyName>
+    <RootNamespace>FrostyBee.FriskyRipples</RootNamespace>
+    <AssemblyName>FriskyRipples</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -53,6 +53,7 @@
     <Compile Include="Animation\AnimationEnums.cs" />
     <Compile Include="Animation\AnimationManager.cs" />
     <Compile Include="Animation\Interpolations.cs" />
+    <Compile Include="Animation\Interpolators\IAnimationInterpolator.cs" />
     <Compile Include="Drawing\Attributes\ConstructableEnumAttribute.cs" />
     <Compile Include="Drawing\Extensions\ControlExtensions.cs" />
     <Compile Include="Drawing\Extensions\EnumExtensions.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Drawing\Profiles\DiamondProfile.cs" />
     <Compile Include="Drawing\Profiles\HexagonProfile.cs" />
     <Compile Include="Drawing\Profiles\CircleProfile.cs" />
-    <Compile Include="Drawing\Settings\ProfileSettings.cs" />
+    <Compile Include="Drawing\Settings\ProfileOptions.cs" />
     <Compile Include="Drawing\Profiles\SquaredPulseProfile.cs" />
     <Compile Include="Drawing\Shapes\RippleEntry.cs" />
     <Compile Include="Drawing\Profiles\SpotlightProfile.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>

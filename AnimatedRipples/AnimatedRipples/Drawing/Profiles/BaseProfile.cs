@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WinFormLayered.Drawing.Attributes;
-using WinFormLayered.Drawing.Extensions;
-using WinFormLayered.Drawing.Profiles;
-using WinFormLayered.Drawing.Shapes;
+using FrostyBee.FriskyRipples.Attributes;
+using FrostyBee.FriskyRipples.Extensions;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Drawing
 {
     /// <summary>
     /// Each profile maintains its list of ripples. 
@@ -25,7 +19,7 @@ namespace WinFormLayered.Drawing
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
         public int BaseRadius { get; set; } = 10;        
-        public RippleProfileSettings Options { get; set; } = new RippleProfileSettings();
+        public ProfileOptions Options { get; set; } = new ProfileOptions();
         #endregion
 
         // Is it better to use an interface with public properties?

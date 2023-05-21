@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using WinFormLayered.Drawing.Shapes;
+using FrostyBee.FriskyRipples.Helpers;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class ConcentricProfile : BaseProfile
     {

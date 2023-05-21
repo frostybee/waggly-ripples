@@ -6,9 +6,8 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WinFormLayered.Drawing.Helpers;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Helpers
 {
     internal class DrawingHelper
     {

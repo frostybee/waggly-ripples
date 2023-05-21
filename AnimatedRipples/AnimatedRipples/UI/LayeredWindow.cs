@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using NativeStructs = FriskyMouse.NativeApi;
-namespace FriskyMouse.UI
+namespace FrostyBee.FriskyRipples.UI
 {
     /// <summary>
     /// Represents a lightweight window used for creating a _layeredWindow, transparent window.

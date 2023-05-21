@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormLayered.Drawing.Attributes;
-using WinFormLayered.Drawing.Profiles;
-using WinFormLayered.Drawing.Shapes;
+﻿using System.ComponentModel;
+using FrostyBee.FriskyRipples.Attributes;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Drawing
 {
     public enum RippleProfileType : uint
     {

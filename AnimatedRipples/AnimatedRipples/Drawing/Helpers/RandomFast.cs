@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormLayered.Drawing.Helpers
+namespace FrostyBee.FriskyRipples.Helpers
 {
     public static class RandomFast
     {

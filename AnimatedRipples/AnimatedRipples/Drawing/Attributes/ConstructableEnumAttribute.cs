@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormLayered.Drawing.Attributes
+namespace FrostyBee.FriskyRipples.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
     internal class ConstructableEnumAttribute : Attribute

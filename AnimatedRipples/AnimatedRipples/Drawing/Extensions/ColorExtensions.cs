@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinFormLayered.Drawing.Shapes
+namespace FrostyBee.FriskyRipples.Extensions
 {
     internal static class ColorExtensions
     {

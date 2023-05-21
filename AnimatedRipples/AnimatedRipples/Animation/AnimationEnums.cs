@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaterialSkin.Animations
+namespace FrostyBee.FriskyRipples.Animation
 {
     /// <summary>
     /// Defines the AnimationDirection

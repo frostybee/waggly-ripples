@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WinFormLayered
+namespace FrostyBee.FriskyRipples
 {
     internal static class Program
     {
@@ -16,8 +16,7 @@ namespace WinFormLayered
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new RippleViewerForm());
-            //Application.Run(new TopMostFrm());
+            Application.Run(new RippleViewerForm());            
         }
     }
 }

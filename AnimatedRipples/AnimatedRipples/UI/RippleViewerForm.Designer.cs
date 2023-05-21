@@ -1,4 +1,4 @@
-﻿namespace WinFormLayered
+﻿namespace FrostyBee.FriskyRipples
 {
     partial class RippleViewerForm
     {

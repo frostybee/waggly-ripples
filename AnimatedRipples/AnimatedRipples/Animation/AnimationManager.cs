@@ -1,4 +1,4 @@
-﻿namespace MaterialSkin.Animations
+﻿namespace FrostyBee.FriskyRipples.Animation
 {
     using System;
     using System.Collections.Generic;

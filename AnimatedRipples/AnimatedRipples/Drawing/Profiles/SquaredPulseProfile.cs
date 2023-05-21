@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormLayered.Drawing.Shapes;
+﻿using System.Drawing;
+using FrostyBee.FriskyRipples.Drawing;
+using FrostyBee.FriskyRipples.Extensions;
+using FrostyBee.FriskyRipples.Helpers;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Drawing
 {
     /// <summary>
     /// Represents a single expanding ripple.

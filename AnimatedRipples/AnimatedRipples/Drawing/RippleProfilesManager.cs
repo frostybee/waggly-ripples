@@ -1,23 +1,15 @@
 ﻿using FriskyMouse.NativeApi;
-using FriskyMouse.UI;
-using MaterialSkin.Animations;
+
+using FrostyBee.FriskyRipples.Animation;
 using ReaLTaiizor.Animate.Metro;
-using ReaLTaiizor.Enum.Metro;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormLayered.Drawing;
-using WinFormLayered.Drawing.Extensions;
-using WinFormLayered.Drawing.Profiles;
-using WinFormLayered.Drawing.Shapes;
+using FrostyBee.FriskyRipples.Drawing;
+using FrostyBee.FriskyRipples.Extensions;
+using FrostyBee.FriskyRipples.UI;
 
-namespace WinFormLayered.LayeredForm
+namespace FrostyBee.FriskyRipples.LayeredForm
 {
     /// <summary>
     /// Responsible for creating, switching and animating ripple profiles. 
@@ -167,7 +159,7 @@ namespace WinFormLayered.LayeredForm
             _layeredWindow.Hide();
         }
 
-        internal void ApplySettings(RippleProfileSettings profileSettings)
+        internal void ApplySettings(ProfileOptions profileSettings)
         {
             _animationManager.Increment = profileSettings.AnimationSpeed;
             _animationManager.InterpolationMode = profileSettings.AnimInteroplation;            

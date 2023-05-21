@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinFormLayered.Drawing.Shapes;
+﻿using System.Drawing;
+using FrostyBee.FriskyRipples.Drawing;
+using FrostyBee.FriskyRipples.Extensions;
+using FrostyBee.FriskyRipples.Helpers;
 
-namespace WinFormLayered.Drawing
+namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class HexagonProfile : BaseProfile
     {
         Pen _outlinePen;
         int _baseRadius = 10; // Needs to be parametrized.
-        
+
         public HexagonProfile()
         {
             InitDrawingProfile();
@@ -41,7 +36,7 @@ namespace WinFormLayered.Drawing
                     IsFilled = false,
                     PolygonType = PolygonType.Hexagon
                     //PolyPoints =  DrawingHelper.CreateHexagon(x, y, _baseRadius)
-                });                                 
-        }              
+                });
+        }
     }
 }

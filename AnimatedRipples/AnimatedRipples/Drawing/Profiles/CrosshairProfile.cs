@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
+﻿using System.Drawing;
 
-namespace WinFormLayered.Drawing.Shapes
+namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class CrosshairProfile : BaseProfile
     {
@@ -21,8 +12,7 @@ namespace WinFormLayered.Drawing.Shapes
         }
 
         private void InitDrawingProfile()
-        {
-            int opacity = 10;            
+        {            
             int width = 40;
             int height = 8;
             // TODO: Set the initial opacity here. 

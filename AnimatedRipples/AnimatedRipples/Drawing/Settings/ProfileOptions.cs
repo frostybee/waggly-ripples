@@ -1,15 +1,9 @@
-﻿using MaterialSkin.Animations;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FrostyBee.FriskyRipples.Animation;
 
 
-namespace WinFormLayered.Drawing.Profiles
+namespace FrostyBee.FriskyRipples.Drawing
 {
-    internal class RippleProfileSettings
+    internal class ProfileOptions
     {
         #region Animation Settings
         public InterpolationType AnimInteroplation { get; set; } = InterpolationType.Linear;
