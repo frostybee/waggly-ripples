@@ -18,7 +18,7 @@ namespace WinFormLayered.Drawing.Profiles
         #endregion        
 
         #region Visual Appearance
-        public bool IsColorTransition { get; set; } = true;
+        public bool IsColorTransition { get; set; } = false;
         public int InitialOpacity { get; set; } = 100;
         public int MaxRadius { get; set; }
         #endregion

@@ -25,6 +25,7 @@ namespace WinFormLayered
         private AnimationManager _animationManager;
         private BaseProfile _currentProfile;        
         private Bitmap _canvas;
+        Bitmap _blankCanvas = null;
         private Graphics _graphics;
 
         public RippleViewerForm()
@@ -59,6 +60,7 @@ namespace WinFormLayered
 
         private void StartAnimation()
         {
+            pcbRipplePreview.Image = _canvas;
             if (!_animationManager.IsAnimating())
             {
                 _animationManager.SetProgress(0);                
@@ -87,6 +89,7 @@ namespace WinFormLayered
             cmbInterpolationMode.PopulateFromEnum(typeof(InterpolationType));
             //-- Create the drawing canvas on which the ripples will be drawn.
             _canvas = DrawingHelper.CreateBitmap(pcbRipplePreview.Width, pcbRipplePreview.Height, Color.White);
+            _blankCanvas = DrawingHelper.CreateBitmap(pcbRipplePreview.Width, pcbRipplePreview.Height, Color.White);
             pcbRipplePreview.Image = _canvas;
             pcbRipplePreview.BackColor = Color.White;
             _graphics = Graphics.FromImage(_canvas);
@@ -98,6 +101,7 @@ namespace WinFormLayered
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
             // Clear the _surface that was previously drawn onto the _layeredWindow window.                                    
+            pcbRipplePreview.Image = _blankCanvas;            
         }
         private void BtnLayeredWindow_Click(object sender, EventArgs e)
         {
@@ -148,7 +152,8 @@ namespace WinFormLayered
         }
         private void ChkbColorTransition_CheckedChanged(object sender, EventArgs e)
         {
-            _currentProfile.IsColorTransition = chkbColorTransition.Checked;            
+            _currentProfile.Options.IsColorTransition = chkbColorTransition.Checked;
+            Debug.WriteLine(_currentProfile.Options.IsColorTransition.ToString());
         }
     }
 }

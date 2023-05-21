@@ -17,8 +17,7 @@ namespace WinFormLayered.Drawing
         {
             if (width > 0 && height > 0)
             {
-                Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
-
+                Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);                
                 using (Graphics graphics = Graphics.FromImage(bmp))
                 {
                     graphics.Clear(inColor);

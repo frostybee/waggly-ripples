@@ -24,8 +24,7 @@ namespace WinFormLayered.Drawing
         #region Properties
         public int Width { get; set; } = 200;
         public int Height { get; set; } = 200;
-        public int BaseRadius { get; set; } = 10;
-        public bool IsColorTransition { get; set; } = true;        
+        public int BaseRadius { get; set; } = 10;        
         public RippleProfileSettings Options { get; set; } = new RippleProfileSettings();
         #endregion
 
@@ -41,8 +40,9 @@ namespace WinFormLayered.Drawing
             // We adjust the ripple properties every animation frame. 
             _ripples.ForEach(ripple =>
             {                
-                if (IsColorTransition)
+                if (Options.IsColorTransition)
                 {
+                    Debug.WriteLine(Options.IsColorTransition.ToString());
                     // We fade the color of the ripple based on the current animation's progress value.
                     ripple.AdjustColorOpacity(progress);
                 }

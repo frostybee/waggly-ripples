@@ -96,7 +96,7 @@ namespace WinFormLayered.LayeredForm
             Debug.WriteLine("Finished....");
             //_layeredWindow.SetBitmap(new Bitmap(200, 200), 1);
             // Clear the _surface that was previously drawn onto the _layeredWindow window.
-            //_layeredWindow.SetBitmap(_blankSurface, 1);
+            //_layeredWindow.SetBitmap(_blankCanvas, 1);
             _graphics.Clear(Color.Transparent);
             _layeredWindow.Hide();
         }
