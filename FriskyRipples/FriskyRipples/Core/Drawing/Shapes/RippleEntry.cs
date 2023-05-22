@@ -98,7 +98,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             //return (255 - Math.Min(Math.Max(0, (int)animationProgress* 150), 255));
             int opacity = 1;
             // Opacity percentage: 255 * 75 / 100
-            float percentage = (float)Math.Round(animationProgress * 80, 2);
+            float percentage = (float)Math.Round(animationProgress * 100, 2);
             opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));
             if (IsFade)
             {

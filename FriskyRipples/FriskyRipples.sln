@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriskyRipples", "AnimatedRipples\FriskyRipples.csproj", "{0B7F705C-D086-4D9A-A847-0E99D4374F46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FriskyRipples", "FriskyRipples\FriskyRipples.csproj", "{0B7F705C-D086-4D9A-A847-0E99D4374F46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetroAnimation", "MetroAnimation\MetroAnimation.csproj", "{707CCEEC-7854-446C-A7FF-91B1A0DE67BF}"
 EndProject

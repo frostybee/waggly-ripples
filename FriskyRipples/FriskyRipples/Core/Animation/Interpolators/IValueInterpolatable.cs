@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrostyBee.FriskyRipples.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FrostyBee.FriskyRipples.Animation
 {
-    public interface IAnimationInterpolator
+    public interface IValueInterpolatable
     {
         double Interpolate(double value);
     }

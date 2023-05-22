@@ -1,5 +1,6 @@
 ﻿namespace FrostyBee.FriskyRipples.Animation
 {
+    using FrostyBee.FriskyRipples.Drawing;
     using System;
     using System.Collections.Generic;
     using System.Drawing;
@@ -10,6 +11,9 @@
     /// </summary>
     internal class AnimationManager
     {
+
+        #region Animation Properties
+        private IValueInterpolatable _interpolator;
         /// <summary>
         /// Gets or sets a value indicating whether InterruptAnimation
         /// </summary>
@@ -26,14 +30,24 @@
         public double SecondaryIncrement { get; set; }
 
         /// <summary>
-        /// Gets or sets the InterpolationType
+        /// Gets or sets the InterpolationType.
+        /// When the values changes, an instance of the selected interpolator 
+        /// will be created. 
         /// </summary>
-        public InterpolationType InterpolationMode { get; set; }
+        public InterpolationType InterpolationMode
+        {
+            set
+            {
+                CreateInterpolator(value);
+            }
+        }
+        
 
         /// <summary>
         /// Gets or sets a value indicating whether Singular
         /// </summary>
         public bool Singular { get; set; }
+        #endregion
 
         /// <summary>
         /// The AnimationFinished
@@ -102,7 +116,8 @@
             _animationSources = new List<Point>();
             _animationDirections = new List<AnimationDirection>();
             _animationDatas = new List<object[]>();
-
+            // Default interpolator.
+            _interpolator = new InterpolatorLinear();
             Increment = 0.03;
             SecondaryIncrement = 0.03;
             InterpolationMode = InterpolationType.Linear;
@@ -229,17 +244,17 @@
                         case AnimationDirection.InOutRepeatingIn:
                         case AnimationDirection.InOutIn:
                         case AnimationDirection.In:
-                            _animationProgresses.Add(MIN_VALUE);
-                            break;
+                        _animationProgresses.Add(MIN_VALUE);
+                        break;
 
                         case AnimationDirection.InOutRepeatingOut:
                         case AnimationDirection.InOutOut:
                         case AnimationDirection.Out:
-                            _animationProgresses.Add(MAX_VALUE);
-                            break;
+                        _animationProgresses.Add(MAX_VALUE);
+                        break;
 
                         default:
-                            throw new Exception("Invalid AnimationDirection");
+                        throw new Exception("Invalid AnimationDirection");
                     }
                 }
 
@@ -267,17 +282,17 @@
                 case AnimationDirection.InOutRepeatingIn:
                 case AnimationDirection.InOutIn:
                 case AnimationDirection.In:
-                    IncrementProgress(index);
-                    break;
+                IncrementProgress(index);
+                break;
 
                 case AnimationDirection.InOutRepeatingOut:
                 case AnimationDirection.InOutOut:
                 case AnimationDirection.Out:
-                    DecrementProgress(index);
-                    break;
+                DecrementProgress(index);
+                break;
 
                 default:
-                    throw new Exception("No AnimationDirection has been set");
+                throw new Exception("No AnimationDirection has been set");
             }
         }
 
@@ -399,44 +414,7 @@
             {
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
-
-            switch (InterpolationMode)
-            {
-                // TODO: Make a factory for instantiating interpolators. 
-                case InterpolationType.InQuint:
-                    return AnimationInQuint.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InOutQuint:
-                    return AnimationInOutQuint.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InCubic:
-                    return AnimationEaseInCubic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.OutCubic:
-                    return AnimationEaseOutCubic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InOutCubic:
-                    return AnimationEaseInOutCubic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.Linear:
-                    return AnimationLinear.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InOut:
-                    return AnimationEaseInOut.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.EaseOut:
-                    return AnimationEaseOut.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.CustomQuadratic:
-                    return AnimationCustomQuadratic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InElastic:
-                    return AnimationEaseInElastic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.OutElastic:
-                    return AnimationOutElastic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InOutElastic:
-                    return AnimationInOutElastic.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InOutBounce:
-                    return AnimationEaseInOutBounce.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.OutBounce:
-                    return EaseOutBounceInterpolator.CalculateProgress(_animationProgresses[index]);
-                case InterpolationType.InBounce:
-                    return AnimationEaseInBounce.CalculateProgress(_animationProgresses[index]);
-
-                default:
-                    throw new NotImplementedException("The given InterpolationType is not implemented");
-            }
+            return _interpolator.Interpolate(_animationProgresses[index]);
         }
 
         /// <summary>
@@ -610,6 +588,10 @@
         {
             _animationTimer.Stop();
             if (OnAnimationFinished != null) OnAnimationFinished(this);
+        }
+        private void CreateInterpolator(InterpolationType inInterpolatorMode)
+        {
+            _interpolator = ConstructableFactory.Instantiate<IValueInterpolatable>(inInterpolatorMode);
         }
     }
 }

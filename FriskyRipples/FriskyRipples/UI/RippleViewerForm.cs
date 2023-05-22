@@ -27,7 +27,7 @@ namespace FrostyBee.FriskyRipples
             _animationManager = new AnimationManager()
             {
                 Increment = 0.010, // Control the animation duration.                                         
-                InterpolationMode = InterpolationType.EaseOut
+                InterpolationMode = InterpolationType.Linear
             };            
             DoubleBuffered = true;
             this.Load += RippleViewerForm_Load;
@@ -112,7 +112,7 @@ namespace FrostyBee.FriskyRipples
         {
             // A ripple profile has been selected. Switch to the newly selected profile. 
             RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();                        
-            BaseProfile _newProfile = BaseProfile.CreateProfile(profile);
+            BaseProfile _newProfile = ConstructableFactory.Instantiate<BaseProfile>(profile);
             _newProfile.Options = _currentProfile.Options;
             _profilesManager.SwitchProfile(_newProfile);
             _currentProfile?.Dispose();

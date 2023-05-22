@@ -50,7 +50,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
                 //Increment = 0.010,                
                 //InterpolationType = InterpolationType.EaseOut,                
                 //InterpolationType = InterpolationType.InElastic
-                InterpolationMode = InterpolationType.OutBounce
+                InterpolationMode = InterpolationType.Linear
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -78,7 +78,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
         
         private BaseProfile MakeDrawingProfile(RippleProfileType inProfileType)
         {
-            BaseProfile rippleProfile = BaseProfile.CreateProfile(inProfileType);            
+            BaseProfile rippleProfile = ConstructableFactory.Instantiate<BaseProfile>(inProfileType);            
             return rippleProfile;
         }
 

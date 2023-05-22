@@ -50,40 +50,57 @@
     <Compile Include="Animate\EasingType.cs" />
     <Compile Include="Animate\IntAnimate.cs" />
     <Compile Include="Animate\Interpolation.cs" />
-    <Compile Include="Animation\AnimationEnums.cs" />
-    <Compile Include="Animation\AnimationManager.cs" />
-    <Compile Include="Animation\Interpolations.cs" />
-    <Compile Include="Animation\Interpolators\IAnimationInterpolator.cs" />
-    <Compile Include="Drawing\Attributes\ConstructableEnumAttribute.cs" />
-    <Compile Include="Drawing\Extensions\ControlExtensions.cs" />
-    <Compile Include="Drawing\Extensions\EnumExtensions.cs" />
-    <Compile Include="Drawing\Extensions\GraphicsExtensions.cs" />
-    <Compile Include="Drawing\Helpers\RandomFast.cs" />
-    <Compile Include="Drawing\Profiles\BaseProfile.cs" />
-    <Compile Include="Drawing\Profiles\DiamondProfile.cs" />
-    <Compile Include="Drawing\Profiles\HexagonProfile.cs" />
-    <Compile Include="Drawing\Profiles\CircleProfile.cs" />
-    <Compile Include="Drawing\Settings\ProfileOptions.cs" />
-    <Compile Include="Drawing\Profiles\SquaredPulseProfile.cs" />
-    <Compile Include="Drawing\Shapes\RippleEntry.cs" />
-    <Compile Include="Drawing\Profiles\SpotlightProfile.cs" />
-    <Compile Include="Drawing\Extensions\ColorExtensions.cs" />
-    <Compile Include="Drawing\Profiles\ConcentricProfile.cs" />
-    <Compile Include="Drawing\Enums\DrawingEnums.cs" />
-    <Compile Include="Drawing\Helpers\DrawingHelper.cs" />
-    <Compile Include="Drawing\Profiles\CrosshairProfile.cs" />
-    <Compile Include="Drawing\Profiles\SonarPulseProfile.cs" />
-    <Compile Include="Drawing\Profiles\SingleProfile.cs" />
-    <Compile Include="Drawing\Profiles\SquareProfile.cs" />
-    <Compile Include="Drawing\Profiles\StarProfile.cs" />
-    <Compile Include="Native\ExtendedWinStyles.cs" />
+    <Compile Include="Core\Animation\AnimationEnums.cs" />
+    <Compile Include="Core\Animation\AnimationManager.cs" />
+    <Compile Include="Core\Animation\Interpolations.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInOutBounce.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInQuint.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInOutQuint.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorEaseInOut.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorOutBounce.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInOutElastic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInBounce.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorOutElastic.cs" />
+    <Compile Include="Core\Animation\Interpolators\IValueInterpolatable.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInCubic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInOutCubic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorCustomQuadratic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInElastic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorOutCubic.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorLinear.cs" />
+    <Compile Include="Core\ConstructableFactory.cs" />
+    <Compile Include="Core\Drawing\Attributes\ConstructableEnumAttribute.cs" />
+    <Compile Include="Core\Extensions\ControlExtensions.cs" />
+    <Compile Include="Core\Extensions\EnumExtensions.cs" />
+    <Compile Include="Core\Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Core\Helpers\RandomFast.cs" />
+    <Compile Include="Core\Drawing\Profiles\BaseProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\DiamondProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\HexagonProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\CircleProfile.cs" />
+    <Compile Include="Core\Drawing\Settings\ProfileOptions.cs" />
+    <Compile Include="Core\Drawing\Profiles\SquaredPulseProfile.cs" />
+    <Compile Include="Core\Drawing\Shapes\RippleEntry.cs" />
+    <Compile Include="Core\Drawing\Profiles\SpotlightProfile.cs" />
+    <Compile Include="Core\Extensions\ColorExtensions.cs" />
+    <Compile Include="Core\Drawing\Profiles\ConcentricProfile.cs" />
+    <Compile Include="Core\Drawing\Enums\DrawingEnums.cs" />
+    <Compile Include="Core\Helpers\DrawingHelper.cs" />
+    <Compile Include="Core\Drawing\Profiles\CrosshairProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\SonarPulseProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\SingleProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\SquareProfile.cs" />
+    <Compile Include="Core\Drawing\Profiles\StarProfile.cs" />
+    <Compile Include="Core\IConstructable.cs" />
+    <Compile Include="Core\Native\ExtendedWinStyles.cs" />
     <Compile Include="UI\LayeredWindow.cs" />
-    <Compile Include="Drawing\RippleProfilesManager.cs" />
-    <Compile Include="Native\HookHelper.cs" />
-    <Compile Include="Native\NativeConstants.cs" />
-    <Compile Include="Native\NativeEnums.cs" />
-    <Compile Include="Native\NativeMethods.cs" />
-    <Compile Include="Native\NativeStructs.cs" />
+    <Compile Include="Core\Drawing\RippleProfilesManager.cs" />
+    <Compile Include="Core\Native\HookHelper.cs" />
+    <Compile Include="Core\Native\NativeConstants.cs" />
+    <Compile Include="Core\Native\NativeEnums.cs" />
+    <Compile Include="Core\Native\NativeMethods.cs" />
+    <Compile Include="Core\Native\NativeStructs.cs" />
     <Compile Include="UI\RippleViewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,9 +131,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

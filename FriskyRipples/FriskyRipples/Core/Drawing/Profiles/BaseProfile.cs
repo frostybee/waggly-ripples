@@ -10,7 +10,7 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// <summary>
     /// Each profile maintains its list of ripples. 
     /// </summary>
-    internal abstract class BaseProfile : IDisposable
+    internal abstract class BaseProfile :  IDisposable
     {
         private bool disposedValue;
         protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
@@ -45,20 +45,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                 ripple.Draw(_graphics);
             });
         }
-
-        /// <summary>
-        /// Creates an instance of the supplied ripple profile.
-        /// </summary>
-        /// <param name="profileType">The enum value that represents the profile to be instantiated.</param>
-        /// <returns>An instance of the </returns>
-        public static BaseProfile CreateProfile(RippleProfileType profileType)
-        {
-            ConstructableEnumAttribute attribute = profileType.GetEnumAttribute<ConstructableEnumAttribute>();
-            Debug.WriteLine(attribute.Type);
-            BaseProfile profile = (BaseProfile)Activator.CreateInstance(attribute.Type);
-            return profile;
-
-        }
+        
         public void DisposeDrawingTools()
         {
             _ripples.ForEach(ripple =>
