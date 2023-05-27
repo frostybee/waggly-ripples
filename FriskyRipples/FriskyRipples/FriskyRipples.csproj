@@ -51,9 +51,12 @@
     <Compile Include="Animate\IntAnimate.cs" />
     <Compile Include="Animate\Interpolation.cs" />
     <Compile Include="Core\Animation\AnimationEnums.cs" />
-    <Compile Include="Core\Animation\AnimationManager.cs" />
+    <Compile Include="Core\Animation\ValueAnimator.cs" />
     <Compile Include="Core\Animation\Interpolations.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInOutBack.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorOutBack.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorInExpo.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInOutBounce.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInQuint.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInOutQuint.cs" />
@@ -61,6 +64,7 @@
     <Compile Include="Core\Animation\Interpolators\InterpolatorOutBounce.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInOutElastic.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInBounce.cs" />
+    <Compile Include="Core\Animation\Interpolators\InterpolatorOutQuint.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorOutElastic.cs" />
     <Compile Include="Core\Animation\Interpolators\IValueInterpolatable.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInCubic.cs" />
@@ -69,8 +73,8 @@
     <Compile Include="Core\Animation\Interpolators\InterpolatorInElastic.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorOutCubic.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorLinear.cs" />
-    <Compile Include="Core\ConstructableFactory.cs" />
-    <Compile Include="Core\Drawing\Attributes\ConstructableEnumAttribute.cs" />
+    <Compile Include="Core\Helpers\ConstructableFactory.cs" />
+    <Compile Include="Core\Attributes\ConstructableEnumAttribute.cs" />
     <Compile Include="Core\Extensions\ControlExtensions.cs" />
     <Compile Include="Core\Extensions\EnumExtensions.cs" />
     <Compile Include="Core\Extensions\GraphicsExtensions.cs" />
@@ -85,7 +89,7 @@
     <Compile Include="Core\Drawing\Profiles\SpotlightProfile.cs" />
     <Compile Include="Core\Extensions\ColorExtensions.cs" />
     <Compile Include="Core\Drawing\Profiles\ConcentricProfile.cs" />
-    <Compile Include="Core\Drawing\Enums\DrawingEnums.cs" />
+    <Compile Include="Core\Drawing\Enums\RippleEnums.cs" />
     <Compile Include="Core\Helpers\DrawingHelper.cs" />
     <Compile Include="Core\Drawing\Profiles\CrosshairProfile.cs" />
     <Compile Include="Core\Drawing\Profiles\SonarPulseProfile.cs" />

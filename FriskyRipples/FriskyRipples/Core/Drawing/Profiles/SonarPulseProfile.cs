@@ -11,7 +11,7 @@ namespace FrostyBee.FriskyRipples.Drawing
     internal class SonarPulseProfile : BaseProfile
     {
         SolidBrush _innerBrush;
-        SolidBrush _outerBursh;
+        SolidBrush _outerBrush;
         Pen _middlePen;
         public SonarPulseProfile()
         {
@@ -21,7 +21,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         private void InitDrawingProfile()
         {
             _innerBrush = new SolidBrush(Color.Green);
-            _outerBursh = new SolidBrush(Color.DarkGreen.WithOpacity(250));
+            _outerBrush = new SolidBrush(Color.DarkGreen.WithOpacity(250));
             _middlePen = new Pen(Color.White, 3);
 
             // 1) Make the outer ripple.
@@ -33,10 +33,10 @@ namespace FrostyBee.FriskyRipples.Drawing
                     ShapeType = ShapeType.Ellipse,
                     InitialRadius = BaseRadius,
                     RadiusMultiplier = 3,
-                    FillBrush = _outerBursh,
+                    FillBrush = _outerBrush,
                     IsFilled = true,
                 });
-            // 2) Make the most outer ripple. 
+            // 2) Make the middle ripple. 
             _ripples.Add(
                 new RippleEntry()
                 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO.Ports;
 using FrostyBee.FriskyRipples.Attributes;
 using FrostyBee.FriskyRipples.Extensions;
 
@@ -10,7 +11,7 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// <summary>
     /// Each profile maintains its list of ripples. 
     /// </summary>
-    internal abstract class BaseProfile :  IDisposable
+    internal abstract class BaseProfile :  IDisposable, IConstructable
     {
         private bool disposedValue;
         protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
@@ -45,7 +46,22 @@ namespace FrostyBee.FriskyRipples.Drawing
                 ripple.Draw(_graphics);
             });
         }
-        
+
+        internal void ResetColorOpacity()
+        {
+            // We adjust the ripple properties every animation frame. 
+            _ripples.ForEach(ripple =>
+            {
+                /*if (Options.IsColorTransition)
+                {
+                    Debug.WriteLine(Options.IsColorTransition.ToString());
+                    // We fade the color of the ripple based on the current animation's progress value.
+                    ripple.AdjustColorOpacity(progress);
+                }*/
+                ripple.ResetColor(255);
+            });
+        }
+
         public void DisposeDrawingTools()
         {
             _ripples.ForEach(ripple =>
@@ -78,6 +94,6 @@ namespace FrostyBee.FriskyRipples.Drawing
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
-        }
+        }        
     }
 }

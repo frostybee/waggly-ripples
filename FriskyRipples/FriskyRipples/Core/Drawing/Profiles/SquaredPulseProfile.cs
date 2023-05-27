@@ -14,7 +14,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         // Add random color?        
         Pen _outlinePen;
         SolidBrush _innerBrush;
-        SolidBrush _outerBursh;
+        SolidBrush _outerBrush;
 
         public SquaredPulseProfile()
         {
@@ -25,7 +25,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         {
             int opacity = 10;
             _innerBrush = new SolidBrush(Color.DarkBlue);
-            _outerBursh = new SolidBrush(Color.Crimson);
+            _outerBrush = new SolidBrush(Color.Crimson);
 
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
@@ -39,7 +39,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     InitialRadius = BaseRadius+5,
                     IsFade = true,
                     RadiusMultiplier = 2,
-                    FillBrush = _outerBursh,
+                    FillBrush = _outerBrush,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
                 });

@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using FrostyBee.FriskyRipples.Drawing;
 using FrostyBee.FriskyRipples.Extensions;
 using FrostyBee.FriskyRipples.UI;
+using System;
 
 namespace FrostyBee.FriskyRipples.LayeredForm
 {
@@ -29,7 +30,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
         /// The drawing canvas on which the mouse click ripples will be repeatedly drawn.
         /// </summary>
         Graphics _graphics;
-        private AnimationManager _animationManager;
+        private ValueAnimator _animationManager;
         private BaseProfile _currentProfile;        
         public RippleProfileType RippleType { get; set; }
         public RippleProfilesManager()
@@ -44,13 +45,13 @@ namespace FrostyBee.FriskyRipples.LayeredForm
             _layeredWindow = new LayeredWindow();                        
             RippleType = RippleProfileType.SonarPulse;
 
-            _animationManager = new AnimationManager()
+            _animationManager = new ValueAnimator()
             {
                 Increment = 0.020, // Control the animation duration.
                 //Increment = 0.010,                
                 //InterpolationType = InterpolationType.EaseOut,                
                 //InterpolationType = InterpolationType.InElastic
-                InterpolationMode = InterpolationType.Linear
+                InterpolationType = InterpolationType.Linear
 
             };
             _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
@@ -78,7 +79,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
         
         private BaseProfile MakeDrawingProfile(RippleProfileType inProfileType)
         {
-            BaseProfile rippleProfile = ConstructableFactory.Instantiate<BaseProfile>(inProfileType);            
+            BaseProfile rippleProfile = ConstructableFactory.GetInstanceOf<BaseProfile>(inProfileType);            
             return rippleProfile;
         }
 
@@ -162,7 +163,15 @@ namespace FrostyBee.FriskyRipples.LayeredForm
         internal void ApplySettings(ProfileOptions profileSettings)
         {
             _animationManager.Increment = profileSettings.AnimationSpeed;
-            _animationManager.InterpolationMode = profileSettings.AnimInteroplation;            
+            _animationManager.InterpolationType = profileSettings.AnimInteroplation;            
+        }
+
+        internal void StopAnimation()
+        {
+            if (_animationManager.IsAnimating())
+            {
+                _animationManager.Stop();
+            }
         }
     }
 }

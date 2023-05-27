@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
 using FrostyBee.FriskyRipples.Extensions;
@@ -109,7 +110,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                 }
                 else
                 {
-                    Debug.WriteLine("opacity: "+opacity);
+                    Debug.WriteLine("opacity: " + opacity);
                     OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
                 }
             }
@@ -130,7 +131,24 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         internal double CalculateNewRadius()
         {
+            
             return InitialRadius * RadiusMultiplier;
+        }
+
+        internal void ResetColor(byte initialOpacity)
+        {
+            if (IsFade)
+            {
+                if (IsFilled)
+                {
+                    FillBrush.Color = FillBrush.Color.WithOpacity(initialOpacity);
+                    //FillBrush.Color = DrawingHelper.RandomColor().ReduceOpacity(opacity);
+                }
+                else
+                {                    
+                    OutlinePen.Color = OutlinePen.Color.WithOpacity(initialOpacity);
+                }
+            }
         }
     }
 }

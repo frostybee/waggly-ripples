@@ -7,10 +7,14 @@ namespace FrostyBee.FriskyRipples.Drawing
     {
         [Description("Expanding Ripple"), ConstructableEnum(typeof(CircleProfile))]
         Single,
-        [Description("Cherry Blossom"), ConstructableEnum(typeof(SingleProfile))]
-        Cherry,
+        [Description("Expanding Square"), ConstructableEnum(typeof(SquareProfile))]
+        Square,
+        [Description("Hexagon"), ConstructableEnum(typeof(HexagonProfile))]
+        Hexagon,
         [Description("Diamond"), ConstructableEnum(typeof(DiamondProfile))]
         Diamond,
+        [Description("Cherry Blossom"), ConstructableEnum(typeof(SingleProfile))]
+        Cherry,        
         [Description("Star ripple"), ConstructableEnum(typeof(StarProfile))]
         Star,        
         [Description("Fading Spotlight"), ConstructableEnum(typeof(SpotlightProfile))]
@@ -18,11 +22,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         [Description("Sonar Pulse"), ConstructableEnum(typeof(SonarPulseProfile))]
         SonarPulse,
         [Description("Squared Pulse"), ConstructableEnum(typeof(SquaredPulseProfile))]
-        SquaredPulse,
-        [Description("Expanding Square"), ConstructableEnum(typeof(SquareProfile))]
-        Square,
-        [Description("Hexagon"), ConstructableEnum(typeof(HexagonProfile))]
-        Hexagon,
+        SquaredPulse,      
         [Description("Crosshair"), ConstructableEnum(typeof(CrosshairProfile))]
         Crosshair,
         [Description("Concentric Circles"), ConstructableEnum(typeof(ConcentricProfile))]

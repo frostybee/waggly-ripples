@@ -4,12 +4,13 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Runtime.CompilerServices;
     using System.Windows.Forms;
 
     /// <summary>
-    /// Defines the <see cref="AnimationManager" />
+    /// Defines the <see cref="ValueAnimator" />
     /// </summary>
-    internal class AnimationManager
+    internal class ValueAnimator
     {
 
         #region Animation Properties
@@ -34,14 +35,13 @@
         /// When the values changes, an instance of the selected interpolator 
         /// will be created. 
         /// </summary>
-        public InterpolationType InterpolationMode
+        public InterpolationType InterpolationType
         {
             set
             {
                 CreateInterpolator(value);
             }
         }
-        
 
         /// <summary>
         /// Gets or sets a value indicating whether Singular
@@ -87,9 +87,9 @@
         private readonly List<AnimationDirection> _animationDirections;
 
         /// <summary>
-        /// Defines the _animationDatas
+        /// Defines the _animationData
         /// </summary>
-        private readonly List<object[]> _animationDatas;
+        private readonly List<object[]> _animationData;
 
         /// <summary>
         /// Defines the MIN_VALUE
@@ -107,20 +107,20 @@
         private readonly Timer _animationTimer = new Timer { Interval = 5, Enabled = false };
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnimationManager"/> class.
+        /// Initializes a new instance of the <see cref="ValueAnimator"/> class.
         /// </summary>
         /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new animation is added to the list.</param>
-        public AnimationManager(bool singular = true)
+        public ValueAnimator(bool singular = true)
         {
             _animationProgresses = new List<double>();
             _animationSources = new List<Point>();
             _animationDirections = new List<AnimationDirection>();
-            _animationDatas = new List<object[]>();
+            _animationData = new List<object[]>();
             // Default interpolator.
             _interpolator = new InterpolatorLinear();
             Increment = 0.03;
             SecondaryIncrement = 0.03;
-            InterpolationMode = InterpolationType.Linear;
+            InterpolationType = InterpolationType.Linear;
             InterruptAnimation = true;
             Singular = singular;
 
@@ -167,7 +167,7 @@
                         _animationProgresses.RemoveAt(i);
                         _animationSources.RemoveAt(i);
                         _animationDirections.RemoveAt(i);
-                        _animationDatas.RemoveAt(i);
+                        _animationData.RemoveAt(i);
                     }
                 }
                 else
@@ -206,8 +206,16 @@
         /// <param name="data">The data<see cref="object[]"/></param>
         public void StartNewAnimation(AnimationDirection animationDirection, object[] data = null)
         {
+            if (animationDirection == AnimationDirection.Out || animationDirection == AnimationDirection.InOutOut)
+            {
+                SetProgress(1);
+            }
+            else
+            {
+                SetProgress(0);
+            }
             StartNewAnimation(animationDirection, new Point(0, 0), data);
-        }
+        }        
 
         /// <summary>
         /// The StartNewAnimation
@@ -258,13 +266,13 @@
                     }
                 }
 
-                if (Singular && _animationDatas.Count > 0)
+                if (Singular && _animationData.Count > 0)
                 {
-                    _animationDatas[0] = data ?? new object[] { };
+                    _animationData[0] = data ?? new object[] { };
                 }
                 else
                 {
-                    _animationDatas.Add(data ?? new object[] { });
+                    _animationData.Add(data ?? new object[] { });
                 }
             }
 
@@ -496,12 +504,12 @@
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (_animationDatas.Count == 0)
+            if (_animationData.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            return _animationDatas[0];
+            return _animationData[0];
         }
 
         /// <summary>
@@ -511,12 +519,12 @@
         /// <returns>The <see cref="object[]"/></returns>
         public object[] GetData(int index)
         {
-            if (!(index < _animationDatas.Count))
+            if (!(index < _animationData.Count))
             {
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
 
-            return _animationDatas[index];
+            return _animationData[index];
         }
 
         /// <summary>
@@ -526,7 +534,7 @@
         public int GetAnimationCount()
         {
             return _animationProgresses.Count;
-        }
+        }        
 
         /// <summary>
         /// The SetProgress
@@ -577,12 +585,12 @@
                 throw new Exception("Animation is not set to Singular.");
             }
 
-            if (_animationDatas.Count == 0)
+            if (_animationData.Count == 0)
             {
                 throw new Exception("Invalid animation");
             }
 
-            _animationDatas[0] = data;
+            _animationData[0] = data;
         }
         public void Stop()
         {
@@ -591,7 +599,16 @@
         }
         private void CreateInterpolator(InterpolationType inInterpolatorMode)
         {
-            _interpolator = ConstructableFactory.Instantiate<IValueInterpolatable>(inInterpolatorMode);
+            IValueInterpolatable newInterpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(inInterpolatorMode);
+            if (newInterpolator == null)
+            {
+                // Create a linear interpolator if the dynamic instantiation fails.
+                _interpolator = new InterpolatorLinear();
+            }
+            else
+            {
+                _interpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(inInterpolatorMode);
+            }
         }
     }
 }

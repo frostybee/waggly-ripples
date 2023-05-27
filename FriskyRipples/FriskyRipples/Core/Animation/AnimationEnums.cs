@@ -1,10 +1,5 @@
 ﻿using FrostyBee.FriskyRipples.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FrostyBee.FriskyRipples.Animation
 {
@@ -30,12 +25,18 @@ namespace FrostyBee.FriskyRipples.Animation
     {
         [Description("Linear"), ConstructableEnum(typeof(InterpolatorLinear))]
         Linear,
+        [Description("In Expo"), ConstructableEnum(typeof(InterpolatorInExpo))]
+        InExpo,
+        [Description("Out Back"), ConstructableEnum(typeof(InterpolatorOutBack))]
+        OutBack,
+        [Description("In Out Back"), ConstructableEnum(typeof(InterpolatorInOutBack))]
+        InOutBack,        
         [Description("In Cubic"), ConstructableEnum(typeof(InterpolatorInCubic))]
         InCubic,
         [Description("Out Cubic"), ConstructableEnum(typeof(InterpolatorOutCubic))]
-         OutCubic,
-         [Description("In Out Cubic"), ConstructableEnum(typeof(InterpolatorInOutCubic))]
-         InOutCubic,
+        OutCubic,
+        [Description("In Out Cubic"), ConstructableEnum(typeof(InterpolatorInOutCubic))]
+        InOutCubic,
         [Description("Custom Quadratic"), ConstructableEnum(typeof(InterpolatorCustomQuadratic))]
         CustomQuadratic,
         [Description("In Elastic"), ConstructableEnum(typeof(InterpolatorInElastic))]
@@ -43,7 +44,7 @@ namespace FrostyBee.FriskyRipples.Animation
         [Description("Out Elastic"), ConstructableEnum(typeof(InterpolatorOutElastic))]
         OutElastic,
         [Description("In Out Elastic"), ConstructableEnum(typeof(InterpolatorInOutElastic))]
-        InOutElastic,        
+        InOutElastic,
         [Description("In Bounce"), ConstructableEnum(typeof(InterpolatorInBounce))]
         InBounce,
         [Description("Out Bounce"), ConstructableEnum(typeof(InterpolatorOutBounce))]
@@ -52,6 +53,8 @@ namespace FrostyBee.FriskyRipples.Animation
         InOutBounce,
         [Description("In Quint"), ConstructableEnum(typeof(InterpolatorInQuint))]
         InQuint,
+        [Description("Out Quint"), ConstructableEnum(typeof(InterpolatorOutQuint))]
+        OutQuint,
         [Description("In Out Quint"), ConstructableEnum(typeof(InterpolatorInOutQuint))]
         InOutQuint,
         [Description("Ease Out"), ConstructableEnum(typeof(InterpolatorEaseOut))]

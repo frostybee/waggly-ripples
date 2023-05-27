@@ -13,7 +13,7 @@ namespace FrostyBee.FriskyRipples
     public partial class RippleViewerForm : Form
     {
         private readonly RippleProfilesManager _profilesManager = new RippleProfilesManager();        
-        private AnimationManager _animationManager;
+        private ValueAnimator _rippleValueAnimator;
         private BaseProfile _currentProfile;        
         private Bitmap _canvas;
         Bitmap _blankCanvas = null;
@@ -24,17 +24,17 @@ namespace FrostyBee.FriskyRipples
             InitializeComponent();            
             //            
             _currentProfile = new SonarPulseProfile();            
-            _animationManager = new AnimationManager()
+            _rippleValueAnimator = new ValueAnimator()
             {
                 Increment = 0.010, // Control the animation duration.                                         
-                InterpolationMode = InterpolationType.Linear
+                InterpolationType = InterpolationType.Linear
             };            
             DoubleBuffered = true;
             this.Load += RippleViewerForm_Load;
             this.Click += RippleViewerForm_Click;
             cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;                    
-            _animationManager.OnAnimationProgress += OnRipplesAnimation_Update;
-            _animationManager.OnAnimationFinished += OnRipplesAnimation_Finished;           
+            _rippleValueAnimator.OnAnimationProgress += OnRipplesAnimation_Update;
+            _rippleValueAnimator.OnAnimationFinished += OnRipplesAnimation_Finished;           
         }
 
         private void RippleViewerForm_Click(object sender, EventArgs e)
@@ -52,20 +52,29 @@ namespace FrostyBee.FriskyRipples
         private void StartAnimation()
         {
             pcbRipplePreview.Image = _canvas;
-            if (!_animationManager.IsAnimating())
-            {
-                _animationManager.SetProgress(0);                
-                _animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
+         //   StopAnimation();
+            _rippleValueAnimator.StartNewAnimation(_currentProfile.Options.AnimationDirection);
+            if (!_rippleValueAnimator.IsAnimating())
+            {                
+                //_animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
+                //_animationManager.StartNewAnimation(AnimationDirection.Out);
             }
         }
-
+        private void StopAnimation()
+        {
+            if (_rippleValueAnimator.IsAnimating())
+            {
+                _rippleValueAnimator.Stop();
+                // Clear the preview.
+            }
+        }
         private void OnRipplesAnimation_Update(object sender)
         {        
-            if (_animationManager.IsAnimating())
+            if (_rippleValueAnimator.IsAnimating())
             {            
                 _graphics.Clear(Color.Transparent);
                 // Draw and animate the selected profile. 
-                var progress = _animationManager.GetProgress();
+                var progress = _rippleValueAnimator.GetProgress();
                 _currentProfile.RenderRipples(_graphics, progress);
                 //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
             }
@@ -104,7 +113,7 @@ namespace FrostyBee.FriskyRipples
             lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();
             // Increase the animation speed.
             double speed = (double)sliderAnimSpeed.Value / 1000;
-            _animationManager.Increment = speed;
+            _rippleValueAnimator.Increment = speed;
             _currentProfile.Options.AnimationSpeed = speed;
             _profilesManager.ApplySettings(_currentProfile.Options);
         }
@@ -112,7 +121,7 @@ namespace FrostyBee.FriskyRipples
         {
             // A ripple profile has been selected. Switch to the newly selected profile. 
             RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();                        
-            BaseProfile _newProfile = ConstructableFactory.Instantiate<BaseProfile>(profile);
+            BaseProfile _newProfile = ConstructableFactory.GetInstanceOf<BaseProfile>(profile);
             _newProfile.Options = _currentProfile.Options;
             _profilesManager.SwitchProfile(_newProfile);
             _currentProfile?.Dispose();
@@ -122,28 +131,28 @@ namespace FrostyBee.FriskyRipples
         private void CmbAnimDirection_SelectedIndexChanged(object sender, EventArgs e)
         {
             // The direction of the animation has been changed.                                     
-            _currentProfile.Options.AnimationDirection = cmbAnimDirection.ParseEnumValue<AnimationDirection>();                         
+            _currentProfile.Options.AnimationDirection = cmbAnimDirection.ParseEnumValue<AnimationDirection>();
+            StartAnimation();
         }
         private void CmbInterpolationMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // The animation's interpolation mode has been changed.                                    
+            // The animation's interpolation mode has been changed.                                     
             InterpolationType interpolation = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
-            _animationManager.InterpolationMode = interpolation;
+            _rippleValueAnimator.InterpolationType = interpolation;
             _currentProfile.Options.AnimInteroplation = interpolation;
             _profilesManager.ApplySettings(_currentProfile.Options);
         }
         
         private void BtnStopAnimation_Click(object sender, EventArgs e)
-        {
-            if (_animationManager.IsAnimating())
-            {
-                _animationManager.Stop();
-                // Clear the preview.
-            }
-        }
+        {            
+            StopAnimation();
+            _profilesManager.StopAnimation();
+        }       
+
         private void ChkbColorTransition_CheckedChanged(object sender, EventArgs e)
         {
             _currentProfile.Options.IsColorTransition = chkbColorTransition.Checked;
+            _currentProfile.ResetColorOpacity();
             Debug.WriteLine(_currentProfile.Options.IsColorTransition.ToString());
         }
     }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace FrostyBee.FriskyRipples.Animation
 {
@@ -11,14 +12,10 @@ namespace FrostyBee.FriskyRipples.Animation
     {
         private double PI = Math.PI;
         private double PI_HALF = Math.PI / 2;
-        public double Interpolate(double progress)
-        {
-            return EaseInOut(progress);
-        }
-
-        private double EaseInOut(double time)
+        public double Interpolate(double time)
         {
             return time - Math.Sin(time * 2 * PI) / (2 * PI);
-        }
+        }        
+
     }
 }

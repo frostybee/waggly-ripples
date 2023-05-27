@@ -14,7 +14,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         // Add random color?        
         Pen _outlinePen;
         SolidBrush _innerBrush;
-        SolidBrush _outerBursh;
+        SolidBrush _outerBrush;
 
         public SingleProfile()
         {
@@ -25,7 +25,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         {
             int opacity = 10;
             _innerBrush = new SolidBrush(Color.Cyan);
-            _outerBursh = new SolidBrush(Color.Crimson);
+            _outerBrush = new SolidBrush(Color.Crimson);
             _outlinePen = new Pen(Color.YellowGreen.ReduceOpacity(opacity), 4);            
 
             //-- 1) Add the middle ripple.
@@ -37,7 +37,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     ShapeType = ShapeType.Ellipse,
                     InitialRadius = BaseRadius,
                     RadiusMultiplier = 3,
-                    FillBrush = _outerBursh,
+                    FillBrush = _outerBrush,
                     OutlinePen = _outlinePen,
                     IsFilled = true,
                 });

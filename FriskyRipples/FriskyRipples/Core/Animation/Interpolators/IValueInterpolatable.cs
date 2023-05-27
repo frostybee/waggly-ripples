@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FrostyBee.FriskyRipples.Animation
 {
-    public interface IValueInterpolatable
+    public interface IValueInterpolatable: IConstructable
     {
         double Interpolate(double value);
     }
