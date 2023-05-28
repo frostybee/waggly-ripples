@@ -52,7 +52,6 @@
     <Compile Include="Animate\Interpolation.cs" />
     <Compile Include="Core\Animation\AnimationEnums.cs" />
     <Compile Include="Core\Animation\ValueAnimator.cs" />
-    <Compile Include="Core\Animation\Interpolations.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorInOutBack.cs" />
     <Compile Include="Core\Animation\Interpolators\InterpolatorOutBack.cs" />

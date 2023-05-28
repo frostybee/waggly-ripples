@@ -53,8 +53,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
                 //InterpolationType = InterpolationType.InElastic
                 InterpolationType = InterpolationType.Linear
 
-            };
-            _animationManager.SetDirection(AnimationDirection.InOutRepeatingIn);
+            };            
             _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
             _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;            
         }
@@ -130,8 +129,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
             animate.Update = OnAnimationUpdated;*/
             //animate.Start(1000);
             if (!_animationManager.IsAnimating())
-            {
-                _animationManager.SetProgress(0);
+            {                
                 //_animationManager.StartNewAnimation(AnimationDirection.InOutIn);
                 _animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
             }
