@@ -118,10 +118,10 @@ namespace FrostyBee.FriskyRipples
             _profilesManager.ApplySettings(_currentProfile.Options);
         }
         private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // A ripple profile has been selected. Switch to the newly selected profile. 
-            RippleProfileType profile = cmbProfilesList.ParseEnumValue<RippleProfileType>();                        
-            BaseProfile _newProfile = ConstructableFactory.GetInstanceOf<BaseProfile>(profile);
+        {            
+            // Switch to the newly selected profile. 
+            RippleProfileType profileType = cmbProfilesList.ParseEnumValue<RippleProfileType>();                        
+            BaseProfile _newProfile = ConstructableFactory.GetInstanceOf<BaseProfile>(profileType);
             _newProfile.Options = _currentProfile.Options;
             _profilesManager.SwitchProfile(_newProfile);
             _currentProfile?.Dispose();
@@ -139,7 +139,7 @@ namespace FrostyBee.FriskyRipples
             // The animation's interpolation mode has been changed.                                     
             InterpolationType interpolation = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
             _rippleValueAnimator.InterpolationType = interpolation;
-            _currentProfile.Options.AnimInteroplation = interpolation;
+            _currentProfile.Options.InterpolationType = interpolation;
             _profilesManager.ApplySettings(_currentProfile.Options);
         }
         

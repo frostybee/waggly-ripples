@@ -15,17 +15,17 @@ namespace FrostyBee.FriskyRipples.Drawing
         Pen _middlePen;
         public SonarPulseProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             _innerBrush = new SolidBrush(Color.Green);
             _outerBrush = new SolidBrush(Color.DarkGreen.WithOpacity(250));
             _middlePen = new Pen(Color.White, 3);
 
             // 1) Make the outer ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,
@@ -37,7 +37,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = true,
                 });
             // 2) Make the middle ripple. 
-            _ripples.Add(
+            AddRipple(   
                 new RippleEntry()
                 {
                     IsExpandable = false,
@@ -50,7 +50,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = false,
                 });
             // 3) Make the most inner ripple. It must drawn last.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,

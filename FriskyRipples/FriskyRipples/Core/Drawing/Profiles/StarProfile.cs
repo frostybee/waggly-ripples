@@ -10,9 +10,9 @@ namespace FrostyBee.FriskyRipples.Drawing
         Pen _outlinePen;
         public StarProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             //TODO: store in the settings the stroke width of the pen.
             // And the style/dashed/dot
@@ -20,7 +20,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             //_outlinePen.DashStyle = DashStyle.Dot;
 
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,

@@ -12,15 +12,15 @@ namespace FrostyBee.FriskyRipples.Drawing
         int _baseRadius = 10; // Needs to be parametrized.
         public SquareProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             brush = new SolidBrush(Color.DarkBlue.ReduceOpacity(_baseRadius * 10));
             _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(_baseRadius * 10), 4);
 
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,

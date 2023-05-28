@@ -8,10 +8,10 @@ namespace FrostyBee.FriskyRipples.Drawing
         SolidBrush _horizontalBrush;
         public CrosshairProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {            
             int width = 40;
             int height = 8;
@@ -20,7 +20,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             _verticalBrush = new SolidBrush(Color.DarkBlue);
             _horizontalBrush = new SolidBrush(Color.Crimson);            
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,
@@ -31,7 +31,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     FillBrush = _verticalBrush,
                     IsFilled = true,
                 });
-            _ripples.Add(
+            AddRipple(
              new RippleEntry()
              {
                  IsExpandable = false,

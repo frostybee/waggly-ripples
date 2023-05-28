@@ -11,14 +11,14 @@ namespace FrostyBee.FriskyRipples.Drawing
         SolidBrush _innerBrush;
         public SpotlightProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             Color rippleColor = Color.Crimson.ReduceOpacity(20);
             _innerBrush = new SolidBrush(rippleColor);
             //-- 1) Make the outer ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,

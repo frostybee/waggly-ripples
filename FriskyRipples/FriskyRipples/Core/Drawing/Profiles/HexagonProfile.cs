@@ -12,10 +12,10 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         public HexagonProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             int opacity = 10;
             int strokeWidth = 4;
@@ -24,7 +24,7 @@ namespace FrostyBee.FriskyRipples.Drawing
 
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,

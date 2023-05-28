@@ -163,7 +163,7 @@ namespace FrostyBee.FriskyRipples.LayeredForm
         internal void ApplySettings(ProfileOptions profileSettings)
         {
             _animationManager.Increment = profileSettings.AnimationSpeed;
-            _animationManager.InterpolationType = profileSettings.AnimInteroplation;            
+            _animationManager.InterpolationType = profileSettings.InterpolationType;            
         }
 
         internal void StopAnimation()

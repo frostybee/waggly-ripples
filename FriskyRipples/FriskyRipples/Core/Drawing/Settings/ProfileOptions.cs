@@ -3,10 +3,10 @@
 
 namespace FrostyBee.FriskyRipples.Drawing
 {
-    internal class ProfileOptions
+    public class ProfileOptions
     {
         #region Animation Settings
-        public InterpolationType AnimInteroplation { get; set; } = InterpolationType.Linear;
+        public InterpolationType InterpolationType { get; set; } = InterpolationType.Linear;
         public AnimationDirection AnimationDirection { get; set; } = AnimationDirection.In;
         public double AnimationSpeed { get; set; } = 0.010;
         #endregion        

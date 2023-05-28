@@ -11,10 +11,10 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// <summary>
     /// Each profile maintains its list of ripples. 
     /// </summary>
-    internal abstract class BaseProfile :  IDisposable, IConstructable
+    public abstract class BaseProfile :  IDisposable, IConstructable
     {
         private bool disposedValue;
-        protected readonly List<RippleEntry> _ripples = new List<RippleEntry>();
+        private readonly List<RippleEntry> _ripples = new List<RippleEntry>();
 
         #region Properties
         public int Width { get; set; } = 200;
@@ -22,15 +22,13 @@ namespace FrostyBee.FriskyRipples.Drawing
         public int BaseRadius { get; set; } = 10;        
         public ProfileOptions Options { get; set; } = new ProfileOptions();
         #endregion
-
-        // Is it better to use an interface with public properties?
-
+        
         /// <summary>
         /// Prepares and renders the ripples that are defined in a given profile.
         /// </summary>
         /// <param name="inRippleProfile">The profile to be rendered.</param>
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
-        public void RenderRipples(Graphics _graphics, double progress)
+        internal void RenderRipples(Graphics _graphics, double progress)
         {                                   
             // We adjust the ripple properties every animation frame. 
             _ripples.ForEach(ripple =>
@@ -46,21 +44,19 @@ namespace FrostyBee.FriskyRipples.Drawing
                 ripple.Draw(_graphics);
             });
         }
+        internal void AddRipple(RippleEntry newRipple)
+        {
+            _ripples.Add(newRipple);
+        }
 
         internal void ResetColorOpacity()
         {
-            // We adjust the ripple properties every animation frame. 
+            // Reset the opacity of the color upon disabling color transition.
             _ripples.ForEach(ripple =>
-            {
-                /*if (Options.IsColorTransition)
-                {
-                    Debug.WriteLine(Options.IsColorTransition.ToString());
-                    // We fade the color of the ripple based on the current animation's progress value.
-                    ripple.AdjustColorOpacity(progress);
-                }*/
+            {            
                 ripple.ResetColor(255);
             });
-        }
+        }        
 
         public void DisposeDrawingTools()
         {

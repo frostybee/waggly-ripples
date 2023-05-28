@@ -18,10 +18,10 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         public SquaredPulseProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             int opacity = 10;
             _innerBrush = new SolidBrush(Color.DarkBlue);
@@ -30,7 +30,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
             //-- 2) Add the middle ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,
@@ -44,7 +44,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = false,
                 });
             //-- 3) Inner ripple that must drawn last.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,

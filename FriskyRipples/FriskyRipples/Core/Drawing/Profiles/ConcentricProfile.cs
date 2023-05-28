@@ -18,13 +18,13 @@ namespace FrostyBee.FriskyRipples.Drawing
         int _baseRadius = 40; // Needs to be parametrized.
         public ConcentricProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             _brushInnerRipple = new SolidBrush(Color.Yellow);
-            _penOutline = new Pen(Color.Crimson, 3);
+            _penOutline = new Pen(Color.Crimson, 4);
             _innerPen = new Pen(Color.SteelBlue, 3)
             {
                 DashStyle = DashStyle.Dash
@@ -32,14 +32,13 @@ namespace FrostyBee.FriskyRipples.Drawing
             
             int width = 200;
             int height = 200;
-            //-- Make the ripples.
-            _ripples.Clear();
+
             // NOTE: To avoid any potential memory leak, we create the ripples
             // once the profile is instantiated.
             // 
 
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,
@@ -51,14 +50,11 @@ namespace FrostyBee.FriskyRipples.Drawing
                     OutlinePen = _penOutline,
                     IsFilled = false,
                 });
-            int radius = 5;
-            //Color internalRippleColor = Color.FromArgb(255 - (byte)progress * 255, Color.SteelBlue);            
-            //Color internalRippleColor = Color.SteelBlue;
-            // Put them in a loop.
+            //-- 2) Make ripples that will be rendered between the inner most and outer most ripples.
+            int radius = 6;            
             for (int i = 0; i < 3; i++)
             {
-                //-- 2) Make ripples that will be rendered between the inner most and outer most ripples.
-                _ripples.Add(
+                AddRipple(
                     new RippleEntry()
                     {
                         IsExpandable = true,
@@ -75,7 +71,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             }
             //-- 3) Make the most inner ripple (aka the core).
             // This ripple's radius does not expand.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,
@@ -87,8 +83,6 @@ namespace FrostyBee.FriskyRipples.Drawing
                     InitialRadius = 7,
                     IsFilled = true,
                 });
-        }
-        // TODO: reduce the opacity of the ripple's color.
-        // TODO: Clam the dynamically computed radius of ripples. Make sure it's withing the _surface's bounding rectangle. 
+        }        
     }
 }

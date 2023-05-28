@@ -12,16 +12,16 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         public DiamondProfile()
         {
-            InitDrawingProfile();
+            InitProfileEntries();
         }
 
-        private void InitDrawingProfile()
+        private void InitProfileEntries()
         {
             int opacity = 10;
             int strokeWidth = 4;            
             _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,

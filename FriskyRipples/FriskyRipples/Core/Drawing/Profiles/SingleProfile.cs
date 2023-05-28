@@ -29,7 +29,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             _outlinePen = new Pen(Color.YellowGreen.ReduceOpacity(opacity), 4);            
 
             //-- 1) Add the middle ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,
@@ -42,7 +42,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = true,
                 });
             //-- 2) Add the outline ripple.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = true,
@@ -54,7 +54,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = false,
                 });
             //-- 3) Inner ripple that must drawn last.
-            _ripples.Add(
+            AddRipple(
                 new RippleEntry()
                 {
                     IsExpandable = false,
