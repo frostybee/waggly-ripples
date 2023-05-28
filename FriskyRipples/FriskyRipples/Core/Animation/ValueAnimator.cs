@@ -43,10 +43,6 @@
             }
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether Singular
-        /// </summary>
-        public bool Singular { get; set; }
         #endregion
 
         /// <summary>
@@ -77,60 +73,38 @@
         private readonly List<double> _animationProgresses;
 
         /// <summary>
-        /// Defines the _animationSources
-        /// </summary>
-        private readonly List<Point> _animationSources;
-
-        /// <summary>
         /// Defines the _animationDirections
         /// </summary>
         private readonly List<AnimationDirection> _animationDirections;
 
         /// <summary>
-        /// Defines the _animationData
-        /// </summary>
-        private readonly List<object[]> _animationData;
-
-        /// <summary>
-        /// Defines the MIN_VALUE
+        /// The lower bound of the animation.
         /// </summary>
         private const double MIN_VALUE = 0.00;
 
         /// <summary>
-        /// Defines the MAX_VALUE
+        /// The upper bound of the animation.
         /// </summary>
         private const double MAX_VALUE = 1.00;
 
         /// <summary>
-        /// Defines the _animationTimer
+        /// Controls the animation progress within the specified interval. 
         /// </summary>
         private readonly Timer _animationTimer = new Timer { Interval = 5, Enabled = false };
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ValueAnimator"/> class.
-        /// </summary>
-        /// <param name="singular">If true, only one animation is supported. The current animation will be replaced with the new one. If false, a new animation is added to the list.</param>
-        public ValueAnimator(bool singular = true)
+        
+        public ValueAnimator()
         {
-            _animationProgresses = new List<double>();
-            _animationSources = new List<Point>();
-            _animationDirections = new List<AnimationDirection>();
-            _animationData = new List<object[]>();
+            _animationProgresses = new List<double>();            
+            _animationDirections = new List<AnimationDirection>();            
             // Default interpolator.
             _interpolator = new InterpolatorLinear();
             Increment = 0.03;
-            SecondaryIncrement = 0.03;
+            SecondaryIncrement = 0.05;
             InterpolationType = InterpolationType.Linear;
             InterruptAnimation = true;
-            Singular = singular;
-
-            if (Singular)
-            {
-                _animationProgresses.Add(0);
-                _animationSources.Add(new Point(0, 0));
-                _animationDirections.Add(AnimationDirection.In);
-            }
-
+            _animationProgresses.Add(0);            
+            // Set the animation direction to inward by default. 
+            _animationDirections.Add(AnimationDirection.In);
             _animationTimer.Tick += AnimationTimerOnTick;
         }
 
@@ -144,46 +118,17 @@
             for (var i = 0; i < _animationProgresses.Count; i++)
             {
                 UpdateProgress(i);
-
-                if (!Singular)
+                if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
                 {
-                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
-                    }
-                    else if (
-                        (_animationDirections[i] == AnimationDirection.In && _animationProgresses[i] == MAX_VALUE) ||
-                        (_animationDirections[i] == AnimationDirection.Out && _animationProgresses[i] == MIN_VALUE) ||
-                        (_animationDirections[i] == AnimationDirection.InOutOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationProgresses.RemoveAt(i);
-                        _animationSources.RemoveAt(i);
-                        _animationDirections.RemoveAt(i);
-                        _animationData.RemoveAt(i);
-                    }
+                    _animationDirections[i] = AnimationDirection.InOutOut;
                 }
-                else
+                else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MAX_VALUE))
                 {
-                    if ((_animationDirections[i] == AnimationDirection.InOutIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingIn && _animationProgresses[i] == MAX_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
-                    }
-                    else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
-                    {
-                        _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
-                    }
+                    _animationDirections[i] = AnimationDirection.InOutRepeatingOut;
+                }
+                else if ((_animationDirections[i] == AnimationDirection.InOutRepeatingOut && _animationProgresses[i] == MIN_VALUE))
+                {
+                    _animationDirections[i] = AnimationDirection.InOutRepeatingIn;
                 }
             }
 
@@ -191,7 +136,7 @@
         }
 
         /// <summary>
-        /// The IsAnimating
+        /// Determines whether the animation is running or not.
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
         public bool IsAnimating()
@@ -215,7 +160,7 @@
                 SetProgress(0);
             }
             StartNewAnimation(animationDirection, new Point(0, 0), data);
-        }        
+        }
 
         /// <summary>
         /// The StartNewAnimation
@@ -227,55 +172,15 @@
         {
             if (!IsAnimating() || InterruptAnimation)
             {
-                if (Singular && _animationDirections.Count > 0)
+                if (_animationDirections.Count > 0)
                 {
                     _animationDirections[0] = animationDirection;
                 }
                 else
                 {
                     _animationDirections.Add(animationDirection);
-                }
-
-                if (Singular && _animationSources.Count > 0)
-                {
-                    _animationSources[0] = animationSource;
-                }
-                else
-                {
-                    _animationSources.Add(animationSource);
-                }
-
-                if (!(Singular && _animationProgresses.Count > 0))
-                {
-                    switch (_animationDirections[_animationDirections.Count - 1])
-                    {
-                        case AnimationDirection.InOutRepeatingIn:
-                        case AnimationDirection.InOutIn:
-                        case AnimationDirection.In:
-                        _animationProgresses.Add(MIN_VALUE);
-                        break;
-
-                        case AnimationDirection.InOutRepeatingOut:
-                        case AnimationDirection.InOutOut:
-                        case AnimationDirection.Out:
-                        _animationProgresses.Add(MAX_VALUE);
-                        break;
-
-                        default:
-                        throw new Exception("Invalid AnimationDirection");
-                    }
-                }
-
-                if (Singular && _animationData.Count > 0)
-                {
-                    _animationData[0] = data ?? new object[] { };
-                }
-                else
-                {
-                    _animationData.Add(data ?? new object[] { });
-                }
+                }                
             }
-
             _animationTimer.Start();
         }
 
@@ -398,10 +303,6 @@
         /// <returns>The <see cref="double"/></returns>
         public double GetProgress()
         {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
 
             if (_animationProgresses.Count == 0)
             {
@@ -423,41 +324,7 @@
                 throw new IndexOutOfRangeException("Invalid animation index");
             }
             return _interpolator.Interpolate(_animationProgresses[index]);
-        }
-
-        /// <summary>
-        /// The GetSource
-        /// </summary>
-        /// <param name="index">The index<see cref="int"/></param>
-        /// <returns>The <see cref="Point"/></returns>
-        public Point GetSource(int index)
-        {
-            if (!(index < GetAnimationCount()))
-            {
-                throw new IndexOutOfRangeException("Invalid animation index");
-            }
-
-            return _animationSources[index];
-        }
-
-        /// <summary>
-        /// The GetSource
-        /// </summary>
-        /// <returns>The <see cref="Point"/></returns>
-        public Point GetSource()
-        {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
-            if (_animationSources.Count == 0)
-            {
-                throw new Exception("Invalid animation");
-            }
-
-            return _animationSources[0];
-        }
+        }               
 
         /// <summary>
         /// The GetDirection
@@ -465,11 +332,6 @@
         /// <returns>The <see cref="AnimationDirection"/></returns>
         public AnimationDirection GetDirection()
         {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
             if (_animationDirections.Count == 0)
             {
                 throw new Exception("Invalid animation");
@@ -492,41 +354,7 @@
 
             return _animationDirections[index];
         }
-
-        /// <summary>
-        /// The GetData
-        /// </summary>
-        /// <returns>The <see cref="object[]"/></returns>
-        public object[] GetData()
-        {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
-            if (_animationData.Count == 0)
-            {
-                throw new Exception("Invalid animation");
-            }
-
-            return _animationData[0];
-        }
-
-        /// <summary>
-        /// The GetData
-        /// </summary>
-        /// <param name="index">The index<see cref="int"/></param>
-        /// <returns>The <see cref="object[]"/></returns>
-        public object[] GetData(int index)
-        {
-            if (!(index < _animationData.Count))
-            {
-                throw new IndexOutOfRangeException("Invalid animation index");
-            }
-
-            return _animationData[index];
-        }
-
+        
         /// <summary>
         /// The GetAnimationCount
         /// </summary>
@@ -534,7 +362,7 @@
         public int GetAnimationCount()
         {
             return _animationProgresses.Count;
-        }        
+        }
 
         /// <summary>
         /// The SetProgress
@@ -542,11 +370,6 @@
         /// <param name="progress">The progress<see cref="double"/></param>
         public void SetProgress(double progress)
         {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
             if (_animationProgresses.Count == 0)
             {
                 throw new Exception("Invalid animation");
@@ -561,11 +384,6 @@
         /// <param name="direction">The direction<see cref="AnimationDirection"/></param>
         public void SetDirection(AnimationDirection direction)
         {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
             if (_animationProgresses.Count == 0)
             {
                 throw new Exception("Invalid animation");
@@ -573,42 +391,25 @@
 
             _animationDirections[0] = direction;
         }
-
-        /// <summary>
-        /// The SetData
-        /// </summary>
-        /// <param name="data">The data<see cref="object[]"/></param>
-        public void SetData(object[] data)
-        {
-            if (!Singular)
-            {
-                throw new Exception("Animation is not set to Singular.");
-            }
-
-            if (_animationData.Count == 0)
-            {
-                throw new Exception("Invalid animation");
-            }
-
-            _animationData[0] = data;
-        }
+                
         public void Stop()
         {
             _animationTimer.Stop();
             if (OnAnimationFinished != null) OnAnimationFinished(this);
         }
-        private void CreateInterpolator(InterpolationType inInterpolatorMode)
+        /// <summary>
+        /// Creates an instance of an interpolator specified by its enum type.
+        /// </summary>
+        /// <param name="pInterpolatorType">The type of interpolator to be instantiated.</param>
+        private void CreateInterpolator(InterpolationType pInterpolatorType)
         {
-            IValueInterpolatable newInterpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(inInterpolatorMode);
+            IValueInterpolatable newInterpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(pInterpolatorType);
             if (newInterpolator == null)
             {
                 // Create a linear interpolator if the dynamic instantiation fails.
-                _interpolator = new InterpolatorLinear();
+                newInterpolator = new InterpolatorLinear();
             }
-            else
-            {
-                _interpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(inInterpolatorMode);
-            }
+            _interpolator = newInterpolator;
         }
     }
 }
