@@ -49,11 +49,11 @@ namespace FrostyBee.FriskyRipples
                 //Increment = 0.010,                
                 //InterpolationType = InterpolationType.EaseOut,                
                 //InterpolationType = InterpolationType.InElastic
-                InterpolationType = InterpolationType.Linear
+                Interpolation = InterpolationType.Linear
 
             };            
-            _animationManager.OnAnimationProgress += OnRipplesAnimationUpdate;
-            _animationManager.OnAnimationFinished += OnRipplesAnimationFinished;            
+            _animationManager.Progressed += RipplesAnimation_Progressed;
+            _animationManager.Completed += RipplesAnimation_Finished;            
         }
 
         public void SwitchProfile(BaseProfile inProfile)
@@ -61,7 +61,7 @@ namespace FrostyBee.FriskyRipples
             _currentProfile = inProfile;
         }
 
-        private void OnRipplesAnimationUpdate(object sender)
+        private void RipplesAnimation_Progressed(object sender)
         {
             // We process the animation frames here. 
             // We perform the drawing here.                        
@@ -80,7 +80,7 @@ namespace FrostyBee.FriskyRipples
             return rippleProfile;
         }
 
-        private void OnRipplesAnimationFinished(object sender)
+        private void RipplesAnimation_Finished(object sender)
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
@@ -136,7 +136,7 @@ namespace FrostyBee.FriskyRipples
         internal void ApplySettings(ProfileOptions profileSettings)
         {
             _animationManager.Increment = profileSettings.AnimationSpeed;
-            _animationManager.InterpolationType = profileSettings.InterpolationType;            
+            _animationManager.Interpolation = profileSettings.InterpolationType;            
         }
 
         internal void StopAnimation()

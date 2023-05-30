@@ -55,7 +55,7 @@ namespace FrostyBee.FriskyRipples.Drawing
             });
         }        
 
-        public void DisposeDrawingTools()
+        private void DisposeDrawingTools()
         {
             _ripples.ForEach(ripple =>
             {

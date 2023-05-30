@@ -7,7 +7,7 @@ using FrostyBee.FriskyRipples.Drawing;
 using FrostyBee.FriskyRipples.Extensions;
 using FrostyBee.FriskyRipples.Helpers;
 using FrostyBee.FriskyRipples.Attributes;
-using FrostyBee.FriskyRipples.Source.Core.Attributes;
+
 
 namespace FrostyBee.FriskyRipples
 {
@@ -28,14 +28,20 @@ namespace FrostyBee.FriskyRipples
             _rippleValueAnimator = new ValueAnimator()
             {
                 Increment = 0.010, // Control the animation duration.                                         
-                InterpolationType = InterpolationType.Linear
+                Interpolation = InterpolationType.Linear
             };            
             DoubleBuffered = true;
             this.Load += RippleViewerForm_Load;
             this.Click += RippleViewerForm_Click;
+            Application.ApplicationExit += Application_ApplicationExit;
             cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;                    
-            _rippleValueAnimator.OnAnimationProgress += OnRipplesAnimation_Update;
-            _rippleValueAnimator.OnAnimationFinished += OnRipplesAnimation_Finished;           
+            _rippleValueAnimator.Progressed += OnRipplesAnimation_Progressed;
+            _rippleValueAnimator.Completed += OnRipplesAnimation_Completed;           
+        }
+
+        private void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            _currentProfile?.Dispose();
         }
 
         private void RippleViewerForm_Click(object sender, EventArgs e)
@@ -69,7 +75,7 @@ namespace FrostyBee.FriskyRipples
                 // Clear the preview.
             }
         }
-        private void OnRipplesAnimation_Update(object sender)
+        private void OnRipplesAnimation_Progressed(object sender)
         {        
             if (_rippleValueAnimator.IsAnimating())
             {            
@@ -97,7 +103,7 @@ namespace FrostyBee.FriskyRipples
             _graphics.SetAntiAliasing(); // Need to set it once.
         }
 
-        private void OnRipplesAnimation_Finished(object sender)
+        private void OnRipplesAnimation_Completed(object sender)
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
@@ -134,12 +140,12 @@ namespace FrostyBee.FriskyRipples
         {
             // The animation's interpolation mode has been changed.                                     
             InterpolationType interpolation = cmbInterpolationMode.ParseEnumValue<InterpolationType>();
-            _rippleValueAnimator.InterpolationType = interpolation;
+            _rippleValueAnimator.Interpolation = interpolation;
             _currentProfile.Options.InterpolationType = interpolation;
             _profilesManager.ApplySettings(_currentProfile.Options);
             // Adjust the animation speed based on the recommended value associated with the selected 
             // interpolation mode. 
-            AnimationSpeedAttribute speedAttribute = interpolation.GetEnumAttribute<AnimationSpeedAttribute>();
+            DefaultSpeedAttribute speedAttribute = interpolation.GetEnumAttribute<DefaultSpeedAttribute>();
             AdjustAnimationSpeed(speedAttribute.Speed);
             sliderAnimSpeed.Value = speedAttribute.Speed;
         }

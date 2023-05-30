@@ -30,7 +30,7 @@ namespace FrostyBee.FriskyRipples.Animation
         /// Sets the Interpolation mode of the animation.
         /// When is set, an instance of the selected interpolator will be created. 
         /// </summary>
-        public InterpolationType InterpolationType
+        public InterpolationType Interpolation
         {
             set
             {
@@ -39,21 +39,21 @@ namespace FrostyBee.FriskyRipples.Animation
         }
         #endregion
 
-        public delegate void AnimationFinished(object sender);
+        public delegate void CompletedEventHandler(object sender);
 
         /// <summary>
         /// Occurs when the animation's progress value reaches the target value.
         /// The target value is 0 if the animation direction is In.
         /// The target value is 1 if the animation direction is Out.
         /// </summary>
-        public event AnimationFinished OnAnimationFinished;
+        public event CompletedEventHandler Completed;
 
-        public delegate void AnimationProgress(object sender);
+        public delegate void ProgressedEventHandler(object sender);
 
         /// <summary>
         /// Occurs whenever the animation progresses inward or outward over time.
         /// </summary>
-        public event AnimationProgress OnAnimationProgress;
+        public event ProgressedEventHandler Progressed;
 
         /// <summary>
         /// Holds the values that indicates the progress of the animation.
@@ -85,7 +85,7 @@ namespace FrostyBee.FriskyRipples.Animation
         {
             Increment = 0.03;
             SecondaryIncrement = 0.03;
-            InterpolationType = InterpolationType.Linear;
+            Interpolation = InterpolationType.Linear;
             InterruptAnimation = true;
             // Set the animation direction to inward by default. 
             _animationDirection = AnimationDirection.In;
@@ -113,7 +113,7 @@ namespace FrostyBee.FriskyRipples.Animation
         {
             UpdateProgress();
             ResetDirection();
-            OnAnimationProgress?.Invoke(this);
+            Progressed?.Invoke(this);
         }
 
         private void ResetDirection()
@@ -184,7 +184,7 @@ namespace FrostyBee.FriskyRipples.Animation
                 }
 
                 _animationTimer.Stop();
-                OnAnimationFinished?.Invoke(this);
+                Completed?.Invoke(this);
             }
         }        
 
@@ -211,7 +211,7 @@ namespace FrostyBee.FriskyRipples.Animation
                     return;
                 }
                 _animationTimer.Stop();
-                OnAnimationFinished?.Invoke(this);
+                Completed?.Invoke(this);
             }
         }
         private bool IsLooping()
@@ -244,7 +244,7 @@ namespace FrostyBee.FriskyRipples.Animation
         public void Stop()
         {
             _animationTimer.Stop();
-            OnAnimationFinished?.Invoke(this);
+            Completed?.Invoke(this);
         }
 
         /// <summary>

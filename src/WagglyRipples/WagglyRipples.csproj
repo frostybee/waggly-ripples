@@ -46,8 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Core\Animation\AnimationDirectionEnum.cs" />
-    <Compile Include="Source\Core\Animation\InterpolationTypesEnum.cs" />
+    <Compile Include="Source\Core\Animation\AnimationDirection.cs" />
+    <Compile Include="Source\Core\Animation\InterpolationType.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutExpo.cs" />
     <Compile Include="Source\Core\Animation\ValueAnimator.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutBack.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInElastic.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutCubic.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorLinear.cs" />
-    <Compile Include="Source\Core\Attributes\AnimationSpeedAttribute.cs" />
+    <Compile Include="Source\Core\Attributes\DefaultSpeedAttribute.cs" />
     <Compile Include="Source\Core\Helpers\ConstructableFactory.cs" />
     <Compile Include="Source\Core\Attributes\ConstructableEnumAttribute.cs" />
     <Compile Include="Source\Core\Extensions\ControlExtensions.cs" />
@@ -97,7 +98,6 @@
     <Compile Include="Source\Core\Native\ExtendedWinStyles.cs" />
     <Compile Include="Source\UI\LayeredWindow.cs" />
     <Compile Include="Source\Core\Drawing\RippleProfilesManager.cs" />
-    <Compile Include="Source\Core\Native\HookHelper.cs" />
     <Compile Include="Source\Core\Native\NativeConstants.cs" />
     <Compile Include="Source\Core\Native\NativeEnums.cs" />
     <Compile Include="Source\Core\Native\NativeMethods.cs" />
