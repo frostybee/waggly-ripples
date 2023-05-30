@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using FrostyBee.FriskyRipples.Drawing;
 using FrostyBee.FriskyRipples.Extensions;
 using FrostyBee.FriskyRipples.Helpers;
+using FrostyBee.FriskyRipples.Attributes;
+using FrostyBee.FriskyRipples.Source.Core.Attributes;
 
 namespace FrostyBee.FriskyRipples
 {
@@ -109,12 +111,7 @@ namespace FrostyBee.FriskyRipples
                 
         private void SliderAnimSpeed_Scroll(object sender, EventArgs e)
         {
-            lblAnimSpeed.Text = sliderAnimSpeed.Value.ToString();
-            // Increase the animation speed.
-            double speed = (double)sliderAnimSpeed.Value / 1000;
-            _rippleValueAnimator.Increment = speed;
-            _currentProfile.Options.AnimationSpeed = speed;
-            _profilesManager.ApplySettings(_currentProfile.Options);
+            AdjustAnimationSpeed(sliderAnimSpeed.Value);            
         }
         private void CmbProfilesList_SelectedIndexChanged(object sender, EventArgs e)
         {            
@@ -140,8 +137,23 @@ namespace FrostyBee.FriskyRipples
             _rippleValueAnimator.InterpolationType = interpolation;
             _currentProfile.Options.InterpolationType = interpolation;
             _profilesManager.ApplySettings(_currentProfile.Options);
+            // Adjust the animation speed based on the recommended value associated with the selected 
+            // interpolation mode. 
+            AnimationSpeedAttribute speedAttribute = interpolation.GetEnumAttribute<AnimationSpeedAttribute>();
+            AdjustAnimationSpeed(speedAttribute.Speed);
+            sliderAnimSpeed.Value = speedAttribute.Speed;
         }
-        
+
+        private void AdjustAnimationSpeed(int speed)
+        {            
+            lblAnimSpeed.Text = speed.ToString();
+            // Increase the animation speed.
+            double speedRate = (double)speed / 1000;
+            _rippleValueAnimator.Increment = speedRate;
+            _currentProfile.Options.AnimationSpeed = speedRate;
+            _profilesManager.ApplySettings(_currentProfile.Options);
+        }
+
         private void BtnStopAnimation_Click(object sender, EventArgs e)
         {            
             StopAnimation();

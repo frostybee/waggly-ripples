@@ -127,7 +127,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         internal double CalculateNewRadius()
         {
             
-            return InitialRadius * RadiusMultiplier * 1.5;
+            return InitialRadius * RadiusMultiplier;
         }
 
         internal void ResetColor(byte initialOpacity)

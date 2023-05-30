@@ -46,7 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Source\Core\Animation\AnimationEnums.cs" />
+    <Compile Include="Source\Core\Animation\AnimationDirectionEnum.cs" />
+    <Compile Include="Source\Core\Animation\InterpolationTypesEnum.cs" />
     <Compile Include="Source\Core\Animation\ValueAnimator.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutBack.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInElastic.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutCubic.cs" />
     <Compile Include="Source\Core\Animation\Interpolators\InterpolatorLinear.cs" />
+    <Compile Include="Source\Core\Attributes\AnimationSpeedAttribute.cs" />
     <Compile Include="Source\Core\Helpers\ConstructableFactory.cs" />
     <Compile Include="Source\Core\Attributes\ConstructableEnumAttribute.cs" />
     <Compile Include="Source\Core\Extensions\ControlExtensions.cs" />
