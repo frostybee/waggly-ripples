@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0B7F705C-D086-4D9A-A847-0E99D4374F46}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>FrostyBee.FriskyRipples</RootNamespace>
+    <AssemblyName>FriskyRipples</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Source\Core\Animation\AnimationEnums.cs" />
+    <Compile Include="Source\Core\Animation\ValueAnimator.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorEaseOut.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutBack.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutBack.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInExpo.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutBounce.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInQuint.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutQuint.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorEaseInOut.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutBounce.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutElastic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInBounce.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutQuint.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutElastic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\IValueInterpolatable.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInCubic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInOutCubic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorCustomQuadratic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorInElastic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorOutCubic.cs" />
+    <Compile Include="Source\Core\Animation\Interpolators\InterpolatorLinear.cs" />
+    <Compile Include="Source\Core\Helpers\ConstructableFactory.cs" />
+    <Compile Include="Source\Core\Attributes\ConstructableEnumAttribute.cs" />
+    <Compile Include="Source\Core\Extensions\ControlExtensions.cs" />
+    <Compile Include="Source\Core\Extensions\EnumExtensions.cs" />
+    <Compile Include="Source\Core\Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Source\Core\Helpers\RandomFast.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\BaseProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\DiamondProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\HexagonProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\CircleProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Settings\ProfileOptions.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\SquaredPulseProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Shapes\RippleEntry.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\SpotlightProfile.cs" />
+    <Compile Include="Source\Core\Extensions\ColorExtensions.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\ConcentricProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Enums\RippleEnums.cs" />
+    <Compile Include="Source\Core\Helpers\DrawingHelper.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\CrosshairProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\SonarPulseProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\SingleProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\SquareProfile.cs" />
+    <Compile Include="Source\Core\Drawing\Profiles\StarProfile.cs" />
+    <Compile Include="Source\Core\IConstructable.cs" />
+    <Compile Include="Source\Core\Native\ExtendedWinStyles.cs" />
+    <Compile Include="Source\UI\LayeredWindow.cs" />
+    <Compile Include="Source\Core\Drawing\RippleProfilesManager.cs" />
+    <Compile Include="Source\Core\Native\HookHelper.cs" />
+    <Compile Include="Source\Core\Native\NativeConstants.cs" />
+    <Compile Include="Source\Core\Native\NativeEnums.cs" />
+    <Compile Include="Source\Core\Native\NativeMethods.cs" />
+    <Compile Include="Source\Core\Native\NativeStructs.cs" />
+    <Compile Include="Source\UI\RippleViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\UI\RippleViewerForm.Designer.cs">
+      <DependentUpon>RippleViewerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Source\UI\LayeredWindow.resx">
+      <DependentUpon>LayeredWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Source\UI\RippleViewerForm.resx">
+      <DependentUpon>RippleViewerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
