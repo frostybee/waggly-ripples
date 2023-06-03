@@ -6,7 +6,6 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class SpotlightProfile : BaseProfile
     {
-        // TODO: dispose the drawing tools.
         SolidBrush _innerBrush;
         public SpotlightProfile()
         {

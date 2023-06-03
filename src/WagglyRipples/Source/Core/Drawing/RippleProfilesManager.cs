@@ -7,6 +7,7 @@ using System.Drawing.Imaging;
 using FrostyBee.FriskyRipples.Drawing;
 using FrostyBee.FriskyRipples.Extensions;
 using FrostyBee.FriskyRipples.UI;
+using System;
 
 namespace FrostyBee.FriskyRipples
 {
@@ -145,6 +146,11 @@ namespace FrostyBee.FriskyRipples
             {
                 _animationManager.Stop();
             }
+        }
+
+        internal void Dispose()
+        {
+            _layeredWindow.Dispose();
         }
     }
 }

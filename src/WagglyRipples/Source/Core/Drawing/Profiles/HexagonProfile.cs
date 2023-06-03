@@ -16,11 +16,7 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         private void InitProfileEntries()
         {
-            int opacity = 10;
-            int strokeWidth = 4;
-            var x = 200 / 2;
-            var y = 200 / 2;
-
+            int opacity = 10;           
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
             AddRipple(

@@ -17,7 +17,7 @@ namespace FrostyBee.FriskyRipples
         private readonly ValueAnimator _rippleValueAnimator;
         private BaseProfile _currentProfile;        
         private Bitmap _canvas;
-        Bitmap _blankCanvas = null;
+        private Bitmap _blankCanvas;
         private Graphics _graphics;
 
         public RippleViewerForm()
@@ -36,12 +36,14 @@ namespace FrostyBee.FriskyRipples
             Application.ApplicationExit += Application_ApplicationExit;
             cmbProfilesList.SelectedIndexChanged += CmbProfilesList_SelectedIndexChanged;                    
             _rippleValueAnimator.Progressed += OnRipplesAnimation_Progressed;
-            _rippleValueAnimator.Completed += OnRipplesAnimation_Completed;           
+            _rippleValueAnimator.Completed += OnRipplesAnimation_Completed;
+            sliderAnimSpeed.Scroll += new System.EventHandler(this.SliderAnimSpeed_Scroll);
         }
 
         private void Application_ApplicationExit(object sender, EventArgs e)
         {
             _currentProfile?.Dispose();
+            _profilesManager.Dispose();
         }
 
         private void RippleViewerForm_Click(object sender, EventArgs e)
@@ -62,9 +64,8 @@ namespace FrostyBee.FriskyRipples
          //   StopAnimation();
             _rippleValueAnimator.StartNewAnimation(_currentProfile.Options.AnimationDirection);
             if (!_rippleValueAnimator.IsAnimating())
-            {                
-                //_animationManager.StartNewAnimation(_currentProfile.Options.AnimationDirection);
-                //_animationManager.StartNewAnimation(AnimationDirection.Out);
+            {               
+                
             }
         }
         private void StopAnimation()
@@ -82,8 +83,7 @@ namespace FrostyBee.FriskyRipples
                 _graphics.Clear(Color.Transparent);
                 // Draw and animate the selected profile. 
                 var progress = _rippleValueAnimator.GetProgress();
-                _currentProfile.RenderRipples(_graphics, progress);
-                //e.Graphics.DrawEllipse(new Pen(Brushes.Red), new Rectangle(pcbRipplePreview.Width / 2, pcbRipplePreview.Width / 2, 100, 100));
+                _currentProfile.RenderRipples(_graphics, progress);                
             }
             pcbRipplePreview.Invalidate();
         }

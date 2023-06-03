@@ -8,9 +8,7 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// Represents a single expanding ripple.
     /// </summary>
     internal class SingleProfile : BaseProfile
-    {
-        // TODO: add IsFilled. Color Transition: enabled/disabled.
-        // Add random color?        
+    {        
         Pen _outlinePen;
         SolidBrush _innerBrush;
         SolidBrush _outerBrush;
