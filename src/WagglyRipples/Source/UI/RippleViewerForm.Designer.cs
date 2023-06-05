@@ -240,7 +240,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(832, 475);
+            this.ClientSize = new System.Drawing.Size(799, 446);
             this.Controls.Add(this.btnStopAnimation);
             this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.groupBox2);

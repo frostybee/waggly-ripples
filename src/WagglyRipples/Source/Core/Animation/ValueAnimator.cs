@@ -10,7 +10,7 @@ namespace FrostyBee.FriskyRipples.Animation
     internal class ValueAnimator
     {
         #region Animation Properties
-        private IValueInterpolatable _interpolator;
+        private IEasing _interpolator;
         /// <summary>
         /// Gets or sets a value indicating whether InterruptAnimation
         /// </summary>
@@ -235,7 +235,7 @@ namespace FrostyBee.FriskyRipples.Animation
         /// <returns>An interpolated value between 0 and 1.</returns>
         public double GetProgress()
         {
-            return _interpolator.Interpolate(_animationProgress);
+            return _interpolator.Ease(_animationProgress);
         }
 
         /// <summary>
@@ -253,9 +253,9 @@ namespace FrostyBee.FriskyRipples.Animation
         /// <param name="pInterpolatorType">The type of interpolator to be instantiated.</param>
         private void SetInterpolator(InterpolationType pInterpolatorType)
         {
-            IValueInterpolatable newInterpolator = ConstructableFactory.GetInstanceOf<IValueInterpolatable>(pInterpolatorType);
+            IEasing newInterpolator = ConstructableFactory.GetInstanceOf<IEasing>(pInterpolatorType);
             // Create a linear interpolator if the dynamic instantiation fails.
-            _interpolator = newInterpolator ?? new InterpolatorLinear();
+            _interpolator = newInterpolator ?? new LinearEasing();
         }
     }
 }

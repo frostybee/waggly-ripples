@@ -8,7 +8,6 @@ using FrostyBee.FriskyRipples.Extensions;
 using FrostyBee.FriskyRipples.Helpers;
 using FrostyBee.FriskyRipples.Attributes;
 
-
 namespace FrostyBee.FriskyRipples
 {
     public partial class RippleViewerForm : Form
@@ -171,6 +170,11 @@ namespace FrostyBee.FriskyRipples
             _currentProfile.Options.IsColorTransition = chkbColorTransition.Checked;
             _currentProfile.ResetColorOpacity();
             Debug.WriteLine(_currentProfile.Options.IsColorTransition.ToString());
+        }
+
+        private void btnLoadEasings_Click(object sender, EventArgs e)
+        {
+            EasingsFactory.GetEasingFunctions();
         }
     }
 }
