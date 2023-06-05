@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Avalonia.Animation.Utils
+namespace FrostyBee.FriskyRipples.Animation
 {
     /// <summary>
     /// Helper static class for easing mathematical constants.
