@@ -14,7 +14,7 @@ namespace FrostyBee.FriskyRipples.Extensions
         /// <param name="inComboBox">The combobox control to be populated. </param>
         /// <param name="inEnumType">The type of the enum that contains 
         /// the definitions of values along with their description attributes. </param>
-        public static void PopulateFromEnum(this ComboBox inComboBox, Type inEnumType)
+        public static void PopulateFromEnum(this ComboBox inComboBox, Type inEnumType) 
         {
             inComboBox.DataSource = Enum.GetValues(inEnumType)
              .Cast<Enum>()

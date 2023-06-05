@@ -1,11 +1,13 @@
 ﻿namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorOutBounce : IValueInterpolatable
+    internal class InterpolatorOutBounce
     {        
 
-        public double Interpolate(double time)
+        public double Interpolate(double progress)
         {
-            double n1 = 7.5625;
+            return BounceEaseUtils.Bounce(progress);
+
+            /*double n1 = 7.5625;
             double d1 = 2.75;
 
             if (time < 1 / d1)
@@ -23,7 +25,7 @@
             else
             {
                 return n1 * (time -= 2.625 / d1) * time + 0.984375;
-            }
+            }*/
         }
     }
 }

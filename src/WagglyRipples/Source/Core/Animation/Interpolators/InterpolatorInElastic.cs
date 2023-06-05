@@ -2,7 +2,7 @@
 
 namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorInElastic : IValueInterpolatable
+    internal class InterpolatorInElastic 
     {
         private double c4 = (2 * Math.PI) / 3;
         public double Interpolate(double progress)

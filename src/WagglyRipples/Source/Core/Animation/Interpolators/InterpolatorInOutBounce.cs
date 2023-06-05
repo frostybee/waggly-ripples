@@ -1,6 +1,6 @@
 ﻿namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorInOutBounce : IValueInterpolatable
+    internal class InterpolatorInOutBounce 
     {
         private readonly InterpolatorOutBounce _outBounceInterpolator = new InterpolatorOutBounce();
         public double Interpolate(double time)

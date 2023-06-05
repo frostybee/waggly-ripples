@@ -2,7 +2,7 @@
 
 namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorOutCubic : IValueInterpolatable
+    internal class InterpolatorOutCubic
     {        
         public double Interpolate(double progress)
         {

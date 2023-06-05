@@ -15,16 +15,19 @@ namespace FrostyBee.FriskyRipples.Drawing
         /// <returns>The newly created instance of the selected type.</returns>
         public static T GetInstanceOf<T>(Enum enumValue) where T : class
         {
-            ConstructableEnumAttribute attribute = enumValue.GetEnumAttribute<ConstructableEnumAttribute>();            
-            Type baseType = attribute.Type;
-            // The type to be instantiated has to be a class that implements the IConstructable interface.
-            if (baseType.IsClass && baseType.GetInterface(nameof(IConstructable)) != null)
+            ConstructableEnumAttribute attribute = enumValue.GetEnumAttribute<ConstructableEnumAttribute>();
+            if (attribute != null)
             {
-                T newInstance = (T)Activator.CreateInstance(attribute.Type);
-                return newInstance;
+                Type baseType = attribute.Type;
+                // The type to be instantiated has to be a class that implements the IConstructable interface.
+                if (baseType.IsClass && baseType.GetInterface(nameof(IConstructable)) != null)
+                {
+                    T newInstance = (T)Activator.CreateInstance(attribute.Type);
+                    return newInstance;
+                }
             }
-            
-            return null;
+
+                return null;
         }        
     }
 }

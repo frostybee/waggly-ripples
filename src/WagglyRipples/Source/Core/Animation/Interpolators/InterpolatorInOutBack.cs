@@ -2,7 +2,7 @@
 
 namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorInOutBack : IValueInterpolatable
+    internal class InterpolatorInOutBack 
     {
         private const double c1 = 2.70158;
         private const double c2 = c1 * 1.525;

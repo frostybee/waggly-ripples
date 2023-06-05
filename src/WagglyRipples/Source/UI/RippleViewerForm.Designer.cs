@@ -46,6 +46,7 @@
             this.chkbColorTransition = new System.Windows.Forms.CheckBox();
             this.btnPreview = new System.Windows.Forms.Button();
             this.btnStopAnimation = new System.Windows.Forms.Button();
+            this.btnLoadEasings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbRipplePreview)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sliderAnimSpeed)).BeginInit();
@@ -236,11 +237,22 @@
             this.btnStopAnimation.UseVisualStyleBackColor = true;
             this.btnStopAnimation.Click += new System.EventHandler(this.BtnStopAnimation_Click);
             // 
+            // btnLoadEasings
+            // 
+            this.btnLoadEasings.Location = new System.Drawing.Point(334, 376);
+            this.btnLoadEasings.Name = "btnLoadEasings";
+            this.btnLoadEasings.Size = new System.Drawing.Size(106, 37);
+            this.btnLoadEasings.TabIndex = 13;
+            this.btnLoadEasings.Text = "Load Easings";
+            this.btnLoadEasings.UseVisualStyleBackColor = true;
+            this.btnLoadEasings.Click += new System.EventHandler(this.btnLoadEasings_Click);
+            // 
             // RippleViewerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 475);
+            this.Controls.Add(this.btnLoadEasings);
             this.Controls.Add(this.btnStopAnimation);
             this.Controls.Add(this.btnPreview);
             this.Controls.Add(this.groupBox2);
@@ -280,6 +292,7 @@
         private System.Windows.Forms.Button btnPreview;
         private System.Windows.Forms.Button btnStopAnimation;
         private System.Windows.Forms.CheckBox chkbColorTransition;
+        private System.Windows.Forms.Button btnLoadEasings;
     }
 }
 

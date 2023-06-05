@@ -1,6 +1,6 @@
 ﻿namespace FrostyBee.FriskyRipples.Animation
 {
-    internal class InterpolatorLinear : IValueInterpolatable
+    internal class InterpolatorLinear
     {        
 
         public double Interpolate(double progress)
