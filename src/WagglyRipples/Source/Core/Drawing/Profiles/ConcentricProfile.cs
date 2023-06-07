@@ -6,16 +6,11 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class ConcentricProfile : BaseProfile
     {
-        //TODO: change the name to Lollipop
-        // Tools required to draw the ripples.
-        // TODO: store the drawing tools in a list in the base class. 
-        // Need to dispose them all at once. 
-        SolidBrush _brushInnerRipple;
-        Pen _penOutline;
-        Pen _innerPen;
-        //Bitmap surface;
-
-        int _baseRadius = 40; // Needs to be parametrized.
+        private SolidBrush _brushInnerRipple;
+        private Pen _penOutline;
+        private Pen _innerPen;
+        
+        
         public ConcentricProfile()
         {
             InitProfileEntries();
@@ -23,20 +18,16 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         private void InitProfileEntries()
         {
+            int _baseRadius = 10;  
+            int width = 200;
+            int height = 200;
             _brushInnerRipple = new SolidBrush(Color.Yellow);
             _penOutline = new Pen(Color.Crimson, 4);
             _innerPen = new Pen(Color.SteelBlue, 3)
             {
                 DashStyle = DashStyle.Dash
-            };
-            
-            int width = 200;
-            int height = 200;
-
-            // NOTE: To avoid any potential memory leak, we create the ripples
-            // once the profile is instantiated.
-            // 
-
+            };           
+                       
             // 1) Make the outer most ripple.
             AddRipple(
                 new RippleEntry()

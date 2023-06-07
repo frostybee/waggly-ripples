@@ -43,6 +43,8 @@ namespace FrostyBee.FriskyRipples
         {
             _currentProfile?.Dispose();
             _profilesManager.Dispose();
+            _blankCanvas?.Dispose();
+            _graphics?.Dispose();
         }
 
         private void RippleViewerForm_Click(object sender, EventArgs e)
@@ -106,7 +108,7 @@ namespace FrostyBee.FriskyRipples
         {
             //-- Long lasting ripple: show it and hide on finish. 
             Debug.WriteLine("Finished....");
-            // Clear the _surface that was previously drawn onto the _layeredWindow window.                                    
+            // Clear the _canvas that was previously drawn onto the _layeredWindow window.                                    
             pcbRipplePreview.Image = _blankCanvas;            
         }
         private void BtnLayeredWindow_Click(object sender, EventArgs e)
@@ -176,5 +178,6 @@ namespace FrostyBee.FriskyRipples
         {
             EasingsFactory.GetEasingFunctions();
         }
+
     }
 }

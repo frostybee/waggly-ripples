@@ -6,9 +6,8 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class HexagonProfile : BaseProfile
     {
-        Pen _outlinePen;
-        int _baseRadius = 10; // Needs to be parametrized.
-
+        private Pen _outlinePen;
+        
         public HexagonProfile()
         {
             InitProfileEntries();
@@ -16,6 +15,7 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         private void InitProfileEntries()
         {
+            int _baseRadius = 10; 
             int opacity = 10;           
             _outlinePen = new Pen(Color.Crimson.ReduceOpacity(opacity), 4);
             // 1) Make the outer most ripple.
@@ -29,8 +29,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     RadiusMultiplier = 2,
                     OutlinePen = _outlinePen,
                     IsFilled = false,
-                    PolygonType = PolygonType.Hexagon
-                    //PolyPoints =  DrawingHelper.CreateHexagon(x, y, _baseRadius)
+                    PolygonType = PolygonType.Hexagon                    
                 });
         }
     }

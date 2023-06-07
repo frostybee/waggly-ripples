@@ -8,10 +8,10 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// Represents a single expanding ripple.
     /// </summary>
     internal class SingleProfile : BaseProfile
-    {        
-        Pen _outlinePen;
-        SolidBrush _innerBrush;
-        SolidBrush _outerBrush;
+    {
+        private Pen _outlinePen;
+        private SolidBrush _innerBrush;
+        private SolidBrush _outerBrush;
 
         public SingleProfile()
         {

@@ -111,8 +111,8 @@ namespace FrostyBee.FriskyRipples.UI
         /// <param name="newBitmap"></param>
         /// <param name="opacity">
         /// Specifies an alpha transparency value to be used on the entire source 
-        /// _surface. The SourceConstantAlpha value is combined with any per-pixel 
-        /// alpha values in the source _surface. The value ranges from 0 to 255. If 
+        /// _canvas. The SourceConstantAlpha value is combined with any per-pixel 
+        /// alpha values in the source _canvas. The value ranges from 0 to 255. If 
         /// you set SourceConstantAlpha to 0, it is assumed that your image is 
         /// transparent. When you only want to use per-pixel alpha values, set 
         /// the SourceConstantAlpha value to 255 (opaque).
@@ -120,10 +120,10 @@ namespace FrostyBee.FriskyRipples.UI
         /// <exception cref="ApplicationException"></exception>
         public void SetBitmap(Bitmap newBitmap, byte opacity)
         {
-            // Does this _surface contain an alpha channel?
+            // Does this _canvas contain an alpha channel?
             if (newBitmap.PixelFormat != PixelFormat.Format32bppArgb)
             {
-                throw new ApplicationException("The _surface must be 32ppp with alpha-channel.");
+                throw new ApplicationException("The _canvas must be 32ppp with alpha-channel.");
             }
             // Get device contexts
             IntPtr screenDc = NativeMethods.GetDC(IntPtr.Zero);
@@ -132,7 +132,7 @@ namespace FrostyBee.FriskyRipples.UI
             IntPtr hOldBitmap = IntPtr.Zero;
             try
             {
-                // Get handle to the new _surface and select it into the current 
+                // Get handle to the new _canvas and select it into the current 
                 // device context.
                 hBitmap = newBitmap.GetHbitmap(Color.FromArgb(0));
                 hOldBitmap = NativeMethods.SelectObject(memoryDc, hBitmap);
@@ -152,7 +152,7 @@ namespace FrostyBee.FriskyRipples.UI
                     screenDc,            // Handle to the screen DC
                     ref newLocation,     // New screen position of the _layeredWindow window
                     ref newSize,         // New size of the _layeredWindow window
-                    memoryDc,            // Handle to the _layeredWindow window _surface DC
+                    memoryDc,            // Handle to the _layeredWindow window _canvas DC
                     ref sourceLocation,  // Location of the layer in the DC
                     0,                   // Color key of the _layeredWindow window
                     ref pBlend,          // Transparency of the _layeredWindow window

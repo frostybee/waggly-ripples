@@ -9,11 +9,10 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// </summary>
     internal class SquaredPulseProfile : BaseProfile
     {
-        // TODO: add IsFilled. Color Transition: enabled/disabled.
-        // Add random color?        
-        Pen _outlinePen;
-        SolidBrush _innerBrush;
-        SolidBrush _outerBrush;
+        
+        private Pen _outlinePen;
+        private SolidBrush _innerBrush;
+        private SolidBrush _outerBrush;
 
         public SquaredPulseProfile()
         {

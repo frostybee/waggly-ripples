@@ -6,15 +6,15 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class SquareProfile : BaseProfile
     {
-        SolidBrush brush;
-        Pen _outlinePen;
-        int _baseRadius = 10; // Needs to be parametrized.
+        private SolidBrush brush;
+        private Pen _outlinePen;        
         public SquareProfile()
         {
             InitProfileEntries();
         }
         private void InitProfileEntries()
         {
+            int _baseRadius = 10; 
             brush = new SolidBrush(Color.DarkBlue.ReduceOpacity(_baseRadius * 10));
             _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(_baseRadius * 10), 4);
 

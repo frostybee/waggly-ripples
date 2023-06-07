@@ -4,8 +4,8 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class CrosshairProfile : BaseProfile
     {
-        SolidBrush _verticalBrush;
-        SolidBrush _horizontalBrush;
+        private SolidBrush _verticalBrush;
+        private SolidBrush _horizontalBrush;
         public CrosshairProfile()
         {
             InitProfileEntries();

@@ -9,9 +9,9 @@ namespace FrostyBee.FriskyRipples.Drawing
     /// </summary>
     internal class SonarPulseProfile : BaseProfile
     {
-        SolidBrush _innerBrush;
-        SolidBrush _outerBrush;
-        Pen _middlePen;
+        private SolidBrush _innerBrush;
+        private SolidBrush _outerBrush;
+        private Pen _middlePen;
         public SonarPulseProfile()
         {
             InitProfileEntries();

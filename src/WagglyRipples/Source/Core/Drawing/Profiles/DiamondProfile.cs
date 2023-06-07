@@ -6,16 +6,15 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class DiamondProfile : BaseProfile
     {
-        Pen _outlinePen;
-        int _baseRadius = 10; // Needs to be parametrized.
-
+        private Pen _outlinePen;
         public DiamondProfile()
         {
             InitProfileEntries();
         }
 
         private void InitProfileEntries()
-        {
+        {            
+            int _baseRadius = 10;
             int opacity = 10;
             int strokeWidth = 4;            
             _outlinePen = new Pen(Color.DarkBlue.ReduceOpacity(opacity), 4);

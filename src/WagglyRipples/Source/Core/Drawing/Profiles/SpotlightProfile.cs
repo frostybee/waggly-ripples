@@ -6,7 +6,7 @@ namespace FrostyBee.FriskyRipples.Drawing
 {
     internal class SpotlightProfile : BaseProfile
     {
-        SolidBrush _innerBrush;
+        private SolidBrush _innerBrush;
         public SpotlightProfile()
         {
             InitProfileEntries();
