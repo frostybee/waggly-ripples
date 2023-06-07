@@ -9,8 +9,7 @@ namespace FrostyBee.FriskyRipples.Drawing
         private SolidBrush _brushInnerRipple;
         private Pen _penOutline;
         private Pen _innerPen;
-        
-        
+               
         public ConcentricProfile()
         {
             InitProfileEntries();
@@ -42,7 +41,7 @@ namespace FrostyBee.FriskyRipples.Drawing
                     IsFilled = false,
                 });
             //-- 2) Make ripples that will be rendered between the inner most and outer most ripples.
-            int radius = 6;            
+            int radius = 4;            
             for (int i = 0; i < 3; i++)
             {
                 AddRipple(
