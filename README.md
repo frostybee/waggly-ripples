@@ -4,16 +4,9 @@ A WinForms application that renders and animates various types of ripples and sh
 
 ## Demo
 
-Watch the demo on YouTube:
-<iframe
-    width="640"
-    height="480"
-    src="https://www.youtube.com/watch?v=CXkYp3l1bMo"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen
->
-</iframe>
+[**Watch the demo on YouTube**](https://www.youtube.com/watch?v=CXkYp3l1bMo)
+
+![alt](screenshot/ripples-demo.png)
 
 
 ## Easing Functions
