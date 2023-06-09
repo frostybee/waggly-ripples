@@ -13,7 +13,7 @@ namespace FrostyBee.FriskyRipples.Animation
         public override double Ease(double progress)
         {
             double p = progress;
-            return Math.Sin(-13d * EasingUtils.HALFPI * (p + 1)) * Math.Pow(2d, -10d * p) + 1d;
+            return Math.Sin(-13d * EasingUtils.HALFPI * (p + 1)) * Math.Pow(2d, -10d * p) + 1d;        
         }
     }
 }

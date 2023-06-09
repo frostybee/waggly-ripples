@@ -16,16 +16,17 @@ namespace FrostyBee.FriskyRipples.Drawing
         public float RadiusMultiplier { get; set; } = 2.2f;        
         public int InitialRadius { get; set; }
         public int Opacity { get; set; }        
-        public Rectangle Bounds { get; set; }
-        public SolidBrush FillBrush { get; set; }
-        public Pen OutlinePen { get; set; }
+        public Rectangle Bounds { get; set; }                
         public PointF[] PolyPoints { get; set; }
         public PolygonType PolygonType { get; set; }
         public double ExpandedRadius { get { return InitialRadius * RadiusMultiplier; } }
         private int _expandedRadius = 1;
-
+        public SolidBrush FillBrush { get; set; }
+        public Pen OutlinePen { get; set; }
+        private Color _initialFillColor = Color.Red;
+        private Color _initialOutlineColor = Color.Red;        
         
-        internal void Draw(Graphics graphics)
+        internal void Draw(Graphics graphics, bool isColorTransition)
         {            
             //-- Draw this ripple entry.
             switch (ShapeType)
@@ -71,22 +72,21 @@ namespace FrostyBee.FriskyRipples.Drawing
 
         internal void AdjustColorOpacity(double animationProgress)
         {
-            //return (255 - Math.Min(Math.Max(0, (int)animationProgress* 150), 255));
             int opacity = 1;
             // Opacity percentage: 255 * 75 / 100
-            float percentage = (float)Math.Round(animationProgress * 60, 2);
-            opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));
+            float percentage = (float)Math.Round(animationProgress * 65, 2);
+            opacity = Math.Max(1, Math.Min(255 * (int)percentage / 100, 255));            
             if (IsFade)
             {
                 if (IsFilled)
                 {
-                     FillBrush.Color = FillBrush.Color.ReduceOpacity(opacity);                    
+                    FillBrush.Color = _initialFillColor.ReduceOpacity(opacity);                                        
                     //FillBrush.Color = DrawingHelper.RandomColor().ReduceOpacity(opacity);
                 }
                 else
                 {
                     Debug.WriteLine("opacity: " + opacity);
-                    OutlinePen.Color = OutlinePen.Color.ReduceOpacity(opacity);
+                    OutlinePen.Color = _initialOutlineColor.ReduceOpacity(opacity);
                 }
             }
         }
@@ -114,12 +114,14 @@ namespace FrostyBee.FriskyRipples.Drawing
             if (IsFade)
             {
                 if (IsFilled)
-                {
-                    FillBrush.Color = FillBrush.Color.WithOpacity(initialOpacity);                    
+                {                    
+                    FillBrush.Color = FillBrush.Color.WithOpacity(initialOpacity);
+                    _initialFillColor = FillBrush.Color;
                 }
                 else
                 {                    
                     OutlinePen.Color = OutlinePen.Color.WithOpacity(initialOpacity);
+                    _initialOutlineColor = OutlinePen.Color;
                 }
             }
         }

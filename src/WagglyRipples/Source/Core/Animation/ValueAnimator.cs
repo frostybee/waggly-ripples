@@ -94,7 +94,6 @@ namespace FrostyBee.FriskyRipples.Animation
 
         /// <summary>
         /// Starts a new animation.
-        /// If the spe
         /// </summary>
         /// <param name="direction">The direction of the animation.</param>
         public void StartNewAnimation(AnimationDirection direction)
@@ -163,7 +162,7 @@ namespace FrostyBee.FriskyRipples.Animation
         }
 
         /// <summary>
-        /// 
+        /// Increments the progress of the animation towards 1.
         /// </summary>
         private void IncrementProgress()
         {
@@ -186,10 +185,10 @@ namespace FrostyBee.FriskyRipples.Animation
                 _animationTimer.Stop();
                 Completed?.Invoke(this);
             }
-        }        
+        }
 
         /// <summary>
-        /// 
+        /// Decrements the progress of the animation towards 0.
         /// </summary>
         private void DecrementProgress()
         {
@@ -254,7 +253,8 @@ namespace FrostyBee.FriskyRipples.Animation
         private void SetInterpolator(InterpolationType pInterpolatorType)
         {
             IEasing newInterpolator = ConstructableFactory.GetInstanceOf<IEasing>(pInterpolatorType);
-            // Create a linear interpolator if the dynamic instantiation fails.
+            // If the instantiation of the specified interpolator fails,
+            // we use a linear interpolator by default.
             _interpolator = newInterpolator ?? new LinearEasing();
         }
     }

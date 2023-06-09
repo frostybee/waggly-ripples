@@ -26,19 +26,20 @@ namespace FrostyBee.FriskyRipples.Drawing
         /// <param name="inRippleProfile">The profile to be rendered.</param>
         /// <param name="progress">The interpolated value that indicates the progress of the currently running animation. </param>
         internal void RenderRipples(Graphics _graphics, double progress)
-        {                                   
+        {            
             // We adjust the ripple properties every animation frame. 
             _ripples.ForEach(ripple =>
-            {                
+            {
+                ripple.ExpandRadius(progress);
                 if (Options.IsColorTransition)
                 {
                     Debug.WriteLine(Options.IsColorTransition.ToString());
                     // We fade the color of the ripple based on the current animation's progress value.
                     ripple.AdjustColorOpacity(progress);
                 }
-                ripple.ExpandRadius(progress);                
+                
                 // Draw the ripple.                
-                ripple.Draw(_graphics);
+                ripple.Draw(_graphics, Options.IsColorTransition);
             });
         }
         internal void AddRipple(RippleEntry newRipple)

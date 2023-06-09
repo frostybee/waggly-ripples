@@ -92,6 +92,7 @@ namespace FrostyBee.FriskyRipples
                 _graphics = Graphics.FromImage(_canvas);
                 _graphics.SetAntiAliasing();
             }
+            _currentProfile.ResetColorOpacity();
             // Clear the _canvas that was previously drawn onto the _layeredWindow window.
             _layeredWindow.SetBitmap(_blankCanvas, 1);
             if (!_animationManager.IsAnimating())
